@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hikicomic/data/models/error_auth.dart';
 import 'package:hikicomic/data/models/response.dart';
 import 'package:hikicomic/repository/account_repository.dart';
-import 'package:hikicomic/utils/utils.dart';
 
 part 'reset_password_event.dart';
 part 'reset_password_state.dart';
@@ -34,7 +33,6 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
 
   final AccountRepository _accountRepository = AccountRepository();
   // AuthenticationRepository();
-  final Utils _utils = Utils();
 
   Future<void> _handleResetPasswordLoadingEvent(
     ResetPasswordLoadingEvent event,

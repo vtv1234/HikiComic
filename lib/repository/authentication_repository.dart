@@ -40,11 +40,6 @@ class AuthenticationRepository {
       return {'isSuccessed': true, 'result': result};
     }
     return {'isSuccessed': false, 'result': ErrorResponse.fromMap(jsonResult)};
-
-    // }
-    // else {
-    //   throw Exception(response.reasonPhrase);
-    // }
   }
 
   Future<void> logOut() async {
@@ -78,11 +73,6 @@ class AuthenticationRepository {
       return {'isSuccessed': true, 'result': result};
     }
     return {'isSuccessed': false, 'result': ErrorResponse.fromMap(jsonResult)};
-
-    // }
-    // else {
-    //   throw Exception(response.reasonPhrase);
-    // }
   }
 
   Future<Map<String, dynamic>> verifyEmail(

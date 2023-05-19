@@ -12,7 +12,7 @@ class ListGenresInitial extends ListGenresState {
 class LoadingListGenres extends ListGenresState {
   // final int indexSelectedGenre;
 
-  LoadingListGenres();
+  const LoadingListGenres();
   @override
   List<Object?> get props => [];
 }

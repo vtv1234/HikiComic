@@ -47,7 +47,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
                   .add(AuthenticationStatus.authenticated);
               emit(const UploadAvatarByCameraSuccessful());
             } else {
-              emit(UploadAvatarByCameraFailure('Cannot upload image'));
+              emit(const UploadAvatarByCameraFailure('Cannot upload image'));
             }
           }
         } catch (e) {
@@ -70,9 +70,9 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
             if (isSuccessed) {
               _authenticationRepository.controller
                   .add(AuthenticationStatus.authenticated);
-              emit(UploadAvatarByGallerySuccessful());
+              emit(const UploadAvatarByGallerySuccessful());
             } else {
-              emit(UploadAvatarByGalleryFailure('Cannot upload image'));
+              emit(const UploadAvatarByGalleryFailure('Cannot upload image'));
             }
           }
         } catch (e) {

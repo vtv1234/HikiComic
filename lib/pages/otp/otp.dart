@@ -7,7 +7,6 @@ import 'package:hikicomic/utils/colors.dart';
 
 import 'package:hikicomic/widget/snackbar.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:async/async.dart';
 
 import 'bloc/otp_bloc.dart';
 
@@ -27,14 +26,8 @@ class OTPScreen extends StatefulWidget {
 }
 
 class _OTPScreen extends State<OTPScreen> {
-  final CancelableOperation _debounce = CancelableOperation.fromFuture(
-    Future.delayed(Duration(seconds: 30)),
-  );
   DateTime lastPressedAt = DateTime.now();
   TextEditingController textEditingController = TextEditingController();
-  // ..text = "123456";
-
-  // ignore: close_sinks
   StreamController<ErrorAnimationType>? errorController;
 
   bool hasError = false;
@@ -74,7 +67,6 @@ class _OTPScreen extends State<OTPScreen> {
           style: TextStyle(
               fontSize: 25, fontWeight: FontWeight.bold, color: kWhite),
         ),
-        //foregroundColor: darkAppBarTheme.backgroundColor,
         elevation: 0,
         backgroundColor: kAppBarDark,
         leading: IconButton(
@@ -104,8 +96,6 @@ class _OTPScreen extends State<OTPScreen> {
             if (state is OtpResendEmailVerificationSuccess) {
               successSnakBar(success: state.message, duration: 10)
                   .show(context);
-              // Future.delayed(
-              //     Duration(seconds: 1), () => context.goNamed('home'));
             }
             if (state is OtpResendEmailVerificationFailure) {
               errorSnakBar(error: state.error, duration: 10).show(context);
@@ -120,23 +110,6 @@ class _OTPScreen extends State<OTPScreen> {
                 child: ListView(
                   children: <Widget>[
                     const SizedBox(height: 30),
-                    // SizedBox(
-                    //   height: MediaQuery.of(context).size.height / 3,
-                    //   child: ClipRRect(
-                    //     borderRadius: BorderRadius.circular(30),
-                    //     child: Image.asset(Constants.otpGifImage),
-                    //   ),
-                    // ),
-                    // const SizedBox(height: 8),
-                    // const Padding(
-                    //   padding: EdgeInsets.symmetric(vertical: 8.0),
-                    //   child: Text(
-                    //     'OTP Verification',
-                    //     style: TextStyle(
-                    //         fontWeight: FontWeight.bold, fontSize: 22),
-                    //     textAlign: TextAlign.center,
-                    //   ),
-                    // ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 30.0, vertical: 8),
@@ -145,27 +118,6 @@ class _OTPScreen extends State<OTPScreen> {
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.headlineSmall,
                       ),
-                      // RichText(
-                      //   text: TextSpan(
-                      //     text:
-                      //         "Please check your email for the OTP we have sent and enter it in the field provided",
-                      //     children: [
-                      //       // TextSpan(
-                      //       //   text: "${widget.phoneNumber}",
-                      //       //   style: const TextStyle(
-                      //       //     color: kWhite,
-                      //       //     fontWeight: FontWeight.bold,
-                      //       //     fontSize: 15,
-                      //       //   ),
-                      //       // ),
-                      //     ],
-                      //     style: const TextStyle(
-                      //       color: kWhite,
-                      //       fontSize: 15,
-                      //     ),
-                      //   ),
-                      //   textAlign: TextAlign.center,
-                      // ),
                     ),
                     const SizedBox(
                       height: 20,
@@ -179,18 +131,12 @@ class _OTPScreen extends State<OTPScreen> {
                         ),
                         child: PinCodeTextField(
                           autoFocus: true,
-                          // focusNode: ,
                           appContext: context,
                           pastedTextStyle: TextStyle(
                             color: Colors.green.shade600,
                             fontWeight: FontWeight.bold,
                           ),
                           length: 6,
-                          // obscureText: true,
-                          // obscuringCharacter: '*',
-                          // obscuringWidget: const FlutterLogo(
-                          //   size: 24,
-                          // ),
                           blinkWhenObscuring: true,
                           animationType: AnimationType.fade,
                           validator: (v) {
@@ -202,18 +148,12 @@ class _OTPScreen extends State<OTPScreen> {
                           },
                           pinTheme: PinTheme(
                             shape: PinCodeFieldShape.underline,
-                            // borderRadius: BorderRadius.circular(15),
                             inactiveFillColor: Colors.black,
                             inactiveColor: kWhite,
                             selectedFillColor: Colors.grey.shade600,
                             selectedColor: Colors.red,
                             activeColor: Colors.grey.shade100,
                             activeFillColor: Colors.grey.shade600,
-
-                            // borderRadius: BorderRadius.circular(5),
-                            // fieldHeight: 50,
-                            // fieldWidth: 40,
-                            // activeFillColor: Colors.white,
                           ),
                           cursorColor: Colors.black,
                           animationDuration: const Duration(milliseconds: 300),
@@ -231,9 +171,6 @@ class _OTPScreen extends State<OTPScreen> {
                           onCompleted: (v) {
                             debugPrint("Completed");
                           },
-                          // onTap: () {
-                          //   print("Pressed");
-                          // },
                           onChanged: (value) {
                             debugPrint(value);
                             setState(() {
@@ -242,8 +179,6 @@ class _OTPScreen extends State<OTPScreen> {
                           },
                           beforeTextPaste: (text) {
                             debugPrint("Allowing to paste $text");
-                            //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
-                            //but you can show anything you want here, like your pop up saying wrong paste format or etc
                             return true;
                           },
                         ),
@@ -275,8 +210,7 @@ class _OTPScreen extends State<OTPScreen> {
                         TextButton(
                           onPressed: () {
                             if (DateTime.now().difference(lastPressedAt) >=
-                                Duration(seconds: 30)) {
-                              // Execute the function here
+                                const Duration(seconds: 30)) {
                               context.read<OtpBloc>().add(
                                   ResendEmailVerificationEvent(
                                       widget.email!, widget.password!));
@@ -292,27 +226,6 @@ class _OTPScreen extends State<OTPScreen> {
                                       duration: 10)
                                   .show(context);
                             }
-
-                            // if (!_debounce.isCompleted) {
-                            //   infoSnakBar(
-                            //           info: "Resend after 30 second",
-                            //           duration: 5)
-                            //       .show(context);
-
-                            //   // _debounce = CancelableOperation.fromFuture(
-                            //   //   Future.delayed(Duration(seconds: 1)),
-                            //   // );
-                            //   _debounce.value.then((_) {
-                            //     // Call your function here
-                            //     context.read<OtpBloc>().add(
-                            //         ResendEmailVerificationEvent(
-                            //             widget.email!, widget.password!));
-                            //   }
-                            //   );
-                            // }
-                            // context.read<OtpBloc>().add(
-                            //       ResendEmailVerificationEvent(
-                            //           widget.email!, widget.password!));
                           },
                           child: const Text(
                             "Resend",
@@ -334,16 +247,6 @@ class _OTPScreen extends State<OTPScreen> {
                       decoration: BoxDecoration(
                         color: kRed,
                         borderRadius: BorderRadius.circular(5),
-                        // boxShadow: [
-                        //   BoxShadow(
-                        //       color: Colors.red.shade200,
-                        //       offset: const Offset(1, -2),
-                        //       blurRadius: 5),
-                        //   BoxShadow(
-                        //       color: Colors.red.shade200,
-                        //       offset: const Offset(-1, 2),
-                        //       blurRadius: 5)
-                        // ]
                       ),
                       child: TextButton(
                         onPressed: () {
@@ -352,20 +255,6 @@ class _OTPScreen extends State<OTPScreen> {
                               email: widget.email!,
                               password: widget.password!,
                               otp: textEditingController.text));
-                          // conditions for validating
-                          // if (currentText.length != 6 ||
-                          //     currentText != "123456") {
-                          //   errorController!.add(ErrorAnimationType
-                          //       .shake); // Triggering error shake animation
-                          //   setState(() => hasError = true);
-                          // } else {
-                          //   setState(
-                          //     () {
-                          //       hasError = false;
-                          //       snackBar("OTP Verified!!");
-                          //     },
-                          //   );
-                          // }
                         },
                         child: Center(
                           child: Text(
@@ -382,29 +271,6 @@ class _OTPScreen extends State<OTPScreen> {
                     const SizedBox(
                       height: 16,
                     ),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   children: <Widget>[
-                    //     Flexible(
-                    //       child: TextButton(
-                    //         child: const Text("Clear"),
-                    //         onPressed: () {
-                    //           textEditingController.clear();
-                    //         },
-                    //       ),
-                    //     ),
-                    //     Flexible(
-                    //       child: TextButton(
-                    //         child: const Text("Set Text"),
-                    //         onPressed: () {
-                    //           setState(() {
-                    //             textEditingController.text = "123456";
-                    //           });
-                    //         },
-                    //       ),
-                    //     ),
-                    //   ],
-                    // )
                   ],
                 ),
               ),

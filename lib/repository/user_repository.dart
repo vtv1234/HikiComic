@@ -20,7 +20,6 @@ class UserRepository {
       return result;
     } else {
       return null;
-      // throw Exception(response.reasonPhrase);
     }
   }
 }

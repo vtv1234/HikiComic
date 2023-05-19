@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:hikicomic/data/models/comic.dart';
 import 'package:hikicomic/pages/tabs/ongoing_comic/bloc/ongoing_comic_bloc.dart';
-import 'package:hikicomic/repository/comic_repository.dart';
 import 'package:hikicomic/widget/card_comic.dart';
 
 class TabOngoingComic extends StatefulWidget {
+  const TabOngoingComic({super.key});
+
   @override
   State<TabOngoingComic> createState() => _TabOngoingComicState();
 }

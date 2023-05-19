@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 import 'package:hikicomic/data/models/response.dart';
@@ -8,7 +7,7 @@ class ErrorResponse extends BaseResponse {
   final bool? isSuccessed;
   final String? message;
   final int? statusCode;
-  final dynamic? resultObj;
+  final dynamic resultObj;
   const ErrorResponse({
     this.validationErrors,
     this.isSuccessed,
@@ -22,7 +21,7 @@ class ErrorResponse extends BaseResponse {
     bool? isSuccessed,
     String? message,
     int? statusCode,
-    dynamic? resultObj,
+    dynamic resultObj,
   }) {
     return ErrorResponse(
       validationErrors: validationErrors ?? this.validationErrors,

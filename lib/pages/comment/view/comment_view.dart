@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,7 +15,7 @@ class CommentView extends StatefulWidget {
   final int comicId;
   final int chapterId;
   final String chapterName;
-  CommentView(
+  const CommentView(
       {super.key,
       required this.comicId,
       required this.chapterId,
@@ -52,9 +51,9 @@ class _CommentViewState extends State<CommentView> {
                   backgroundColor: Colors.transparent,
                   resizeToAvoidBottomInset: true,
                   bottomSheet: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: kWhite,
-                      borderRadius: const BorderRadius.only(
+                      borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(kBorderRadius),
                           topRight: Radius.circular(kBorderRadius)),
                     ),
@@ -68,7 +67,7 @@ class _CommentViewState extends State<CommentView> {
                                 .textTheme
                                 .bodySmall
                                 ?.copyWith(color: Colors.black),
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.fromLTRB(
                                     kDefaultPadding, 0, kDefaultPadding, 0)),
                           ),
@@ -88,13 +87,14 @@ class _CommentViewState extends State<CommentView> {
                                   if (mounted) {
                                     showDialog(
                                       context: context,
-                                      builder: (context) => SignInDialog(),
+                                      builder: (context) =>
+                                          const SignInDialog(),
                                     );
                                   }
                                 }
                               }
                             },
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.send,
                               color: kRed,
                             ))
@@ -103,9 +103,9 @@ class _CommentViewState extends State<CommentView> {
                   ),
                   body: Container(
                     height: 0.6.sh,
-                    decoration: BoxDecoration(
-                      color: Color(0x242526),
-                      borderRadius: const BorderRadius.only(
+                    decoration: const BoxDecoration(
+                      color: Color(0x00242526),
+                      borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(16.0),
                           topRight: Radius.circular(16.0)),
                     ),
@@ -118,7 +118,7 @@ class _CommentViewState extends State<CommentView> {
                             textAlign: TextAlign.center,
                             style: Theme.of(context).textTheme.headlineSmall,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5,
                           ),
                           Expanded(
@@ -156,7 +156,7 @@ class _CommentViewState extends State<CommentView> {
                     ),
                   ));
             }
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(
                 color: kRed,
                 strokeWidth: 2,

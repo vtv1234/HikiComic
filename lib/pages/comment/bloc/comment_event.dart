@@ -11,7 +11,7 @@ class GetListCommentOfChapter extends CommentEvent {
   final int comicId;
   final int? chapterId;
 
-  GetListCommentOfChapter(this.comicId, this.chapterId);
+  const GetListCommentOfChapter(this.comicId, this.chapterId);
 }
 
 class SendComment extends CommentEvent {
@@ -20,7 +20,7 @@ class SendComment extends CommentEvent {
   final int? chapterId;
   final int? parrentCommentId;
 
-  SendComment(
+  const SendComment(
       {required this.commentContent,
       required this.comicId,
       required this.chapterId,

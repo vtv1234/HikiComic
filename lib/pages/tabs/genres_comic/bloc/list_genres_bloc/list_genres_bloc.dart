@@ -16,7 +16,7 @@ class ListGenresBloc extends Bloc<ListGenresEvent, ListGenresState> {
     on<LoadAllGenresEvent>(_handleLoadListGenresEvent);
   }
   FutureOr<void> _handleLoadListGenresEvent(event, emit) async {
-    emit(LoadingListGenres());
+    emit(const LoadingListGenres());
     try {
       final result = await _genresRepository.getAllGenres();
       if (result.isSuccessed == true) {

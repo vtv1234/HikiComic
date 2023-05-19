@@ -24,7 +24,7 @@ class OtpLoading extends OtpState {
 class OtpSuccess extends OtpState {
   final String message;
 
-  OtpSuccess({required this.message});
+  const OtpSuccess({required this.message});
 
   @override
   List<Object?> get props => [message];
@@ -33,17 +33,16 @@ class OtpSuccess extends OtpState {
 class OtpFailure extends OtpState {
   final String error;
 
-  OtpFailure({required this.error});
+  const OtpFailure({required this.error});
 
   @override
-  // TODO: implement props
   List<Object?> get props => [error];
 }
 
 class OtpResendEmailVerificationSuccess extends OtpState {
   final String message;
 
-  OtpResendEmailVerificationSuccess({required this.message});
+  const OtpResendEmailVerificationSuccess({required this.message});
   @override
   List<Object?> get props => [message];
 }
@@ -51,7 +50,7 @@ class OtpResendEmailVerificationSuccess extends OtpState {
 class OtpResendEmailVerificationFailure extends OtpState {
   final String error;
 
-  OtpResendEmailVerificationFailure({required this.error});
+  const OtpResendEmailVerificationFailure({required this.error});
   @override
   List<Object?> get props => [error];
 }

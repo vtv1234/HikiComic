@@ -29,7 +29,6 @@ class SearchStateError extends SearchState {
 
   SearchStateError(this.error);
   @override
-  // TODO: implement props
   List<Object?> get props => [error];
 }
 
@@ -75,6 +74,6 @@ class SearchStateError extends SearchState {
 //   }
 
 //   @override
-//   // TODO: implement props
+//   
 //   List<Object?> get props => [];
 // }

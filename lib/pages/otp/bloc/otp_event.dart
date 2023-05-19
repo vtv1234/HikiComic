@@ -20,5 +20,5 @@ class ResendEmailVerificationEvent extends OtpEvent {
   final String email;
   final String password;
 
-  ResendEmailVerificationEvent(this.email, this.password);
+  const ResendEmailVerificationEvent(this.email, this.password);
 }

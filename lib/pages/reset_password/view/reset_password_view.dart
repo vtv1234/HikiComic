@@ -59,7 +59,7 @@ class _ResetPasswordView extends State<ResetPasswordView> {
           child: SingleChildScrollView(
             // physics: NeverScrollableScrollPhysics(),
             //controller: NeverScrollableScrollPhysics(),
-            child: Container(
+            child: SizedBox(
               // color: Theme.of(context).colorScheme.background,
               height: MediaQuery.of(context).size.height,
               width: double.infinity,
@@ -263,13 +263,13 @@ class _ResetPasswordView extends State<ResetPasswordView> {
                                                 .bodySmall!
                                                 .copyWith(color: kRed),
                                             errorMaxLines: 3,
-                                            contentPadding: EdgeInsets.all(8),
-                                            hintStyle: TextStyle(fontSize: 12),
+                                            contentPadding: const EdgeInsets.all(8),
+                                            hintStyle: const TextStyle(fontSize: 12),
                                             hintText:
                                                 "Enter your new passsword",
                                             labelText: "New password",
                                             labelStyle:
-                                                TextStyle(color: kWhite),
+                                                const TextStyle(color: kWhite),
                                             // prefixIcon: const Padding(
                                             //   padding: EdgeInsets.all(
                                             //       kDefaultPadding),
@@ -297,7 +297,7 @@ class _ResetPasswordView extends State<ResetPasswordView> {
                                             ),
                                             border: OutlineInputBorder(
                                               gapPadding: 1,
-                                              borderSide: BorderSide(
+                                              borderSide: const BorderSide(
                                                   width: 0.5,
                                                   color: Colors.white),
                                               borderRadius:
@@ -305,7 +305,7 @@ class _ResetPasswordView extends State<ResetPasswordView> {
                                             ),
                                             errorBorder: OutlineInputBorder(
                                               gapPadding: 1,
-                                              borderSide: BorderSide(
+                                              borderSide: const BorderSide(
                                                   width: 0.5,
                                                   color: Colors.red),
                                               borderRadius:
@@ -313,7 +313,7 @@ class _ResetPasswordView extends State<ResetPasswordView> {
                                             ),
                                             enabledBorder: OutlineInputBorder(
                                               gapPadding: 1,
-                                              borderSide: BorderSide(
+                                              borderSide: const BorderSide(
                                                   width: 0.5,
                                                   color: Colors.grey),
                                               borderRadius:
@@ -369,13 +369,13 @@ class _ResetPasswordView extends State<ResetPasswordView> {
                                                 .bodySmall!
                                                 .copyWith(color: kRed),
                                             errorMaxLines: 3,
-                                            contentPadding: EdgeInsets.all(8),
-                                            hintStyle: TextStyle(fontSize: 12),
+                                            contentPadding: const EdgeInsets.all(8),
+                                            hintStyle: const TextStyle(fontSize: 12),
                                             hintText:
                                                 "Enter your confirm passsword",
                                             labelText: "Confirm Password",
                                             labelStyle:
-                                                TextStyle(color: kWhite),
+                                                const TextStyle(color: kWhite),
                                             // prefixIcon: const Padding(
                                             //   padding: EdgeInsets.all(
                                             //       kDefaultPadding),
@@ -403,7 +403,7 @@ class _ResetPasswordView extends State<ResetPasswordView> {
                                             ),
                                             border: OutlineInputBorder(
                                               gapPadding: 1,
-                                              borderSide: BorderSide(
+                                              borderSide: const BorderSide(
                                                   width: 0.5,
                                                   color: Colors.white),
                                               borderRadius:
@@ -411,7 +411,7 @@ class _ResetPasswordView extends State<ResetPasswordView> {
                                             ),
                                             errorBorder: OutlineInputBorder(
                                               gapPadding: 1,
-                                              borderSide: BorderSide(
+                                              borderSide: const BorderSide(
                                                   width: 0.5,
                                                   color: Colors.red),
                                               borderRadius:
@@ -419,7 +419,7 @@ class _ResetPasswordView extends State<ResetPasswordView> {
                                             ),
                                             enabledBorder: OutlineInputBorder(
                                               gapPadding: 1,
-                                              borderSide: BorderSide(
+                                              borderSide: const BorderSide(
                                                   width: 0.5,
                                                   color: Colors.grey),
                                               borderRadius:
@@ -495,7 +495,7 @@ class _ResetPasswordView extends State<ResetPasswordView> {
                                         child: ElevatedButton(
                                           style: ElevatedButton.styleFrom(
                                               minimumSize:
-                                                  Size(double.infinity, 50),
+                                                  const Size(double.infinity, 50),
 
                                               // padding: MaterialStateProperty.all(
                                               //     EdgeInsets.symmetric(horizontal: 10)),
@@ -564,7 +564,7 @@ class _ResetPasswordView extends State<ResetPasswordView> {
                                       //   ],
                                       // ),
                                       // Text('You have an account? Sign In')
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 10,
                                       ),
                                     ]

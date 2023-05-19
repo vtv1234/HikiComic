@@ -1,5 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, use_build_context_synchronously
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +5,6 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hikicomic/pages/comment/bloc/comment_bloc.dart';
-import 'package:hikicomic/pages/comment/view/comment_view.dart';
 import 'package:hikicomic/pages/comment/view/widget/comment_branch_view.dart';
 import 'package:hikicomic/utils/colors.dart';
 import 'package:hikicomic/utils/utils.dart';
@@ -20,7 +17,6 @@ import 'package:hikicomic/data/models/chapter.dart';
 import 'package:hikicomic/data/models/comic_detail.dart';
 import 'package:hikicomic/data/models/genre.dart';
 import 'package:hikicomic/pages/comic_detail/bloc/comic_detail_bloc.dart';
-import 'package:hikicomic/pages/home/view/home_view.dart';
 import 'package:hikicomic/pages/sign_in/view/sign_in_view.dart';
 import 'package:hikicomic/repository/chapter_repository.dart';
 import 'package:hikicomic/repository/comic_detail_repository.dart';
@@ -30,7 +26,7 @@ import 'package:hikicomic/widget/snackbar.dart';
 class ComicDetailView extends StatefulWidget {
   final String comicSEOAlias;
 
-  ComicDetailView({
+  const ComicDetailView({
     Key? key,
     required this.comicSEOAlias,
   }) : super(key: key);
@@ -81,7 +77,7 @@ class _ComicDetailViewState extends State<ComicDetailView> {
                       .add(LoadComicDetailEvent(widget.comicSEOAlias));
                   showDialog(
                     context: context,
-                    builder: (context) => SignInDialog(),
+                    builder: (context) => const SignInDialog(),
                   );
                   // context
                   //     .read<ComicDetailBloc>()
@@ -422,55 +418,64 @@ class _ComicDetailViewState extends State<ComicDetailView> {
                                             if (await utils.isLoggedIn() ==
                                                 "true") {
                                               if (isEnable) {
-                                                context
-                                                    .read<ComicDetailBloc>()
-                                                    .add(
-                                                        UpdateStatusFollowingComic(
-                                                            comicDetail
-                                                                .comicId!));
-                                                isEnable = false;
+                                                if (mounted) {
+                                                  context
+                                                      .read<ComicDetailBloc>()
+                                                      .add(
+                                                          UpdateStatusFollowingComic(
+                                                              comicDetail
+                                                                  .comicId!));
+                                                  isEnable = false;
+                                                }
                                               } else if (DateTime.now()
                                                       .difference(
                                                           lastPressedAt) >=
-                                                  Duration(seconds: 10)) {
-                                                context
-                                                    .read<ComicDetailBloc>()
-                                                    .add(
-                                                        UpdateStatusFollowingComic(
-                                                            comicDetail
-                                                                .comicId!));
-                                                lastPressedAt = DateTime.now();
+                                                  const Duration(seconds: 10)) {
+                                                if (mounted) {
+                                                  context
+                                                      .read<ComicDetailBloc>()
+                                                      .add(
+                                                          UpdateStatusFollowingComic(
+                                                              comicDetail
+                                                                  .comicId!));
+                                                  lastPressedAt =
+                                                      DateTime.now();
+                                                }
                                               }
                                               // if (DateTime.now()
                                               //         .difference(lastPressedAt)
                                               //         .inSeconds !=
                                               //     0)
                                               else {
-                                                infoSnakBar(
-                                                        info:
-                                                            "You can ${comicDetail.isFollow! ? 'unfollow' : 'follow'} this comic in ${10 - DateTime.now().difference(lastPressedAt).inSeconds} second",
-                                                        duration: 2)
-                                                    .show(context);
+                                                if (mounted) {
+                                                  infoSnakBar(
+                                                          info:
+                                                              "You can ${comicDetail.isFollow! ? 'unfollow' : 'follow'} this comic in ${10 - DateTime.now().difference(lastPressedAt).inSeconds} second",
+                                                          duration: 2)
+                                                      .show(context);
+                                                }
                                               }
                                             } else {
-                                              infoSnakBar(
-                                                      info:
-                                                          "You must sign in to follow this comic",
-                                                      duration: 10)
-                                                  .show(context);
-                                              showDialog(
-                                                context: context,
-                                                builder: (context) =>
-                                                    SignInDialog(),
-                                              ).then((value) => context
-                                                  .read<ComicDetailBloc>()
-                                                  .add(LoadComicDetailEvent(
-                                                      widget.comicSEOAlias)));
+                                              if (mounted) {
+                                                infoSnakBar(
+                                                        info:
+                                                            "You must sign in to follow this comic",
+                                                        duration: 10)
+                                                    .show(context);
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) =>
+                                                      const SignInDialog(),
+                                                ).then((value) => context
+                                                    .read<ComicDetailBloc>()
+                                                    .add(LoadComicDetailEvent(
+                                                        widget.comicSEOAlias)));
+                                              }
                                             }
                                           },
                                           icon: AnimatedSwitcher(
-                                              duration:
-                                                  Duration(milliseconds: 300),
+                                              duration: const Duration(
+                                                  milliseconds: 300),
                                               transitionBuilder: (Widget child,
                                                   Animation<double> animation) {
                                                 return
@@ -494,8 +499,8 @@ class _ComicDetailViewState extends State<ComicDetailView> {
                                               // size: 16,
                                               ),
                                           label: AnimatedSwitcher(
-                                              duration:
-                                                  Duration(milliseconds: 300),
+                                              duration: const Duration(
+                                                  milliseconds: 300),
                                               transitionBuilder: (Widget child,
                                                   Animation<double> animation) {
                                                 return
@@ -591,6 +596,12 @@ class _ComicDetailViewState extends State<ComicDetailView> {
                             ),
                           ),
                         ),
+                        SliverToBoxAdapter(
+                            child: Text('Chapters',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(fontWeight: FontWeight.bold))),
                         SliverList(
                           delegate: SliverChildBuilderDelegate(
                             (BuildContext context, int index) {
@@ -620,7 +631,7 @@ class _ComicDetailViewState extends State<ComicDetailView> {
                                   },
                                 ),
                                 child: Padding(
-                                  padding: EdgeInsets.all(8),
+                                  padding: const EdgeInsets.all(8),
                                   child: Row(
                                     // mainAxisAl,
                                     children: [
@@ -723,7 +734,7 @@ class _ComicDetailViewState extends State<ComicDetailView> {
                                 },
                                 builder: (context, state) {
                                   if (state is CommentLoading) {
-                                    return Center(
+                                    return const Center(
                                       child: CircularProgressIndicator(
                                         color: kRed,
                                         strokeWidth: 2,
@@ -738,7 +749,13 @@ class _ComicDetailViewState extends State<ComicDetailView> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text('Comment',
+                                          const Divider(
+                                            thickness: 0,
+                                            indent: 0,
+                                            height: 20,
+                                            color: Colors.white,
+                                          ),
+                                          Text('Comments',
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .bodyMedium
@@ -758,15 +775,13 @@ class _ComicDetailViewState extends State<ComicDetailView> {
                                               // itemBuilder: (context, index) => ParentCommentView(),
                                               ),
                                           Container(
-                                            decoration: BoxDecoration(
+                                            decoration: const BoxDecoration(
                                               color: kWhite,
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                      topLeft:
-                                                          Radius.circular(
-                                                              kBorderRadius),
-                                                      topRight: Radius.circular(
-                                                          kBorderRadius)),
+                                              borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(
+                                                      kBorderRadius),
+                                                  topRight: Radius.circular(
+                                                      kBorderRadius)),
                                             ),
                                             child: Row(
                                               children: [
@@ -781,7 +796,7 @@ class _ComicDetailViewState extends State<ComicDetailView> {
                                                         ?.copyWith(
                                                             color:
                                                                 Colors.black),
-                                                    decoration: InputDecoration(
+                                                    decoration: const InputDecoration(
                                                         contentPadding:
                                                             EdgeInsets.fromLTRB(
                                                                 kDefaultPadding,
@@ -819,13 +834,13 @@ class _ComicDetailViewState extends State<ComicDetailView> {
                                                             showDialog(
                                                               context: context,
                                                               builder: (context) =>
-                                                                  SignInDialog(),
+                                                                  const SignInDialog(),
                                                             );
                                                           }
                                                         }
                                                       }
                                                     },
-                                                    icon: Icon(
+                                                    icon: const Icon(
                                                       Icons.send,
                                                       color: kRed,
                                                     ))

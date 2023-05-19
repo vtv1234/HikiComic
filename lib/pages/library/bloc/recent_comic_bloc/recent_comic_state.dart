@@ -22,8 +22,7 @@ class RecentComicLoaded extends RecentComicState {
 class RecentComicError extends RecentComicState {
   final String error;
 
-  RecentComicError(this.error);
+  const RecentComicError(this.error);
   @override
-  // TODO: implement props
   List<Object> get props => [error];
 }

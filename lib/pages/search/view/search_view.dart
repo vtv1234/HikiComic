@@ -21,14 +21,14 @@ class SearchView extends SearchDelegate<List?> {
           onPressed: () {
             query = '';
           },
-          icon: Icon(Icons.clear))
+          icon: const Icon(Icons.clear))
     ];
   }
 
   @override
   Widget? buildLeading(BuildContext context) {
     return IconButton(
-      icon: BackButtonIcon(),
+      icon: const BackButtonIcon(),
       onPressed: () {
         close(context, null);
       },
@@ -39,23 +39,23 @@ class SearchView extends SearchDelegate<List?> {
   Widget buildResults(BuildContext context) {
     searchBloc.add(SearchEvent(query));
     return Padding(
-      padding: EdgeInsets.all(kDefaultPadding),
+      padding: const EdgeInsets.all(kDefaultPadding),
       child: BlocBuilder<SearchBloc, SearchState>(
         builder: (context, state) {
           if (state is SearchStateLoading) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           } else if (state is SearchStateError) {
-            return Center(
+            return const Center(
               child: Text('Fail to search comics'),
             );
           } else if (state is SearchStateSuccess) {
-            if (state.comics.isEmpty)
-              return Center(
+            if (state.comics.isEmpty) {
+              return const Center(
                 child: Text('No result found'),
               );
-            else {
+            } else {
               if (query.isEmpty) {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,7 +73,7 @@ class SearchView extends SearchDelegate<List?> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Expanded(
@@ -90,7 +90,7 @@ class SearchView extends SearchDelegate<List?> {
                           )
                         },
                         child: Card(
-                          margin: EdgeInsets.only(bottom: 10),
+                          margin: const EdgeInsets.only(bottom: 10),
                           color: kPrimary,
                           elevation: 0,
                           // color: Colors.white,
@@ -178,7 +178,7 @@ class SearchView extends SearchDelegate<List?> {
                                   .headlineSmall
                                   ?.copyWith(color: kRed))
                         ])),
-                    SizedBox(
+                    const SizedBox(
                       height: kDefaultPadding,
                     ),
                     Expanded(
@@ -191,8 +191,8 @@ class SearchView extends SearchDelegate<List?> {
                           itemBuilder: (context, index) => InkResponse(
                                 onTap: () => {},
                                 child: Card(
-                                  margin:
-                                      EdgeInsets.only(bottom: kDefaultPadding),
+                                  margin: const EdgeInsets.only(
+                                      bottom: kDefaultPadding),
                                   elevation: 0.1,
                                   // color: Colors.white,
                                   //shape: const ShapeBorder(),
@@ -322,23 +322,23 @@ class SearchView extends SearchDelegate<List?> {
   Widget buildSuggestions(BuildContext context) {
     searchBloc.add(SearchEvent(query));
     return Padding(
-      padding: EdgeInsets.all(kDefaultPadding),
+      padding: const EdgeInsets.all(kDefaultPadding),
       child: BlocBuilder<SearchBloc, SearchState>(
         builder: (context, state) {
           if (state is SearchStateLoading) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           } else if (state is SearchStateError) {
-            return Center(
+            return const Center(
               child: Text('Fail to search comics'),
             );
           } else if (state is SearchStateSuccess) {
-            if (state.comics.isEmpty)
-              return Center(
+            if (state.comics.isEmpty) {
+              return const Center(
                 child: Text('No result found'),
               );
-            else {
+            } else {
               if (query.isEmpty) {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -356,7 +356,7 @@ class SearchView extends SearchDelegate<List?> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Expanded(
@@ -373,7 +373,7 @@ class SearchView extends SearchDelegate<List?> {
                           )
                         },
                         child: Card(
-                          margin: EdgeInsets.only(bottom: 10),
+                          margin: const EdgeInsets.only(bottom: 10),
                           color: kPrimary,
                           elevation: 0,
                           // color: Colors.white,
@@ -461,7 +461,7 @@ class SearchView extends SearchDelegate<List?> {
                                   .headlineSmall
                                   ?.copyWith(color: kRed))
                         ])),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Expanded(
@@ -474,8 +474,8 @@ class SearchView extends SearchDelegate<List?> {
                           itemBuilder: (context, index) => InkResponse(
                                 onTap: () => {},
                                 child: Card(
-                                  margin:
-                                      EdgeInsets.only(bottom: kDefaultPadding),
+                                  margin: const EdgeInsets.only(
+                                      bottom: kDefaultPadding),
                                   elevation: 0.1,
                                   // color: Colors.white,
                                   //shape: const ShapeBorder(),

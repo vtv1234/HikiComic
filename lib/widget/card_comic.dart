@@ -29,7 +29,7 @@ class CardComic extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5),
                 child: CachedNetworkImage(
                   height: 0.20.sh,
-                  errorWidget: (context, url, error) => Center(
+                  errorWidget: (context, url, error) => const Center(
                     child: Icon(Icons.error),
                   ),
                   imageUrl: comic.comicCoverImageURL!,
@@ -39,12 +39,12 @@ class CardComic extends StatelessWidget {
               Text(
                 comic.comicName!,
                 maxLines: 1,
-                style: TextStyle(overflow: TextOverflow.ellipsis),
+                style: const TextStyle(overflow: TextOverflow.ellipsis),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.remove_red_eye,
                     size: 10,
                   ),
@@ -55,10 +55,10 @@ class CardComic extends StatelessWidget {
                         .bodySmall
                         ?.copyWith(color: Colors.grey.shade400),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
-                  Icon(
+                  const Icon(
                     Icons.star,
                     size: 10,
                     color: Colors.yellow,

@@ -14,18 +14,16 @@ class CommentLoading extends CommentState {}
 class CommentLoadedSuccessful extends CommentState {
   final List<Comment>? listComment;
 
-  CommentLoadedSuccessful(this.listComment);
+  const CommentLoadedSuccessful(this.listComment);
   @override
-  // TODO: implement props
   List<Object> get props => [listComment!];
 }
 
 class CommentLoadedFailure extends CommentState {
   final String error;
 
-  CommentLoadedFailure(this.error);
+  const CommentLoadedFailure(this.error);
   @override
-  // TODO: implement props
   List<Object> get props => [error];
 }
 
@@ -34,11 +32,11 @@ class SendingComment extends CommentState {}
 class SendedCommentSuccess extends CommentState {
   final Comment sendedComment;
 
-  SendedCommentSuccess(this.sendedComment);
+  const SendedCommentSuccess(this.sendedComment);
 }
 
 class SendedCommentFail extends CommentState {
   final String error;
 
-  SendedCommentFail(this.error);
+  const SendedCommentFail(this.error);
 }
