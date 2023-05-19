@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hikicomic/data/models/error_auth.dart';
 import 'package:hikicomic/data/models/response.dart';
 import 'package:hikicomic/repository/authentication_repository.dart';
-import 'package:hikicomic/utils/utils.dart';
 
 part 'sign_up_event.dart';
 part 'sign_up_state.dart';
@@ -34,7 +33,6 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
   final AuthenticationRepository _authenticationRepository;
   // AuthenticationRepository();
-  final Utils _utils = Utils();
 
   Future<void> _handleSignUpLoadingEvent(
     SignUpLoadingEvent event,

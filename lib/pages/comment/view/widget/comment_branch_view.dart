@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -39,7 +38,6 @@ class BuildComment extends StatelessWidget {
   const BuildComment({super.key, required this.comment});
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Padding(
       padding: EdgeInsets.only(
         left: comment.parentCommentId != null ? 40 : 0,
@@ -80,7 +78,7 @@ class BuildComment extends StatelessWidget {
                     decoration: BoxDecoration(
                         color: kGrey.shade700,
                         // border: Border.all(width: 1.0),
-                        borderRadius: BorderRadius.all(
+                        borderRadius: const BorderRadius.all(
                           Radius.circular(kBorderRadius),
                         )),
                     // height: 0.1.sh,

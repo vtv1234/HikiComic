@@ -8,12 +8,12 @@ class CompletedComicLoadingState extends CompletedComicState {
 }
 
 class CompletedComicLoadedState extends CompletedComicState {
-  final List<Comic> CompletedComics;
+  final List<Comic> completedComics;
 
-  CompletedComicLoadedState(this.CompletedComics);
+  CompletedComicLoadedState(this.completedComics);
 
   @override
-  List<Object?> get props => [CompletedComics];
+  List<Object?> get props => [completedComics];
 }
 
 class CompletedComicErrorState extends CompletedComicState {

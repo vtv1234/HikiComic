@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:hikicomic/data/models/response.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:hikicomic/repository/authentication_repository.dart';
 
 part 'forgot_password_event.dart';
@@ -11,7 +11,7 @@ part 'forgot_password_state.dart';
 class ForgotPasswordBloc
     extends Bloc<ForgotPasswordEvent, ForgotPasswordState> {
   ForgotPasswordBloc()
-      : super(ForgotPasswordLoading(email: '', isEmailValidated: false)) {
+      : super(const ForgotPasswordLoading(email: '', isEmailValidated: false)) {
     on<SendRequestForgotPasswordEvent>(_handleSendRequestForgotPassword);
     on<EmailChangedEvent>(_handleEmailChangedEvent);
     on<EmailValidateEvent>(_handleEmailValidateEvent);

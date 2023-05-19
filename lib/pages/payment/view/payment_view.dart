@@ -7,7 +7,7 @@ class PaymentView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Coin')),
+      appBar: AppBar(title: const Text('Coin')),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: DataTable(
@@ -35,7 +35,7 @@ class PaymentView extends StatelessWidget {
           // defaultColumnWidth: ,
           border: TableBorder.all(
               color: kWhite, style: BorderStyle.solid, width: 0.2),
-          rows: [],
+          rows: const [],
           // children: [
           //   TableRow(children: [
           //     Column(
@@ -104,16 +104,16 @@ TableRow tableRow(
     ),
     Row(
       children: [
-        Icon(Icons.monetization_on),
+        const Icon(Icons.monetization_on),
         Text(coin.toString()),
-        Spacer(),
+        const Spacer(),
         ElevatedButton(
           onPressed: () {},
-          child: Text('Buy'),
           style: Theme.of(context).elevatedButtonTheme.style!.copyWith(
-              backgroundColor: MaterialStatePropertyAll(kRed),
+              backgroundColor: const MaterialStatePropertyAll(kRed),
               shape: MaterialStatePropertyAll(RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5)))),
+          child: const Text('Buy'),
         )
       ],
     ),

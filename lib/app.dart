@@ -69,13 +69,7 @@ class _AppState extends State<App> {
         child: const AppView(),
       ),
     );
-
-    // const AppView();
-    // ),
-    // );
   }
-
-  final GlobalKey<NavigatorState> _navigatorState = GlobalKey<NavigatorState>();
 }
 
 class AppView extends StatefulWidget {
@@ -98,19 +92,10 @@ class _AppViewState extends State<AppView> {
       useInheritedMediaQuery: true,
       builder: (BuildContext context, Widget? child) {
         return MaterialApp.router(
-          // home: SplashScreen(),
-          // routes: routers,
-          // routerConfig: router,
-          // routerConfig: router,
           routeInformationProvider: _router.routeInformationProvider,
           routeInformationParser: _router.routeInformationParser,
           routerDelegate: _router.routerDelegate,
-
-          // initialRoute: '/',
-          // route: router,
-          // onGenerateRoute: RouteGenerator.generateRoute,
           theme: darkTheme(context),
-
           title: 'HikiComic',
           debugShowCheckedModeBanner: false,
         );
@@ -132,7 +117,8 @@ class _AppViewState extends State<AppView> {
         GoRoute(
           name: 'home',
           path: '/home',
-          builder: (BuildContext context, GoRouterState state) => HomeScreen(),
+          builder: (BuildContext context, GoRouterState state) =>
+              const HomeScreen(),
         ),
         GoRoute(
           name: 'details',
@@ -220,7 +206,7 @@ class _AppViewState extends State<AppView> {
           name: 'account',
           path: '/account',
           builder: (BuildContext context, GoRouterState state) {
-            return AccountView();
+            return const AccountView();
           },
         ),
       ]);

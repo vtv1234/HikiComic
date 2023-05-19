@@ -23,8 +23,8 @@ class _TabGenresComicState extends State<TabGenresComic> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          ListGenresBloc()..add(LoadAllGenresEvent(indexSelectedGenre: 0)),
+      create: (context) => ListGenresBloc()
+        ..add(const LoadAllGenresEvent(indexSelectedGenre: 0)),
       child: SingleChildScrollView(
         child: BlocConsumer<ListGenresBloc, ListGenresState>(
           listener: (context, state) {},
@@ -68,7 +68,7 @@ class _TabGenresComicState extends State<TabGenresComic> {
                             //   },
                             // ),
                           ])))),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   SizedBox(
@@ -118,7 +118,7 @@ class _TabGenresComicState extends State<TabGenresComic> {
                 ]),
               );
             }
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
             // return Column(children: [
@@ -195,12 +195,10 @@ class _BuildGenresState extends State<BuildGenres> {
     return Wrap(
       children: widget.listAllGenres
           .map((e) => BlocConsumer<GenresComicBloc, GenresComicState>(
-                listener: (context, state) {
-                  // TODO: implement listener
-                },
+                listener: (context, state) {},
                 builder: (context, state) {
                   return Padding(
-                    padding: EdgeInsets.only(right: 8),
+                    padding: const EdgeInsets.only(right: 8),
                     child: InkWell(
                       onTap: () {
                         // setState(() {});
@@ -236,9 +234,7 @@ List<Widget> buildGenres(
   List<Widget> listGenres = [];
   for (var genre in genres) {
     listGenres.add(BlocConsumer<GenresComicBloc, GenresComicState>(
-      listener: (context, state) {
-        // TODO: implement listener
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         return InkWell(
           onTap: () {
@@ -257,7 +253,7 @@ List<Widget> buildGenres(
         );
       },
     ));
-    listGenres.add(SizedBox(
+    listGenres.add(const SizedBox(
       width: 10,
     ));
   }

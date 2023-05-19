@@ -6,7 +6,6 @@ abstract class VerifyForgotPasswordState extends Equatable {
 
 class VerifyForgotPasswordInitial extends VerifyForgotPasswordState {
   @override
-  // TODO: implement props
   List<Object?> get props => [];
 }
 

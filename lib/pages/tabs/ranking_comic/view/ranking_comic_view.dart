@@ -40,7 +40,7 @@ class TabRankingComic extends StatelessWidget {
                   crossAxisCount: 3,
                   mainAxisSpacing: 6,
                   crossAxisSpacing: 6,
-                  itemBuilder: (context, index) => Container(
+                  itemBuilder: (context, index) => SizedBox(
                         height: 0.25.sh,
                         child: Stack(children: [
                           CardComic(
@@ -49,7 +49,7 @@ class TabRankingComic extends StatelessWidget {
                           Positioned(
                               top: 0,
                               child: Container(
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   color: kRed,
                                   borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(5),

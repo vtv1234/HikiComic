@@ -22,8 +22,7 @@ class FollowingComicLoaded extends FollowingComicState {
 class FollowingComicError extends FollowingComicState {
   final String error;
 
-  FollowingComicError(this.error);
+  const FollowingComicError(this.error);
   @override
-  // TODO: implement props
   List<Object> get props => [error];
 }

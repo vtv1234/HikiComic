@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -64,12 +63,12 @@ class LibrarySceen extends StatelessWidget {
                     //     colors: [Colors.redAccent, Colors.orangeAccent]),
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.redAccent),
-                tabs: [Tab(text: 'Recent'), Tab(text: 'Following')],
+                tabs: const [Tab(text: 'Recent'), Tab(text: 'Following')],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Expanded(
+              const Expanded(
                   child: TabBarView(
                 children: [
                   RecentComicView(),
@@ -85,6 +84,8 @@ class LibrarySceen extends StatelessWidget {
 }
 
 class FollowingComicView extends StatelessWidget {
+  const FollowingComicView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -147,16 +148,9 @@ class FollowingComicView extends StatelessWidget {
   }
 }
 
-class FavoriteComicView extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('favorite'),
-    );
-  }
-}
-
 class RecentComicView extends StatelessWidget {
+  const RecentComicView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(

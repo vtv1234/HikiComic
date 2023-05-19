@@ -8,7 +8,6 @@ import 'package:hikicomic/data/models/response.dart';
 import 'package:hikicomic/utils/apis.dart';
 import 'package:hikicomic/utils/const.dart';
 import 'package:hikicomic/utils/utils.dart';
-import 'package:http_parser/http_parser.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -69,14 +68,6 @@ class AccountRepository {
       ),
     );
     request.headers.addAll(headers);
-    // request.files.add(
-    //   http.MultipartFile(
-    //     'image',
-    //     imageFile.readAsBytes().asStream(),
-    //     imageFile.lengthSync(),
-    //     filename: imageFile.path.split('/').last,
-    //   ),
-    // );
     request.files.add(
       await http.MultipartFile.fromPath(
         'image',
@@ -85,10 +76,10 @@ class AccountRepository {
     );
     var response = await request.send();
     if (response.statusCode == 200) {
-      print('Image uploaded successfully');
+      // print('Image uploaded successfully');
       return true;
     } else {
-      print('Image upload failed with status ${response.statusCode}');
+      // print('Image upload failed with status ${response.statusCode}');
       return false;
     }
   }

@@ -21,7 +21,7 @@ class ComicGenreView extends StatelessWidget {
         ..add(LoadAllGenresEvent(indexSelectedGenre: int.parse(selectedGenre))),
       child: SafeArea(
         child: Scaffold(
-          appBar: AppBar(title: Text('Genres')),
+          appBar: AppBar(title: const Text('Genres')),
           body: SingleChildScrollView(
             child: BlocConsumer<ListGenresBloc, ListGenresState>(
               listener: (context, state) {},
@@ -67,7 +67,7 @@ class ComicGenreView extends StatelessWidget {
                                 //   },
                                 // ),
                               ])))),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       SizedBox(
@@ -118,7 +118,7 @@ class ComicGenreView extends StatelessWidget {
                     ]),
                   );
                 }
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
                 // return Column(children: [

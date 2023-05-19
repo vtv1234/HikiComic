@@ -8,7 +8,6 @@ import 'package:hikicomic/pages/comment/view/comment_view.dart';
 import 'package:hikicomic/pages/read_comic/bloc/read_comic_bloc.dart';
 
 import 'package:hikicomic/utils/colors.dart';
-import 'package:hikicomic/utils/utils.dart';
 import 'package:hikicomic/widget/snackbar.dart';
 
 class ReadComicView extends StatefulWidget {
@@ -36,7 +35,6 @@ class _ReadComicViewState extends State<ReadComicView>
 
   @override
   Widget build(BuildContext context) {
-    final utils = Utils();
     return Scaffold(
       body: SafeArea(
         child: BlocProvider(
@@ -75,7 +73,7 @@ class _ReadComicViewState extends State<ReadComicView>
                   builder: (context, child) => Stack(children: [
                     Scrollbar(
                       thickness: 5,
-                      radius: Radius.circular(25),
+                      radius: const Radius.circular(25),
                       interactive: true,
                       trackVisibility: true,
                       thumbVisibility: true,
@@ -93,7 +91,7 @@ class _ReadComicViewState extends State<ReadComicView>
                                   onPressed: () {
                                     context.pop();
                                   },
-                                  icon: Icon(Icons.home_outlined))
+                                  icon: const Icon(Icons.home_outlined))
                             ],
                             title: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -137,13 +135,15 @@ class _ReadComicViewState extends State<ReadComicView>
                                         fit: BoxFit.cover,
                                         imageUrl: chapterImage
                                             .chapterImageURLs![index],
-                                        placeholder: (context, url) => SizedBox(
-                                            height: 100,
-                                            child: Center(
-                                                child:
-                                                    CircularProgressIndicator())),
+                                        placeholder: (context, url) =>
+                                            const SizedBox(
+                                                height: 100,
+                                                child: Center(
+                                                    child:
+                                                        CircularProgressIndicator())),
                                         errorWidget: (context, url, error) =>
-                                            Center(child: Icon(Icons.error)),
+                                            const Center(
+                                                child: Icon(Icons.error)),
                                       ),
                                   childCount:
                                       chapterImage.chapterImageURLs!.length))
@@ -224,7 +224,7 @@ class _ReadComicViewState extends State<ReadComicView>
                           },
 
                           //backgroundColor: Colors.amber,
-                          items: [
+                          items: const [
                             BottomNavigationBarItem(
                                 icon: Icon(Icons.arrow_back_outlined),
                                 label: 'Prev'),

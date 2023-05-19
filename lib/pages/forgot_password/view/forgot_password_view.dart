@@ -46,7 +46,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                     (timeStamp) async => await successSnakBar(
                             success: state.message, duration: 10)
                         .show(context));
-                await context.pushNamed('verify-forgot-password', params: {
+                context.pushNamed('verify-forgot-password', params: {
                   'email': state.email,
                 });
               }
@@ -62,13 +62,13 @@ class ForgotPasswordScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(children: [
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       Text(
                         "Please check your email for the OTP we have sent and enter it in the field provided to reset password",
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.headlineSmall,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Form(
@@ -124,24 +124,24 @@ class ForgotPasswordScreen extends StatelessWidget {
                                     // ),
                                     border: OutlineInputBorder(
                                       gapPadding: 1,
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                           width: 0.5, color: Colors.white),
                                       borderRadius: BorderRadius.circular(15.0),
                                     ),
                                     errorBorder: OutlineInputBorder(
                                       gapPadding: 1,
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                           width: 0.5, color: Colors.red),
                                       borderRadius: BorderRadius.circular(15.0),
                                     ),
-                                    contentPadding: EdgeInsets.all(8),
-                                    hintStyle: TextStyle(fontSize: 12),
+                                    contentPadding: const EdgeInsets.all(8),
+                                    hintStyle: const TextStyle(fontSize: 12),
                                     hintText: "Enter your Email",
-                                    labelStyle: TextStyle(color: kWhite),
+                                    labelStyle: const TextStyle(color: kWhite),
                                     labelText: "Email",
                                     enabledBorder: OutlineInputBorder(
                                       gapPadding: 1,
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                           width: 0.5, color: Colors.grey),
                                       borderRadius: BorderRadius.circular(15.0),
                                     ),
@@ -151,7 +151,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(15),
                                     )),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 20,
                               ),
                               SizedBox(
@@ -159,7 +159,8 @@ class ForgotPasswordScreen extends StatelessWidget {
                                 // height: double.infinity,
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                      minimumSize: Size(double.infinity, 50),
+                                      minimumSize:
+                                          const Size(double.infinity, 50),
 
                                       // padding: MaterialStateProperty.all(
                                       //     EdgeInsets.symmetric(horizontal: 10)),

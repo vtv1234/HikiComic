@@ -17,7 +17,7 @@ class LoadingComicOfGenre extends GenresComicState {
 class LoadComicOfGenreSuccess extends GenresComicState {
   final List<Comic> comicOfGenre;
 
-  LoadComicOfGenreSuccess({required this.comicOfGenre});
+  const LoadComicOfGenreSuccess({required this.comicOfGenre});
 
   @override
   List<Object?> get props => [comicOfGenre];
@@ -29,6 +29,5 @@ class LoadComicOfGenreFailure extends GenresComicState {
   const LoadComicOfGenreFailure({required this.error});
 
   @override
-  // TODO: implement props
   List<Object?> get props => [];
 }

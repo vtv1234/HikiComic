@@ -8,19 +8,8 @@ class SendOtpVerifyForgotPasswordEvent extends VerifyForgotPasswordEvent {
   final String email;
   final String otp;
 
-  SendOtpVerifyForgotPasswordEvent(this.email, this.otp);
+  const SendOtpVerifyForgotPasswordEvent(this.email, this.otp);
 
   @override
-  // TODO: implement props
   List<Object?> get props => [email, otp];
 }
-// class LoadingVerifyForgotPasswordEvent extends VerifyForgotPasswordEvent{
-//   final String email;
-//   final String otp;
-
-//   LoadingVerifyForgotPasswordEvent(this.email, this.otp);
-  
-//   @override
-//   // TODO: implement props
-//   List<Object?> get props => [email,otp];
-// }

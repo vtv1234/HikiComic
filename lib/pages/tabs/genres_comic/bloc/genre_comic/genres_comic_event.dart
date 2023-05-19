@@ -7,7 +7,7 @@ abstract class GenresComicEvent extends Equatable {
 class LoadComicOfGenresEvent extends GenresComicEvent {
   final Genre genre;
 
-  LoadComicOfGenresEvent({required this.genre});
+  const LoadComicOfGenresEvent({required this.genre});
   @override
   List<Object?> get props => [];
 }

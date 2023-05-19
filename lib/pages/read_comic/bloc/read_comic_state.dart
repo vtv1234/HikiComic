@@ -12,7 +12,7 @@ class LoadingChapterImageState extends ReadComicState {
 class LoadedChapterImageState extends ReadComicState {
   final ChapterImage chapterImage;
 
-  LoadedChapterImageState(this.chapterImage);
+  const LoadedChapterImageState(this.chapterImage);
 
   @override
   List<Object?> get props => [chapterImage];
@@ -21,7 +21,7 @@ class LoadedChapterImageState extends ReadComicState {
 class ErrorChapterImageState extends ReadComicState {
   final String error;
 
-  ErrorChapterImageState(this.error);
+  const ErrorChapterImageState(this.error);
 
   @override
   List<Object?> get props => [error];

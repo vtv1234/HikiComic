@@ -17,7 +17,7 @@ class AccountLoading extends AccountState {
 class AccountLoadedSuccessful extends AccountState {
   final Account accountInformation;
 
-  AccountLoadedSuccessful(this.accountInformation);
+  const AccountLoadedSuccessful(this.accountInformation);
   @override
   List<Object> get props => [accountInformation];
 }
@@ -25,20 +25,17 @@ class AccountLoadedSuccessful extends AccountState {
 class AccountLoadedFailure extends AccountState {
   final String error;
 
-  AccountLoadedFailure(this.error);
+  const AccountLoadedFailure(this.error);
   @override
-  // TODO: implement props
   List<Object> get props => [error];
 }
 
 class UploadAvatarLoading extends AccountState {
   @override
-  // TODO: implement props
   List<Object?> get props => [];
 }
 
 class UploadAvatarByCameraSuccessful extends AccountState {
-  // final Account accountInformation;
 
   const UploadAvatarByCameraSuccessful();
   @override
@@ -48,15 +45,14 @@ class UploadAvatarByCameraSuccessful extends AccountState {
 class UploadAvatarByCameraFailure extends AccountState {
   final String error;
 
-  UploadAvatarByCameraFailure(this.error);
+  const UploadAvatarByCameraFailure(this.error);
   @override
   List<Object> get props => [error];
 }
 
 class UploadAvatarByGallerySuccessful extends AccountState {
-  // final Account accountInformation;
 
-  UploadAvatarByGallerySuccessful();
+  const UploadAvatarByGallerySuccessful();
   @override
   List<Object> get props => [];
 }
@@ -64,7 +60,7 @@ class UploadAvatarByGallerySuccessful extends AccountState {
 class UploadAvatarByGalleryFailure extends AccountState {
   final String error;
 
-  UploadAvatarByGalleryFailure(this.error);
+  const UploadAvatarByGalleryFailure(this.error);
   @override
   List<Object> get props => [error];
 }

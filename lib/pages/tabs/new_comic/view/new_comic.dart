@@ -27,33 +27,29 @@ class TabNewComic extends StatelessWidget {
           builder: (context, state) {
             if (state is NewComicLoadingState) {
               return SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
+                physics: const AlwaysScrollableScrollPhysics(),
                 child: RefreshIndicator(
                   onRefresh: () async {
                     context.read<NewComicBloc>().add(LoadNewComicEvent(
                         pageIndex: pageIndex, pageSize: pageSize));
                   },
-                  child: Container(
+                  child: SizedBox(
                       height: 0.8.sh,
-                      child: Center(child: CircularProgressIndicator())),
+                      child: const Center(child: CircularProgressIndicator())),
                 ),
               );
             }
             if (state is NewComicErrorState) {
               return SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
+                  physics: const AlwaysScrollableScrollPhysics(),
                   child: RefreshIndicator(
                     onRefresh: () async {
                       context.read<NewComicBloc>().add(LoadNewComicEvent(
                           pageIndex: pageIndex, pageSize: pageSize));
                     },
-                    child:
-                        // Container(alignment: Alignment.center,child: AutoSizeText.rich(
-                        //   TextSpan(text: )
-                        // ),)
-                        Container(
-                            height: 0.8.sh,
-                            child: Center(child: Text(state.error))),
+                    child: SizedBox(
+                        height: 0.8.sh,
+                        child: Center(child: Text(state.error))),
                   ));
             }
             if (state is NewComicLoadedState) {
@@ -82,101 +78,11 @@ class TabNewComic extends StatelessWidget {
   }
 }
 
-// return BlocProvider<NewComicBloc> (
-
-//   create: (context) =>
-//       NewComicBloc(ComicRepository())..add(LoadNewComicEvent(1)),
-//   child: BlocBuilder<HomeBloc, HomeState>(
-//     builder: (context, state) {
-//       if (state is HomeLoadingNewComicState) {
-//         return const Center(
-//           child: CircularProgressIndicator(),
-//         );
-//       }
-//       if (state is HomeErrorNewComicState) {
-//         return const Center(child: Text("Error"));
-//       }
-//       if (state is HomeLoadedNewComicState) {
-//         List<Comic> newComics = state.newComics;
-//         return AlignedGridView.count(
-//             itemCount: newComics.length,
-//             crossAxisCount: 3,
-//             mainAxisSpacing: 4,
-//             crossAxisSpacing: 6,
-//             itemBuilder: (context, index) =>
-//                 buildCardComic(context, newComics, index));
-//       }
-//       return Container();
-//     },
-//   ),
-// );
-
 class TabNewFeedComic extends StatelessWidget {
+  const TabNewFeedComic({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text('newfeed'));
-    // return BlocProvider<NewComicBloc> (
-
-    //   create: (context) =>
-    //       NewComicBloc(ComicRepository())..add(LoadNewComicEvent(1)),
-    //   child: BlocBuilder<HomeBloc, HomeState>(
-    //     builder: (context, state) {
-    //       if (state is HomeLoadingNewComicState) {
-    //         return const Center(
-    //           child: CircularProgressIndicator(),
-    //         );
-    //       }
-    //       if (state is HomeErrorNewComicState) {
-    //         return const Center(child: Text("Error"));
-    //       }
-    //       if (state is HomeLoadedNewComicState) {
-    //         List<Comic> newComics = state.newComics;
-    //         return AlignedGridView.count(
-    //             itemCount: newComics.length,
-    //             crossAxisCount: 3,
-    //             mainAxisSpacing: 4,
-    //             crossAxisSpacing: 6,
-    //             itemBuilder: (context, index) =>
-    //                 buildCardComic(context, newComics, index));
-    //       }
-    //       return Container();
-    //     },
-    //   ),
-    // );
-  }
-}
-
-class TabCompletedComic extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Text("""There's no completed comic"""));
-    // return BlocProvider<NewComicBloc> (
-
-    //   create: (context) =>
-    //       NewComicBloc(ComicRepository())..add(LoadNewComicEvent(1)),
-    //   child: BlocBuilder<HomeBloc, HomeState>(
-    //     builder: (context, state) {
-    //       if (state is HomeLoadingNewComicState) {
-    //         return const Center(
-    //           child: CircularProgressIndicator(),
-    //         );
-    //       }
-    //       if (state is HomeErrorNewComicState) {
-    //         return const Center(child: Text("Error"));
-    //       }
-    //       if (state is HomeLoadedNewComicState) {
-    //         List<Comic> newComics = state.newComics;
-    //         return AlignedGridView.count(
-    //             itemCount: newComics.length,
-    //             crossAxisCount: 3,
-    //             mainAxisSpacing: 4,
-    //             crossAxisSpacing: 6,
-    //             itemBuilder: (context, index) =>
-    //                 buildCardComic(context, newComics, index));
-    //       }
-    //       return Container();
-    //     },
-    //   ),
-    // );
+    return const Center(child: Text('newfeed'));
   }
 }

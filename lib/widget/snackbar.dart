@@ -12,8 +12,8 @@ Flushbar infoSnakBar({required String info, required int duration}) {
       duration: Duration(seconds: duration),
       flushbarStyle: FlushbarStyle.FLOATING,
       backgroundColor: Colors.blueAccent,
-      icon: Icon(Icons.info_outline),
-      margin: EdgeInsets.all(8),
+      icon: const Icon(Icons.info_outline),
+      margin: const EdgeInsets.all(8),
       borderRadius: BorderRadius.circular(8));
 }
 
@@ -27,8 +27,8 @@ Flushbar warningSnakBar({required String warning, required int duration}) {
       duration: Duration(seconds: duration),
       flushbarStyle: FlushbarStyle.FLOATING,
       backgroundColor: Colors.amber,
-      icon: Icon(Icons.warning_outlined),
-      margin: EdgeInsets.all(8),
+      icon: const Icon(Icons.warning_outlined),
+      margin: const EdgeInsets.all(8),
       borderRadius: BorderRadius.circular(8));
 }
 
@@ -42,8 +42,8 @@ Flushbar errorSnakBar({required String error, required int duration}) {
       duration: Duration(seconds: duration),
       flushbarStyle: FlushbarStyle.FLOATING,
       backgroundColor: kRed,
-      icon: Icon(Icons.error_outline),
-      margin: EdgeInsets.all(8),
+      icon: const Icon(Icons.error_outline),
+      margin: const EdgeInsets.all(8),
       borderRadius: BorderRadius.circular(8));
 }
 
@@ -57,7 +57,7 @@ Flushbar successSnakBar({required String success, required int duration}) {
       duration: Duration(seconds: duration),
       flushbarStyle: FlushbarStyle.FLOATING,
       backgroundColor: Colors.green,
-      icon: Icon(Icons.check_circle_outline),
-      margin: EdgeInsets.all(8),
+      icon: const Icon(Icons.check_circle_outline),
+      margin: const EdgeInsets.all(8),
       borderRadius: BorderRadius.circular(8));
 }

@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hikicomic/data/models/user.dart';
-import 'package:hikicomic/pages/authentication/authentication.dart';
+
 import 'package:hikicomic/repository/authentication_repository.dart';
 import 'package:hikicomic/repository/user_repository.dart';
 import 'package:hikicomic/utils/utils.dart';

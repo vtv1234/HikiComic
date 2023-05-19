@@ -1,4 +1,4 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hikicomic/data/models/comic.dart';
 import 'package:hikicomic/repository/comic_repository.dart';

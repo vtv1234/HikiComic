@@ -7,7 +7,7 @@ abstract class ListGenresEvent extends Equatable {
 class LoadAllGenresEvent extends ListGenresEvent {
   final int indexSelectedGenre;
 
-  LoadAllGenresEvent({required this.indexSelectedGenre});
+  const LoadAllGenresEvent({required this.indexSelectedGenre});
   @override
   List<Object?> get props => [indexSelectedGenre];
 }
