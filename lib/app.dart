@@ -7,6 +7,7 @@ import 'package:hikicomic/pages/account/view/account_view.dart';
 import 'package:hikicomic/pages/home/view/home_view.dart';
 import 'package:hikicomic/pages/library/view/library_view.dart';
 import 'package:hikicomic/pages/read_comic/view/read_comic_view.dart';
+import 'package:hikicomic/pages/sign_in_with_google/view/sign_in_with_google_view.dart';
 import 'package:hikicomic/pages/sign_up/sign_up_view.dart';
 import 'package:hikicomic/pages/splash/view/splash.dart';
 import 'package:hikicomic/utils/theme.dart';
@@ -106,7 +107,7 @@ class _AppViewState extends State<AppView> {
 
   final GlobalKey<NavigatorState> _navigatorState = GlobalKey<NavigatorState>();
   late final GoRouter _router = GoRouter(
-      initialLocation: '/splash',
+      initialLocation: '/login-page',
       navigatorKey: _navigatorState,
       routes: [
         GoRoute(
@@ -114,6 +115,11 @@ class _AppViewState extends State<AppView> {
           path: '/splash',
           builder: (BuildContext context, GoRouterState state) =>
               const SplashScreen(),
+        ),
+        GoRoute(
+          name: 'login-page',
+          path: '/login-page',
+          builder: (BuildContext context, GoRouterState state) => LoginPage(),
         ),
         GoRoute(
           name: 'home',
