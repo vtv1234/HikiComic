@@ -141,6 +141,7 @@ class _OTPScreen extends State<VerifyForgotPasswordScreen> {
                       child: Text(
                         "Please check your email for the OTP we have sent and enter it in the field provided",
                         textAlign: TextAlign.center,
+                        maxLines: 3,
                         style: Theme.of(context).textTheme.headlineSmall,
                       ),
                       // RichText(

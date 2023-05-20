@@ -472,7 +472,15 @@ class SearchView extends SearchDelegate<List?> {
                           //     ),
                           itemCount: state.comics.length,
                           itemBuilder: (context, index) => InkResponse(
-                                onTap: () => {},
+                                onTap: () => {
+                                  context.pushNamed(
+                                    "details",
+                                    params: {
+                                      "comicSEOAlias":
+                                          state.comics[index].comicSEOAlias!
+                                    },
+                                  )
+                                },
                                 child: Card(
                                   margin: const EdgeInsets.only(
                                       bottom: kDefaultPadding),

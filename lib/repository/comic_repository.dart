@@ -85,7 +85,8 @@ class ComicRepository {
     final response = await http.get(Uri.parse(
         '${Apis.getComicByStatus}?StatusId=$statusId&PageIndex=$pageIndex&PageSize=$pageSize'));
     if (response.statusCode == 200) {
-      final List result = jsonDecode(response.body);
+      final List result = jsonDecode(response.body)['items'];
+
       return result.map((e) => Comic.fromMap(e)).toList();
     } else {
       throw Exception(response.reasonPhrase);

@@ -26,3 +26,26 @@ class ErrorChapterImageState extends ReadComicState {
   @override
   List<Object?> get props => [error];
 }
+
+class LoadingListChapterState extends ReadComicState {
+  @override
+  List<Object?> get props => [];
+}
+
+class LoadedListChapterState extends ReadComicState {
+  final List<Chapter> listChapter;
+
+  const LoadedListChapterState(this.listChapter);
+
+  @override
+  List<Object?> get props => [listChapter];
+}
+
+class ErrorListChapterState extends ReadComicState {
+  final String error;
+
+  const ErrorListChapterState(this.error);
+
+  @override
+  List<Object?> get props => [error];
+}

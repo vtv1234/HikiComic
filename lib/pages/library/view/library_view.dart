@@ -158,28 +158,6 @@ class RecentComicView extends StatelessWidget {
       child: BlocProvider(
         create: (context) => RecentComicBloc()..add(LoadRecentComicEvent()),
         child: BlocBuilder<RecentComicBloc, RecentComicState>(
-          // listener: (context, state) {
-          //   if (state is RecentComicLoaded) {
-          //     Center(
-          //       child: Text('Loaded'),
-          //     );
-          //     // Center(
-          //     //     child: AlignedGridView.count(
-          //     //         itemCount: state.recentComic.length,
-          //     //         crossAxisCount: 3,
-          //     //         mainAxisSpacing: 6,
-          //     //         crossAxisSpacing: 6,
-          //     //         itemBuilder: (context, index) => CardHistoryComic(
-          //     //               comic: state.recentComic[index],
-          //     //             )));
-          //   }
-
-          //   if (state is RecentComicError) {
-          //     Center(
-          //       child: Text(state.error),
-          //     );
-          //   }
-          // },
           builder: (context, state) {
             if (state is RecentComicLoaded) {
               // Center(

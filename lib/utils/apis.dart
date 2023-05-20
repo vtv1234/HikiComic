@@ -18,14 +18,12 @@ class Apis {
   static const getFollowedComicsApi =
       '$_baseUrl/user-comic-followings/get-user-followed-comic';
 
-  
   static const loginApi = '$_baseUrl/users/login';
   //user
 
   static const getUserByUserId = '$_userUrl/get-user-by-user-id';
 
   //genres
-  
 
   static const _genresApi = '$_baseUrl/genres';
   static const getAllGenresApi = '$_genresApi/get-all';
@@ -63,12 +61,11 @@ class Apis {
 //account
   static const _accountApi = '$_baseUrl/accounts';
   static const resetPassword = '$_accountApi/reset-password';
-  static const getAccountInformaton = '$_accountApi/my-account-information';
+  static const getAccountInformaton = '$_userUrl/get-user-by-user-id';
   static const uploadAvatar = '$_accountApi/user-change-avatar';
 
   //history
   static const comicReadingHistories = '$_baseUrl/user-comic-reading-histories';
-
 
   //comment
   static const _commentApi = '$_baseUrl/comments';

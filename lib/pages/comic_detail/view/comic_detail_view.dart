@@ -190,18 +190,6 @@ class _ComicDetailViewState extends State<ComicDetailView> {
                                 ),
                                 Row(
                                   children: [
-                                    // const Icon(
-                                    //   Icons.thumb_up_outlined,
-                                    //   size: kSmallIconSize,
-                                    //   color: kIconLight,
-                                    // ),
-                                    // const SizedBox(
-                                    //   width: 5,
-                                    // ),
-                                    // Text('5,000'),
-                                    // const SizedBox(
-                                    //   width: 10,
-                                    // ),
                                     const Icon(
                                       Icons.remove_red_eye_outlined,
                                       size: kSmallIconSize,
@@ -262,23 +250,6 @@ class _ComicDetailViewState extends State<ComicDetailView> {
                                                 comicSEOAlias:
                                                     widget.comicSEOAlias,
                                                 rating: rating));
-                                        // } else {
-                                        //   context.read<ComicDetailBloc>().add(
-                                        //       LoadComicDetailEvent(
-                                        //           comicSEOAlias));
-                                        //   infoSnakBar(
-                                        //           info:
-                                        //               "You must sign in to rating this comic",
-                                        //           duration: 10)
-                                        //       .show(context);
-                                        //   showDialog(
-                                        //     context: context,
-                                        //     builder: (context) =>
-                                        //         const SignInDialog(),
-                                        //   );
-                                        //   return;
-                                        // }
-                                        // return;
                                       },
                                     ),
                                     const SizedBox(
@@ -335,9 +306,6 @@ class _ComicDetailViewState extends State<ComicDetailView> {
                                             fontWeight: FontWeight.bold),
                                       ),
                                     ),
-                                    // const SizedBox(
-                                    //   width: 15,
-                                    // ),
                                     Expanded(
                                       flex: 7,
                                       child: Wrap(
@@ -355,7 +323,6 @@ class _ComicDetailViewState extends State<ComicDetailView> {
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
 
-                                //buildSummary(comicDetail.summary!),
                                 BuildSummary(
                                   summary: comicDetail.summary!,
                                 ),
@@ -379,9 +346,19 @@ class _ComicDetailViewState extends State<ComicDetailView> {
                                                       side: const BorderSide(
                                                           color:
                                                               kButtonBackground)))),
-                                          onPressed: () {},
-                                          icon: const Text(
-                                            'Chapter 1',
+                                          onPressed: () {
+                                            context.pushNamed(
+                                              "read-comic",
+                                              params: {
+                                                "comicSEOAlias":
+                                                    comicDetail.comicSEOAlias!,
+                                                'chapterSEOAlias':
+                                                    chapters[0].chapterSEOAlias!
+                                              },
+                                            );
+                                          },
+                                          icon: Text(
+                                            state.chapters[0].chapterName!,
                                             style:
                                                 TextStyle(color: Colors.white),
                                           ),
@@ -597,11 +574,14 @@ class _ComicDetailViewState extends State<ComicDetailView> {
                           ),
                         ),
                         SliverToBoxAdapter(
-                            child: Text('Chapters',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium
-                                    ?.copyWith(fontWeight: FontWeight.bold))),
+                            child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text('Chapters',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(fontWeight: FontWeight.bold)),
+                        )),
                         SliverList(
                           delegate: SliverChildBuilderDelegate(
                             (BuildContext context, int index) {
@@ -726,7 +706,7 @@ class _ComicDetailViewState extends State<ComicDetailView> {
                                         .show(context);
                                   }
                                   if (state is SendedCommentSuccess) {
-                                    commentController.text == "";
+                                    commentController.text = "";
                                     context.read<CommentBloc>().add(
                                         GetListCommentOfChapter(
                                             comicDetail.comicId!, null));
@@ -744,7 +724,8 @@ class _ComicDetailViewState extends State<ComicDetailView> {
 
                                   if (state is CommentLoadedSuccessful) {
                                     return Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                      padding:
+                                          const EdgeInsets.fromLTRB(8, 8, 8, 0),
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -777,11 +758,11 @@ class _ComicDetailViewState extends State<ComicDetailView> {
                                           Container(
                                             decoration: const BoxDecoration(
                                               color: kWhite,
-                                              borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(
-                                                      kBorderRadius),
-                                                  topRight: Radius.circular(
-                                                      kBorderRadius)),
+                                              // borderRadius: BorderRadius.only(
+                                              //     topLeft: Radius.circular(
+                                              //         kBorderRadius),
+                                              //     topRight: Radius.circular(
+                                              //         kBorderRadius)),
                                             ),
                                             child: Row(
                                               children: [

@@ -17,6 +17,13 @@ class LoadChapterImageEvent extends ReadComicEvent {
   List<Object?> get props => [comicSeoAlias, chapterSeoAlias];
 }
 
+class LoadListChapterEvent extends ReadComicEvent {
+  final String comicSeoAlias;
+
+  LoadListChapterEvent(this.comicSeoAlias);
+  @override
+  List<Object?> get props => [];
+}
 // class LoadNextChapter extends ReadComicEvent{}
 // class ErrorLoadChapterImageEvent extends ReadComicEvent {
 //   final String error;

@@ -88,13 +88,13 @@ class _BuildSideBarState extends State<BuildSideBar> {
                         width: 100,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(120),
-                          child: state.user.userImageURL != null
+                          child: state.user.userImageURL != "default.png"
                               ? CachedNetworkImage(
                                   errorWidget: (context, url, error) =>
                                       const Icon(Icons.error),
                                   fit: BoxFit.fill,
                                   imageUrl: state.user.userImageURL!)
-                              : Container(),
+                              : Image.asset(ImagePath.userAvatarImagePath),
                         ),
                       ),
                       Text(state.user.email!)

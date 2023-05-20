@@ -53,9 +53,9 @@ class _CommentViewState extends State<CommentView> {
                   bottomSheet: Container(
                     decoration: const BoxDecoration(
                       color: kWhite,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(kBorderRadius),
-                          topRight: Radius.circular(kBorderRadius)),
+                      // borderRadius: BorderRadius.only(
+                      //     topLeft: Radius.circular(kBorderRadius),
+                      //     topRight: Radius.circular(kBorderRadius)),
                     ),
                     child: Row(
                       children: [

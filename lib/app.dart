@@ -7,6 +7,7 @@ import 'package:hikicomic/pages/account/view/account_view.dart';
 import 'package:hikicomic/pages/home/view/home_view.dart';
 import 'package:hikicomic/pages/library/view/library_view.dart';
 import 'package:hikicomic/pages/read_comic/view/read_comic_view.dart';
+import 'package:hikicomic/pages/sign_up/sign_up_view.dart';
 import 'package:hikicomic/pages/splash/view/splash.dart';
 import 'package:hikicomic/utils/theme.dart';
 
@@ -18,7 +19,7 @@ import 'pages/otp/otp.dart';
 import 'pages/payment/view/payment_view.dart';
 import 'pages/reset_password/view/reset_password_view.dart';
 import 'pages/search/bloc/search_bloc.dart';
-import 'pages/sign _up/sign_up_view.dart';
+
 import 'pages/verify_forgot_password/view/verfify_forgot_password_view.dart';
 import 'repository/authentication_repository.dart';
 import 'repository/user_repository.dart';

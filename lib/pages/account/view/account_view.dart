@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:hikicomic/pages/account/bloc/account_bloc.dart';
+import 'package:hikicomic/repository/authentication_repository.dart';
 import 'package:hikicomic/utils/colors.dart';
 import 'package:hikicomic/utils/img_path.dart';
 import 'package:intl/intl.dart';
@@ -32,8 +33,7 @@ class AccountView extends StatelessWidget {
               context.loaderOverlay.show();
             } else if (state is UploadAvatarLoading) {
               context.loaderOverlay.show();
-            }
-            if (state is UploadAvatarByCameraSuccessful) {
+            } else if (state is UploadAvatarByCameraSuccessful) {
               context.loaderOverlay.hide();
               context.read<AccountBloc>().add(GetAccountInformation());
             } else if (state is UploadAvatarByCameraFailure) {
@@ -63,7 +63,8 @@ class AccountView extends StatelessWidget {
                           width: 120,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(120),
-                            child: state.accountInformation.userImageURL != null
+                            child: state.accountInformation.userImageURL !=
+                                    "default.png"
                                 ? CachedNetworkImage(
                                     errorWidget: (context, url, error) =>
                                         const Icon(Icons.error),
@@ -151,7 +152,8 @@ class AccountView extends StatelessWidget {
                           const Expanded(flex: 1, child: Text('First Name')),
                           Expanded(
                             flex: 2,
-                            child: Text(state.accountInformation.firstName!),
+                            child:
+                                Text(state.accountInformation.firstName ?? ""),
                           )
                         ],
                       ),
@@ -160,7 +162,8 @@ class AccountView extends StatelessWidget {
                           const Expanded(flex: 1, child: Text('Last Name')),
                           Expanded(
                             flex: 2,
-                            child: Text(state.accountInformation.lastName!),
+                            child:
+                                Text(state.accountInformation.lastName ?? ""),
                           )
                         ],
                       ),
@@ -179,7 +182,8 @@ class AccountView extends StatelessWidget {
                           const Expanded(flex: 1, child: Text('Gender')),
                           Expanded(
                             flex: 2,
-                            child: Text(state.accountInformation.genderName!),
+                            child:
+                                Text(state.accountInformation.genderName ?? ""),
                           )
                         ],
                       ),

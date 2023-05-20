@@ -195,20 +195,19 @@ class _ReadComicViewState extends State<ReadComicView>
                                       chapterName:
                                           state.chapterImage.chapterName!),
                                 );
-                                // if (chapterImage.previousChapterSEOAlias ==
-                                //     null) {
-                                //   infoSnakBar(
-                                //           info:
-                                //               "No previous chapter available ",
-                                //           duration: 10)
-                                //       .show(context);
-                                // } else {
-                                //   context.read<ReadComicBloc>().add(
-                                //       LoadChapterImageEvent(
-                                //           widget.comicSEOAlias,
-                                //           state.chapterImage
-                                //               .previousChapterSEOAlias!));
-                                // }
+
+                                break;
+                              case 3:
+                                showModalBottomSheet(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(kBorderRadius),
+                                  ),
+                                  context: context,
+                                  builder: (context) => ListChapterView(
+                                      comicSeoAlias:
+                                          state.chapterImage.comicSEOAlias!),
+                                );
                                 break;
 
                               case 4:
@@ -292,6 +291,58 @@ class _ReadComicViewState extends State<ReadComicView>
   //     ),
   //   );
   // }
+}
+
+class ListChapterView extends StatelessWidget {
+  final String comicSeoAlias;
+
+  const ListChapterView({super.key, required this.comicSeoAlias});
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+        create: (context) =>
+            ReadComicBloc()..add(LoadListChapterEvent(comicSeoAlias)),
+        child: BlocBuilder<ReadComicBloc, ReadComicState>(
+          builder: (context, state) {
+            if (state is LoadingListChapterState) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (state is ErrorListChapterState) {
+              return Center(
+                child: Text(state.error),
+              );
+            } else if (state is LoadedListChapterState) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text('Chapters',
+                      style: Theme.of(context).textTheme.headlineSmall),
+                  Expanded(
+                      child: ListView.builder(
+                    itemCount: state.listChapter.length,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          context.read<ReadComicBloc>().add(
+                              LoadChapterImageEvent(
+                                  state.listChapter[index].comicSEOAlias!,
+                                  state.listChapter[index].chapterSEOAlias!));
+                        },
+                        child: ListTile(
+                          title: Text(state.listChapter[index].chapterName!),
+                        ),
+                      );
+                      // return Text(state.listChapter[index].chapterName!);
+                    },
+                  ))
+                ],
+              );
+            }
+            return Container();
+          },
+        ));
+  }
 }
 
 class ScrollListener extends ChangeNotifier {

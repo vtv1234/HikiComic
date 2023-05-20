@@ -19,7 +19,7 @@ class CardComic extends StatelessWidget {
       },
       //
       child: SizedBox(
-        height: 0.26.sh,
+        height: 0.24.sh,
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,

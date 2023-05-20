@@ -41,7 +41,7 @@ class TabRankingComic extends StatelessWidget {
                   mainAxisSpacing: 6,
                   crossAxisSpacing: 6,
                   itemBuilder: (context, index) => SizedBox(
-                        height: 0.25.sh,
+                        height: 0.24.sh,
                         child: Stack(children: [
                           CardComic(
                             comic: rankingComics[index],
