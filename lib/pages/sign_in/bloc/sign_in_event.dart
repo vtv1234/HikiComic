@@ -75,3 +75,15 @@ class SignInEmailValidatedEvent extends SignInEvent {
   @override
   List<Object?> get props => [isValidated];
 }
+
+class SignInWithFacebookEvent extends SignInEvent {
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
+}
+
+class SignInWithGoogleEvent extends SignInEvent {
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
+}

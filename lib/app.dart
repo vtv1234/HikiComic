@@ -1,4 +1,7 @@
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -10,6 +13,7 @@ import 'package:hikicomic/pages/read_comic/view/read_comic_view.dart';
 import 'package:hikicomic/pages/sign_in_with_google/view/sign_in_with_google_view.dart';
 import 'package:hikicomic/pages/sign_up/sign_up_view.dart';
 import 'package:hikicomic/pages/splash/view/splash.dart';
+import 'package:hikicomic/utils/device_info.dart';
 import 'package:hikicomic/utils/theme.dart';
 
 import 'pages/authentication/authentication.dart';
@@ -84,12 +88,90 @@ class AppView extends StatefulWidget {
 }
 
 class _AppViewState extends State<AppView> {
+  static final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
+  late Map<String, dynamic> _deviceData = <String, dynamic>{};
+  final DeviceInfo _deviceInfo = DeviceInfo();
+  static const platform = MethodChannel('com.example.hikicomic/androidId');
+  String androidId = '';
   // final _navigatorKey = GlobalKey<NavigatorState>();
 
   // NavigatorState get _navigator => _navigatorKey.currentState!;
   @override
+  void initState() {
+    super.initState();
+    initPlatformState();
+    getDeviceId();
+  }
+
+  Future<void> getDeviceId() async {
+    try {
+      final String result = await platform.invokeMethod('getAndroidId');
+      androidId = result;
+    } on PlatformException catch (e) {
+      androidId = "";
+    }
+  }
+
+  Future<void> initPlatformState() async {
+    var deviceData = <String, dynamic>{};
+
+    try {
+      if (kIsWeb) {
+        deviceData = _deviceInfo
+            .readWebBrowserInfo(await deviceInfoPlugin.webBrowserInfo);
+      } else {
+        switch (defaultTargetPlatform) {
+          // TargetPlatform.android =>
+          //   _readAndroidBuildData(await deviceInfoPlugin.androidInfo),
+          // TargetPlatform.iOS =>
+          //   _readIosDeviceInfo(await deviceInfoPlugin.iosInfo),
+          // TargetPlatform.linux =>
+          //   _readLinuxDeviceInfo(await deviceInfoPlugin.linuxInfo),
+          // TargetPlatform.windows =>
+          //   _readWindowsDeviceInfo(await deviceInfoPlugin.windowsInfo),
+          // TargetPlatform.macOS =>
+          //   _readMacOsDeviceInfo(await deviceInfoPlugin.macOsInfo),
+          // TargetPlatform.fuchsia => <String, dynamic>{
+          //     'Error:': 'Fuchsia platform isn\'t supported'
+          //   },
+          case TargetPlatform.android:
+            deviceData = _deviceInfo
+                .readAndroidBuildData(await deviceInfoPlugin.androidInfo);
+            break;
+          case TargetPlatform.fuchsia:
+            // TODO: Handle this case.
+            break;
+          case TargetPlatform.iOS:
+            // TODO: Handle this case.
+            break;
+          case TargetPlatform.linux:
+            // TODO: Handle this case.
+            break;
+          case TargetPlatform.macOS:
+            // TODO: Handle this case.
+            break;
+          case TargetPlatform.windows:
+            // TODO: Handle this case.
+            break;
+        }
+      }
+    } on PlatformException {
+      deviceData = <String, dynamic>{
+        'Error:': 'Failed to get platform version.'
+      };
+    }
+
+    if (!mounted) return;
+
+    setState(() {
+      _deviceData = deviceData;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // print(Authe)
+    print(androidId);
+    // print(_deviceData);
     return ScreenUtilInit(
       useInheritedMediaQuery: true,
       builder: (BuildContext context, Widget? child) {
@@ -107,7 +189,7 @@ class _AppViewState extends State<AppView> {
 
   final GlobalKey<NavigatorState> _navigatorState = GlobalKey<NavigatorState>();
   late final GoRouter _router = GoRouter(
-      initialLocation: '/login-page',
+      initialLocation: '/splash',
       navigatorKey: _navigatorState,
       routes: [
         GoRoute(

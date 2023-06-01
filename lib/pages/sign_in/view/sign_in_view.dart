@@ -120,7 +120,8 @@ class SignInDialog extends StatelessWidget {
                       ),
                       border: OutlineInputBorder(
                         gapPadding: 1,
-                        borderSide: const BorderSide(width: 0.5, color: Colors.white),
+                        borderSide:
+                            const BorderSide(width: 0.5, color: Colors.white),
                         borderRadius: BorderRadius.circular(15.0),
                       ),
                       errorBorder: OutlineInputBorder(
@@ -130,7 +131,8 @@ class SignInDialog extends StatelessWidget {
                       ),
                       enabledBorder: OutlineInputBorder(
                         gapPadding: 1,
-                        borderSide: const BorderSide(width: 0.5, color: Colors.grey),
+                        borderSide:
+                            const BorderSide(width: 0.5, color: Colors.grey),
                         borderRadius: BorderRadius.circular(15.0),
                       ),
                       focusedBorder: OutlineInputBorder(
@@ -160,7 +162,11 @@ class SignInDialog extends StatelessWidget {
                                 children: [
                                   IconButton(
                                       iconSize: 40,
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        context
+                                            .read<SignInBloc>()
+                                            .add(SignInWithGoogleEvent());
+                                      },
                                       icon: Image.asset(
                                         ImagePath.iconPathGoogle,
                                         //height: ,
@@ -171,7 +177,11 @@ class SignInDialog extends StatelessWidget {
                                   ),
                                   IconButton(
                                       iconSize: 40,
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        context
+                                            .read<SignInBloc>()
+                                            .add(SignInWithFacebookEvent());
+                                      },
                                       icon: Image.asset(
                                         ImagePath.iconPathFacebook,
                                         //height: ,
@@ -261,8 +271,8 @@ class SignInDialog extends StatelessWidget {
                                   ),
                                   errorBorder: OutlineInputBorder(
                                     gapPadding: 1,
-                                    borderSide:
-                                        const BorderSide(width: 0.5, color: kRed),
+                                    borderSide: const BorderSide(
+                                        width: 0.5, color: kRed),
                                     borderRadius: BorderRadius.circular(15.0),
                                   ),
                                   contentPadding: const EdgeInsets.all(8),
@@ -376,7 +386,8 @@ class SignInDialog extends StatelessWidget {
                               // height: double.infinity,
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                    minimumSize: const Size(double.infinity, 50),
+                                    minimumSize:
+                                        const Size(double.infinity, 50),
 
                                     // padding: MaterialStateProperty.all(
                                     //     EdgeInsets.symmetric(horizontal: 10)),

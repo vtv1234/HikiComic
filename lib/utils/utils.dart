@@ -43,6 +43,24 @@ class Utils {
     // await Future.delayed(Duration(seconds: 1));
   }
 
+  Future<bool> hasAccessTokenFacebook() async {
+    if (kDebugMode) {
+      print(await _storageService.readSecureData('accessTokenFacebook'));
+    }
+
+    return await _storageService.containsKeyInSecureData('accessTokenFacebook');
+    // await Future.delayed(Duration(seconds: 1));
+  }
+
+  Future<bool> hasAccessTokenGoogle() async {
+    if (kDebugMode) {
+      print(await _storageService.readSecureData('accessTokenGoogle'));
+    }
+
+    return await _storageService.containsKeyInSecureData('accessTokenGoogle');
+    // await Future.delayed(Duration(seconds: 1));
+  }
+
   Future<String?> readStorage(String key) async {
     return await _storageService.readSecureData(key);
   }

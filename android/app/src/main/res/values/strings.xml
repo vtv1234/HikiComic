@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HikiComic</string>
+    <string name="facebook_app_id">930467981554585</string>
+    <string name="fb_login_protocol_scheme">fb930467981554585</string>
+    <string name="facebook_client_token">a644daf44f13ef73632853dade3062d7</string>
+</resources>

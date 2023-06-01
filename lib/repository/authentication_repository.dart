@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hikicomic/data/models/error_auth.dart';
 import 'package:hikicomic/data/models/response.dart';
 
@@ -42,10 +44,48 @@ class AuthenticationRepository {
     return {'isSuccessed': false, 'result': ErrorResponse.fromMap(jsonResult)};
   }
 
-  Future<void> logOut() async {
-    await utils.deleteAllSecureData();
+  Future<Map<String, dynamic>> loginWithFacebook(
+      {required String email,
+      required String password,
+      required bool rememberMe}) async {
+    final response = await http.post(
+      Uri.parse(Apis.login),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(
+          {"email": email, "password": password, "rememberMe": rememberMe}),
+    );
+    // if (response.statusCode == 200) {
+    final jsonResult = jsonDecode(response.body);
+    if (jsonResult['isSuccessed'] == true) {
+      final result = BaseResponse(
+          isSuccessed: jsonResult['isSuccessed'] as bool,
+          message: jsonResult['message'],
+          statusCode: jsonResult['statusCode'] as int,
+          ressultObj: jsonResult['resultObj'] as String);
+      return {'isSuccessed': true, 'result': result};
+    }
+    return {'isSuccessed': false, 'result': ErrorResponse.fromMap(jsonResult)};
+  }
 
-    controller.add(AuthenticationStatus.unauthenticated);
+  Future<void> logOut() async {
+    if (await utils.isLoggedIn() == "true" && await utils.hasToken() == true) {
+      await utils.deleteAllSecureData();
+
+      controller.add(AuthenticationStatus.unauthenticated);
+    } else if (await utils.isLoggedIn() == "true" &&
+        await utils.hasAccessTokenFacebook() == true) {
+      await FacebookAuth.instance.logOut();
+      await utils.deleteAllSecureData();
+
+      controller.add(AuthenticationStatus.unauthenticated);
+    } else if (await utils.isLoggedIn() == "true" &&
+        await utils.hasAccessTokenGoogle() == true) {
+      GoogleSignIn googleSignIn = GoogleSignIn();
+      googleSignIn.disconnect();
+      await utils.deleteAllSecureData();
+
+      controller.add(AuthenticationStatus.unauthenticated);
+    }
   }
 
   void dispose() => controller.close();
