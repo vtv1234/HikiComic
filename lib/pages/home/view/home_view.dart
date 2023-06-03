@@ -79,9 +79,9 @@ class _BuildSideBarState extends State<BuildSideBar> {
         width: 0.6.sw,
         child: BlocConsumer<AuthenticationBloc, AuthenticationState>(
           listener: (context, state) {
-            // if (state.status == AuthenticationStatus.unknown) {
-            //   context.loaderOverlay.show(widget: LoadingScreen());
-            // }
+            if (state.status == AuthenticationStatus.unknown) {
+              context.loaderOverlay.show(widget: LoadingScreen());
+            }
           },
           builder: (context, state) {
             if (state.status == AuthenticationStatus.authenticated) {
@@ -144,6 +144,7 @@ class _BuildSideBarState extends State<BuildSideBar> {
               );
             }
             if (state.status == AuthenticationStatus.unauthenticated) {
+              context.loaderOverlay.hide();
               return ListView(
                 padding: EdgeInsets.zero,
                 children: [

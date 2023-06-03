@@ -10,6 +10,7 @@ import 'package:hikicomic/pages/tabs/new_comic/bloc/new_comic_bloc.dart';
 import 'package:hikicomic/repository/comic_repository.dart';
 import 'package:hikicomic/utils/colors.dart';
 import 'package:hikicomic/widget/card_comic.dart';
+import 'package:hikicomic/widget/loading_screen.dart';
 
 class TabNewComic extends StatelessWidget {
   const TabNewComic({super.key});
@@ -33,9 +34,7 @@ class TabNewComic extends StatelessWidget {
                     context.read<NewComicBloc>().add(LoadNewComicEvent(
                         pageIndex: pageIndex, pageSize: pageSize));
                   },
-                  child: SizedBox(
-                      height: 0.8.sh,
-                      child: const Center(child: CircularProgressIndicator())),
+                  child: SizedBox(height: 0.8.sh, child: const LoadingScreen()),
                 ),
               );
             }

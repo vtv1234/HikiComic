@@ -7,6 +7,7 @@ import 'package:hikicomic/pages/comment/view/widget/comment_branch_view.dart';
 
 import 'package:hikicomic/utils/colors.dart';
 import 'package:hikicomic/utils/utils.dart';
+import 'package:hikicomic/widget/loading_screen.dart';
 import 'package:hikicomic/widget/snackbar.dart';
 
 import '../../sign_in/view/sign_in_view.dart';
@@ -156,12 +157,7 @@ class _CommentViewState extends State<CommentView> {
                     ),
                   ));
             }
-            return const Center(
-              child: CircularProgressIndicator(
-                color: kRed,
-                strokeWidth: 2,
-              ),
-            );
+            return const LoadingScreen();
           },
         ));
   }

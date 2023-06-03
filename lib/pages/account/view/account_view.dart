@@ -7,6 +7,7 @@ import 'package:hikicomic/pages/account/bloc/account_bloc.dart';
 import 'package:hikicomic/repository/authentication_repository.dart';
 import 'package:hikicomic/utils/colors.dart';
 import 'package:hikicomic/utils/img_path.dart';
+import 'package:hikicomic/widget/loading_screen.dart';
 import 'package:intl/intl.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
@@ -69,9 +70,8 @@ class AccountView extends StatelessWidget {
                                     errorWidget: (context, url, error) =>
                                         const Icon(Icons.error),
                                     fit: BoxFit.cover,
-                                    placeholder: (context, url) => const Center(
-                                          child: CircularProgressIndicator(),
-                                        ),
+                                    placeholder: (context, url) =>
+                                        const LoadingScreen(),
                                     imageUrl:
                                         state.accountInformation.userImageURL!)
                                 : Image.asset(ImagePath.userAvatarImagePath),

@@ -157,7 +157,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         //_accessToken = accessToken;
         print("tokens: ${accessToken.toJson()}");
         final Map<String, dynamic> loginResult = await _authenticationRepository
-            .loginWithFacebook(accessToken: accessToken!.token);
+            .loginWithFacebook(accessToken: accessToken.token);
 
         if (loginResult['isSuccessed'] == true) {
           BaseResponse loginSuccessedResult = loginResult['result'];

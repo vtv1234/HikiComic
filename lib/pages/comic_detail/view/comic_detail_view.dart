@@ -8,6 +8,7 @@ import 'package:hikicomic/pages/comment/bloc/comment_bloc.dart';
 import 'package:hikicomic/pages/comment/view/widget/comment_branch_view.dart';
 import 'package:hikicomic/utils/colors.dart';
 import 'package:hikicomic/utils/utils.dart';
+import 'package:hikicomic/widget/loading_screen.dart';
 
 import 'package:intl/intl.dart' as intl;
 
@@ -92,9 +93,7 @@ class _ComicDetailViewState extends State<ComicDetailView> {
                   context
                       .read<ComicDetailBloc>()
                       .add(LoadComicDetailEvent(widget.comicSEOAlias));
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
+                  return const LoadingScreen();
                 }
                 if (state is ErrorComicDetailState) {
                   return const Center(child: Text("Error"));
@@ -714,12 +713,7 @@ class _ComicDetailViewState extends State<ComicDetailView> {
                                 },
                                 builder: (context, state) {
                                   if (state is CommentLoading) {
-                                    return const Center(
-                                      child: CircularProgressIndicator(
-                                        color: kRed,
-                                        strokeWidth: 2,
-                                      ),
-                                    );
+                                    return const LoadingScreen();
                                   }
 
                                   if (state is CommentLoadedSuccessful) {
@@ -832,12 +826,7 @@ class _ComicDetailViewState extends State<ComicDetailView> {
                                       ),
                                     );
                                   }
-                                  return const Center(
-                                    child: CircularProgressIndicator(
-                                      color: kRed,
-                                      strokeWidth: 2,
-                                    ),
-                                  );
+                                  return const LoadingScreen();
                                 },
                               )),
                         ),

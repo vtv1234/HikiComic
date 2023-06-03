@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:hikicomic/pages/search/bloc/search_bloc.dart';
 import 'package:hikicomic/utils/colors.dart';
+import 'package:hikicomic/widget/loading_screen.dart';
 
 class SearchView extends SearchDelegate<List?> {
   final SearchBloc searchBloc;
@@ -43,9 +44,7 @@ class SearchView extends SearchDelegate<List?> {
       child: BlocBuilder<SearchBloc, SearchState>(
         builder: (context, state) {
           if (state is SearchStateLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const LoadingScreen();
           } else if (state is SearchStateError) {
             return const Center(
               child: Text('Fail to search comics'),
@@ -326,9 +325,7 @@ class SearchView extends SearchDelegate<List?> {
       child: BlocBuilder<SearchBloc, SearchState>(
         builder: (context, state) {
           if (state is SearchStateLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const LoadingScreen();
           } else if (state is SearchStateError) {
             return const Center(
               child: Text('Fail to search comics'),

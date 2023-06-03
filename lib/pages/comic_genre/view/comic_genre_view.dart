@@ -7,6 +7,7 @@ import 'package:hikicomic/pages/tabs/genres_comic/bloc/genre_comic/genres_comic_
 import 'package:hikicomic/pages/tabs/genres_comic/bloc/list_genres_bloc/list_genres_bloc.dart';
 import 'package:hikicomic/pages/tabs/genres_comic/view/genres_comic.dart';
 import 'package:hikicomic/widget/card_comic.dart';
+import 'package:hikicomic/widget/loading_screen.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ComicGenreView extends StatelessWidget {
@@ -118,9 +119,7 @@ class ComicGenreView extends StatelessWidget {
                     ]),
                   );
                 }
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
+                return const LoadingScreen();
                 // return Column(children: [
                 //   Container(
                 //     height: 0.1.sh,
