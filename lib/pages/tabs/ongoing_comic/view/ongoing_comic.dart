@@ -5,6 +5,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:hikicomic/data/models/comic.dart';
 import 'package:hikicomic/pages/tabs/ongoing_comic/bloc/ongoing_comic_bloc.dart';
 import 'package:hikicomic/widget/card_comic.dart';
+import 'package:hikicomic/widget/loading_screen.dart';
 
 class TabOngoingComic extends StatefulWidget {
   const TabOngoingComic({super.key});
@@ -38,12 +39,12 @@ class _TabOngoingComicState extends State<TabOngoingComic> {
         builder: (context, state) {
           if (state is OngoingComicInitial) {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: LoadingScreen(),
             );
           }
           if (state is OngoingComicLoading) {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: LoadingScreen(),
             );
           }
           if (state is OngoingComicError) {

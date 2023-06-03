@@ -21,7 +21,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
       try {
         final result = await _accountRepository.getAccountInformation();
         if (result.isSuccessed == true) {
-          emit(AccountLoadedSuccessful(result.ressultObj));
+          emit(AccountLoadedSuccessful(result.resultObj));
         } else {
           emit(AccountLoadedFailure(result.message.toString()));
         }

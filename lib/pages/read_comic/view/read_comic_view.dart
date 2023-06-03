@@ -8,6 +8,7 @@ import 'package:hikicomic/pages/comment/view/comment_view.dart';
 import 'package:hikicomic/pages/read_comic/bloc/read_comic_bloc.dart';
 
 import 'package:hikicomic/utils/colors.dart';
+import 'package:hikicomic/widget/loading_screen.dart';
 import 'package:hikicomic/widget/snackbar.dart';
 
 class ReadComicView extends StatefulWidget {
@@ -48,7 +49,7 @@ class _ReadComicViewState extends State<ReadComicView>
                 //     (timeStamp) async =>
                 // await errorSnakBar(error: state.error, duration: 10)
                 //     .show(context);
-                // if (await utils.isLoggedIn() != "true") {
+                // if (await utils.methodLogin() != "true") {
                 //   SchedulerBinding.instance
                 //       .addPostFrameCallback((timeStamp) async => showDialog(
                 //             context: context,
@@ -61,9 +62,7 @@ class _ReadComicViewState extends State<ReadComicView>
                 previous != current && current is LoadedChapterImageState,
             builder: (context, state) {
               if (state is LoadingChapterImageState) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
+                return const LoadingScreen();
               }
 
               if (state is LoadedChapterImageState) {
@@ -138,9 +137,7 @@ class _ReadComicViewState extends State<ReadComicView>
                                         placeholder: (context, url) =>
                                             const SizedBox(
                                                 height: 100,
-                                                child: Center(
-                                                    child:
-                                                        CircularProgressIndicator())),
+                                                child: LoadingScreen()),
                                         errorWidget: (context, url, error) =>
                                             const Center(
                                                 child: Icon(Icons.error)),
@@ -305,9 +302,7 @@ class ListChapterView extends StatelessWidget {
         child: BlocBuilder<ReadComicBloc, ReadComicState>(
           builder: (context, state) {
             if (state is LoadingListChapterState) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
+              return LoadingScreen();
             } else if (state is ErrorListChapterState) {
               return Center(
                 child: Text(state.error),

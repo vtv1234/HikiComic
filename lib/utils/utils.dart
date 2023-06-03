@@ -25,12 +25,12 @@ class Utils {
     return;
   }
 
-  Future<String?> isLoggedIn() async {
+  Future<String?> methodLogin() async {
     if (kDebugMode) {
-      print(await _storageService.readSecureData('isLoggedIn'));
+      print(await _storageService.readSecureData('methodLogin'));
     }
 
-    return await _storageService.readSecureData('isLoggedIn');
+    return await _storageService.readSecureData('methodLogin');
     // await Future.delayed(Duration(seconds: 1));
   }
 

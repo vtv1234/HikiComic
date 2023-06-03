@@ -21,7 +21,7 @@ class ReadComicBloc extends Bloc<ReadComicEvent, ReadComicState> {
             await _chapterImageRepository.getChaptersByChapterComicSeoAlias(
                 event.comicSeoAlias, event.chapterSeoAlias);
         if (chapterImageResult.isSuccessed == true) {
-          emit(LoadedChapterImageState(chapterImageResult.ressultObj));
+          emit(LoadedChapterImageState(chapterImageResult.resultObj));
         } else {
           emit(ErrorChapterImageState(chapterImageResult.message!));
         }
@@ -35,7 +35,7 @@ class ReadComicBloc extends Bloc<ReadComicEvent, ReadComicState> {
         try {
           final chapters = await _chapterRepository
               .getChaptersByComicSeoAlias(event.comicSeoAlias);
-          emit(LoadedListChapterState(chapters.ressultObj));
+          emit(LoadedListChapterState(chapters.resultObj));
         } catch (e) {
           emit(ErrorListChapterState(e.toString()));
         }

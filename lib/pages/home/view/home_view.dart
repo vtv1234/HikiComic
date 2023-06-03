@@ -22,6 +22,8 @@ import 'package:hikicomic/utils/colors.dart';
 import 'package:hikicomic/utils/img_path.dart';
 import 'package:hikicomic/utils/utils.dart';
 import 'package:hikicomic/widget/lazy_load_indexed_stack.dart';
+import 'package:hikicomic/widget/loading_screen.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 const primaryColor = Color(0xFF685BFF);
 const canvasColor = Color(0xFF2E2E48);
@@ -70,123 +72,132 @@ class _BuildSideBarState extends State<BuildSideBar> {
   Widget build(BuildContext context) {
     final utils = Utils();
 
-    return Drawer(
-      width: 0.6.sw,
-      child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-        builder: (context, state) {
-          if (state.status == AuthenticationStatus.authenticated) {
-            return Column(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    context.pushNamed('account');
-                  },
-                  child: DrawerHeader(
-                    child: Column(children: [
-                      SizedBox(
-                        height: 100,
-                        width: 100,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(120),
-                          child: state.user.userImageURL != "default.png"
-                              ? CachedNetworkImage(
-                                  errorWidget: (context, url, error) =>
-                                      const Icon(Icons.error),
-                                  fit: BoxFit.fill,
-                                  imageUrl: state.user.userImageURL!)
-                              : Image.asset(ImagePath.userAvatarImagePath),
+    return LoaderOverlay(
+      closeOnBackButton: true,
+      disableBackButton: false,
+      child: Drawer(
+        width: 0.6.sw,
+        child: BlocConsumer<AuthenticationBloc, AuthenticationState>(
+          listener: (context, state) {
+            // if (state.status == AuthenticationStatus.unknown) {
+            //   context.loaderOverlay.show(widget: LoadingScreen());
+            // }
+          },
+          builder: (context, state) {
+            if (state.status == AuthenticationStatus.authenticated) {
+              return Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      context.pushNamed('account');
+                    },
+                    child: DrawerHeader(
+                      child: Column(children: [
+                        SizedBox(
+                          height: 100,
+                          width: 100,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(120),
+                            child: state.user.userImageURL != "default.png"
+                                ? CachedNetworkImage(
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(Icons.error),
+                                    fit: BoxFit.fill,
+                                    imageUrl: state.user.userImageURL!)
+                                : Image.asset(ImagePath.userAvatarImagePath),
+                          ),
                         ),
-                      ),
-                      Text(state.user.email!)
-                    ]),
+                        Text(state.user.email!)
+                      ]),
+                    ),
                   ),
-                ),
-                ListTile(
-                  leading: const Icon(Icons.book_outlined),
-                  title: const Text('Library'),
-                  onTap: () async {
-                    if (await utils.isLoggedIn() == "true") {
-                      if (mounted) {
-                        context.pushNamed(
-                          'library',
-                        );
+                  ListTile(
+                    leading: const Icon(Icons.book_outlined),
+                    title: const Text('Library'),
+                    onTap: () async {
+                      if (await utils.methodLogin() != "") {
+                        if (mounted) {
+                          context.pushNamed(
+                            'library',
+                          );
+                        }
+                      } else {
+                        if (mounted) {
+                          showDialog(
+                            context: context,
+                            builder: (context) => const SignInDialog(),
+                          );
+                        }
                       }
-                    } else {
-                      if (mounted) {
-                        showDialog(
-                          context: context,
-                          builder: (context) => const SignInDialog(),
-                        );
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.logout),
+                    title: const Text('Sign Out'),
+                    onTap: () {
+                      context
+                          .read<AuthenticationBloc>()
+                          .add(AuthenticationLogoutRequested());
+                    },
+                  ),
+                ],
+              );
+            }
+            if (state.status == AuthenticationStatus.unauthenticated) {
+              return ListView(
+                padding: EdgeInsets.zero,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => const SignInDialog(),
+                      );
+                    },
+                    child: DrawerHeader(
+                        padding: const EdgeInsets.all(0),
+                        child: Center(
+                          child: ListTile(
+                            leading: const Icon(Icons.login_outlined),
+                            title: const Text('Sign in now'),
+                            onTap: () async {
+                              showDialog(
+                                context: context,
+                                builder: (context) => const SignInDialog(),
+                              );
+                            },
+                          ),
+                        )),
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.book_outlined),
+                    title: const Text('Library'),
+                    onTap: () async {
+                      if (await utils.methodLogin() != "") {
+                        if (mounted) {
+                          context.pushNamed(
+                            'library',
+                          );
+                        }
+                      } else {
+                        if (mounted) {
+                          showDialog(
+                            context: context,
+                            builder: (context) => const SignInDialog(),
+                          );
+                        }
                       }
-                    }
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.logout),
-                  title: const Text('Sign Out'),
-                  onTap: () {
-                    context
-                        .read<AuthenticationBloc>()
-                        .add(AuthenticationLogoutRequested());
-                  },
-                ),
-              ],
-            );
-          }
-          if (state.status == AuthenticationStatus.unauthenticated) {
-            return ListView(
-              padding: EdgeInsets.zero,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => const SignInDialog(),
-                    );
-                  },
-                  child: DrawerHeader(
-                      padding: const EdgeInsets.all(0),
-                      child: Center(
-                        child: ListTile(
-                          leading: const Icon(Icons.login_outlined),
-                          title: const Text('Sign in now'),
-                          onTap: () async {
-                            showDialog(
-                              context: context,
-                              builder: (context) => const SignInDialog(),
-                            );
-                          },
-                        ),
-                      )),
-                ),
-                ListTile(
-                  leading: const Icon(Icons.book_outlined),
-                  title: const Text('Library'),
-                  onTap: () async {
-                    if (await utils.isLoggedIn() == "true") {
-                      if (mounted) {
-                        context.pushNamed(
-                          'library',
-                        );
-                      }
-                    } else {
-                      if (mounted) {
-                        showDialog(
-                          context: context,
-                          builder: (context) => const SignInDialog(),
-                        );
-                      }
-                    }
-                  },
-                ),
-              ],
-            );
-          }
-          if (state.status == AuthenticationStatus.unknown) {
-            Container();
-          }
-          return Container();
-        },
+                    },
+                  ),
+                ],
+              );
+            }
+            if (state.status == AuthenticationStatus.unknown) {
+              Container();
+            }
+            return Container();
+          },
+        ),
       ),
     );
   }
@@ -256,7 +267,7 @@ class _HomeViewState extends State<HomeView> {
               constraints: const BoxConstraints(),
               icon: const Icon(Icons.book_outlined),
               onPressed: () async {
-                if (await utils.isLoggedIn() == "true") {
+                if (await utils.methodLogin() != "") {
                   if (mounted) {
                     context.pushNamed(
                       'library',

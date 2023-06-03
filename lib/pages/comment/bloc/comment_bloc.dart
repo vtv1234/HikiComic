@@ -32,7 +32,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
             commentContent: event.commentContent,
             parentCommentId: event.parrentCommentId);
         if (responseResult.isSuccessed == true) {
-          emit(SendedCommentSuccess(responseResult.ressultObj));
+          emit(SendedCommentSuccess(responseResult.resultObj));
         } else {
           emit(SendedCommentFail(responseResult.message!));
         }

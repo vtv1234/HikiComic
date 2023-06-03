@@ -88,6 +88,10 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     SignInButtonPressedEvent event,
     Emitter<SignInState> emit,
   ) async {
+    emit(state.copyWith(
+      message: "Siging...",
+      status: SignInStatus.loading,
+    ));
     try {
       final Map<String, dynamic> loginResult =
           await _authenticationRepository.login(
@@ -100,13 +104,13 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         BaseResponse loginSuccessedResult = loginResult['result'];
         final StorageItem tokenItem =
             StorageItem(key: 'token', value: loginSuccessedResult.message!);
-        final StorageItem isLoggedInItem =
-            StorageItem(key: 'isLoggedIn', value: 'true');
+        final StorageItem methodLoginItem =
+            StorageItem(key: 'methodLogin', value: 'email');
 
         await _utils.persistToken(tokenItem);
-        await _utils.persistToken(isLoggedInItem);
+        await _utils.persistToken(methodLoginItem);
         // _utils.persistToken(userIdToken);
-        // _utils.isLoggedIn(isLoggedInItem);
+        // _utils.methodLogin(methodLoginItem);
         _authenticationRepository.controller
             .add(AuthenticationStatus.authenticated);
 // controller.add(AuthenticationStatus.authenticated);
@@ -139,31 +143,36 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       SignInWithFacebookEvent event, Emitter<SignInState> emit) async {
     AccessToken? accessToken;
     Map<String, dynamic>? userData;
-    // _checkIfisLoggedIn() async {
+    // _checkIfmethodLogin() async {
 
     try {
+      emit(state.copyWith(
+        message: "Siging...",
+        status: SignInStatus.loading,
+      ));
       accessToken = await FacebookAuth.instance.accessToken;
       if (accessToken != null) {
         print("accesstokenfb: ${accessToken.toJson()}");
         userData = await FacebookAuth.instance.getUserData();
         //_accessToken = accessToken;
         print("tokens: ${accessToken.toJson()}");
-      } else {
-        final LoginResult result = await FacebookAuth.instance
-            .login(permissions: ['email', 'public_profile']);
+        final Map<String, dynamic> loginResult = await _authenticationRepository
+            .loginWithFacebook(accessToken: accessToken!.token);
 
-        if (result.status == LoginStatus.success) {
-          accessToken = result.accessToken;
-          print("accesstokenfb: ${result.accessToken!.token}");
-
-          userData = await FacebookAuth.instance.getUserData();
-          final StorageItem tokenItem = StorageItem(
-              key: 'accessTokenFacebook', value: accessToken!.token);
-          final StorageItem isLoggedInItem =
-              StorageItem(key: 'isLoggedIn', value: 'true');
+        if (loginResult['isSuccessed'] == true) {
+          BaseResponse loginSuccessedResult = loginResult['result'];
+          final StorageItem tokenItem =
+              StorageItem(key: 'token', value: loginSuccessedResult.message!);
+          final StorageItem accessTokenFacebookItem =
+              StorageItem(key: 'accessTokenFacebook', value: accessToken.token);
+          final StorageItem methodLoginItem =
+              StorageItem(key: 'methodLogin', value: 'facebook');
 
           await _utils.persistToken(tokenItem);
-          await _utils.persistToken(isLoggedInItem);
+          await _utils.persistToken(accessTokenFacebookItem);
+          await _utils.persistToken(methodLoginItem);
+          // _utils.persistToken(userIdToken);
+          // _utils.methodLogin(methodLoginItem);
           _authenticationRepository.controller
               .add(AuthenticationStatus.authenticated);
           emit(state.copyWith(
@@ -171,9 +180,44 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
               status: SignInStatus.success,
               accessTokenFacebook: accessToken,
               userData: userData));
-        } else {
-          print(result.status);
-          print(result.message);
+        }
+      } else {
+        final LoginResult result = await FacebookAuth.instance.login();
+
+        if (result.status == LoginStatus.success) {
+          accessToken = result.accessToken;
+          print("accesstokenfb: ${result.accessToken!.token}");
+
+          userData = await FacebookAuth.instance.getUserData();
+          final Map<String, dynamic> loginResult =
+              await _authenticationRepository.loginWithFacebook(
+                  accessToken: accessToken!.token);
+
+          if (loginResult['isSuccessed'] == true) {
+            BaseResponse loginSuccessedResult = loginResult['result'];
+            final StorageItem tokenItem =
+                StorageItem(key: 'token', value: loginSuccessedResult.message!);
+            final StorageItem accessTokenFacebookItem = StorageItem(
+                key: 'accessTokenFacebook', value: accessToken.token);
+            final StorageItem methodLoginItem =
+                StorageItem(key: 'methodLogin', value: 'facebook');
+
+            await _utils.persistToken(tokenItem);
+            await _utils.persistToken(accessTokenFacebookItem);
+            await _utils.persistToken(methodLoginItem);
+            // _utils.persistToken(userIdToken);
+            // _utils.methodLogin(methodLoginItem);
+            _authenticationRepository.controller
+                .add(AuthenticationStatus.authenticated);
+            emit(state.copyWith(
+                message: 'Success',
+                status: SignInStatus.success,
+                accessTokenFacebook: accessToken,
+                userData: userData));
+          } else {
+            print(result.status);
+            print(result.message);
+          }
         }
       }
     } catch (e) {
@@ -188,7 +232,15 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       SignInWithGoogleEvent event, Emitter<SignInState> emit) async {
     GoogleSignIn googleSignIn = GoogleSignIn();
     // GoogleSignInAccount? currentUser=();
+    // emit(state.copyWith(
+    //   message: "Siging...",
+    //   status: SignInStatus.loading,
+    // ));
     try {
+      emit(state.copyWith(
+        message: "Signing...",
+        status: SignInStatus.loading,
+      ));
       String? accessToken;
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
@@ -203,20 +255,31 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
                   }));
       // await _googleSignIn.signIn();
       print("googleUser: $googleUser");
-      final StorageItem tokenItem =
-          StorageItem(key: 'accessTokenGoogle', value: accessToken!);
-      final StorageItem isLoggedInItem =
-          StorageItem(key: 'isLoggedIn', value: 'true');
+      final Map<String, dynamic> loginResult = await _authenticationRepository
+          .loginWithGoogle(accessToken: accessToken!);
 
-      await _utils.persistToken(tokenItem);
-      await _utils.persistToken(isLoggedInItem);
-      _authenticationRepository.controller
-          .add(AuthenticationStatus.authenticated);
-      emit(state.copyWith(
-          message: 'Success',
-          status: SignInStatus.success,
-          googleUser: googleUser,
-          accessTokenGoogle: accessToken));
+      if (loginResult['isSuccessed'] == true) {
+        BaseResponse loginSuccessedResult = loginResult['result'];
+        final StorageItem tokenItem =
+            StorageItem(key: 'token', value: loginSuccessedResult.message!);
+        final StorageItem accessTokenGoogleItem =
+            StorageItem(key: 'accessTokenGoogle', value: accessToken!);
+        final StorageItem methodLoginItem =
+            StorageItem(key: 'methodLogin', value: 'google');
+
+        await _utils.persistToken(tokenItem);
+        await _utils.persistToken(accessTokenGoogleItem);
+        await _utils.persistToken(methodLoginItem);
+        // _utils.persistToken(userIdToken);
+        // _utils.methodLogin(methodLoginItem);
+        _authenticationRepository.controller
+            .add(AuthenticationStatus.authenticated);
+        emit(state.copyWith(
+            message: 'Success',
+            status: SignInStatus.success,
+            googleUser: googleUser,
+            accessTokenGoogle: accessToken));
+      }
     } catch (error) {
       emit(state.copyWith(
         message: error.toString(),
@@ -239,11 +302,11 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     //       userData = await FacebookAuth.instance.getUserData();
     //       final StorageItem tokenItem = StorageItem(
     //           key: 'accessTokenFacebook', value: accessToken!.token);
-    //       final StorageItem isLoggedInItem =
-    //           StorageItem(key: 'isLoggedIn', value: 'true');
+    //       final StorageItem methodLoginItem =
+    //           StorageItem(key: 'methodLogin', value: 'true');
 
     //       await _utils.persistToken(tokenItem);
-    //       await _utils.persistToken(isLoggedInItem);
+    //       await _utils.persistToken(methodLoginItem);
     //       _authenticationRepository.controller
     //           .add(AuthenticationStatus.authenticated);
     //       emit(state.copyWith(

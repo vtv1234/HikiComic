@@ -28,56 +28,56 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     try {
       // utils.deleteAllSecureData();
 
-      if (await utils.isLoggedIn() == "true" &&
-          await utils.hasToken() == true) {
+      if (await utils.methodLogin() != "" && await utils.hasToken() == true) {
         final result = await _userRepository.getUser();
         if (result != null) {
           _authenticationRepository.controller
               .add(AuthenticationStatus.authenticated);
-          emit(SplashLoadedState(user: result.ressultObj));
-          // print('user: ${result.ressultObj}');
+          emit(SplashLoadedState(user: result.resultObj));
+          // print('user: ${result.resultObj}');
           // print('get user');
         }
         emit(SplashLoadedState());
         // print(result);
-      } else if (await utils.isLoggedIn() == "true" &&
-          await utils.hasAccessTokenFacebook() == true) {
-        final LoginResult result = await FacebookAuth.instance.login();
+      } else if (await utils.methodLogin() == "facebook" &&
+          await utils.hasToken() == true &&
+          await utils.hasAccessTokenFacebook()) {
+        final LoginResult loginResult = await FacebookAuth.instance.login();
 
-        if (result.status == LoginStatus.success) {
-          AccessToken? accessToken = result.accessToken;
-          print(result.accessToken!.token);
+        if (loginResult.status == LoginStatus.success) {
+          AccessToken? accessToken = loginResult.accessToken;
+          print(loginResult.accessToken!.token);
 
           Map<String, dynamic>? userData =
               await FacebookAuth.instance.getUserData();
-          final StorageItem tokenItem = StorageItem(
+          final StorageItem accessTokenFacebookItem = StorageItem(
               key: 'accessTokenFacebook', value: accessToken!.token);
-          // final StorageItem isLoggedInItem =
-          //     StorageItem(key: 'isLoggedIn', value: 'true');
+          // final StorageItem methodLoginItem =
+          //     StorageItem(key: 'methodLogin', value: 'true');
 
-          await utils.persistToken(tokenItem);
-          // await utils.persistToken(isLoggedInItem);
-          _authenticationRepository.controller
-              .add(AuthenticationStatus.authenticated);
-          final User user = User(
-              id: userData['id'],
-              userImageURL: userData['picture']['data']['url'],
-              email: userData['email'],
-              lastName: userData['name']);
+          await utils.persistToken(accessTokenFacebookItem);
+          final result = await _userRepository.getUser();
+          if (result != null) {
+            _authenticationRepository.controller
+                .add(AuthenticationStatus.authenticated);
+            emit(SplashLoadedState(user: result.resultObj));
+            // print('user: ${result.resultObj}');
+            // print('get user');
+          }
+          // await utils.persistToken(methodLoginItem);
+          // _authenticationRepository.controller
+          //     .add(AuthenticationStatus.authenticated);
 
-          // final result = await _userRepository.getUser();
-          // if (user != null) {
-          _authenticationRepository.controller
-              .add(AuthenticationStatus.authenticated);
-          emit(SplashLoadedState(user: user));
-          // print('user: ${result.ressultObj}');
+          // emit(SplashLoadedState(user: result.resultObj));
+          // print('user: ${result.resultObj}');
           // print('get user');
           // }
           // emit(SplashLoadedState());
           // print(result);
         }
-      } else if (await utils.isLoggedIn() == "true" &&
-          await utils.hasAccessTokenGoogle() == true) {
+      } else if (await utils.methodLogin() == "google" &&
+          await utils.hasToken() == true &&
+          await utils.hasAccessTokenGoogle()) {
         // try {
         String? accessToken;
         GoogleSignIn googleSignIn = GoogleSignIn();
@@ -91,15 +91,20 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
                 }));
         // await _googleSignIn.signIn();
         print("googleUser: $googleUser");
-        final StorageItem tokenItem =
+        final StorageItem accessTokenGoogleItem =
             StorageItem(key: 'accessTokenGoogle', value: accessToken!);
-        // final StorageItem isLoggedInItem =
-        // StorageItem(key: 'isLoggedIn', value: 'true');
+        // final StorageItem methodLoginItem =
+        //     StorageItem(key: 'methodLogin', value: 'true');
 
-        await utils.persistToken(tokenItem);
-        // await utils.persistToken(isLoggedInItem);
-        _authenticationRepository.controller
-            .add(AuthenticationStatus.authenticated);
+        await utils.persistToken(accessTokenGoogleItem);
+        final result = await _userRepository.getUser();
+        if (result != null) {
+          _authenticationRepository.controller
+              .add(AuthenticationStatus.authenticated);
+          emit(SplashLoadedState(user: result.resultObj));
+          // print('user: ${result.resultObj}');
+          // print('get user');
+        }
       }
 
       emit(SplashLoadedState());

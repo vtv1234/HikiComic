@@ -10,6 +10,7 @@ import 'package:hikicomic/pages/tabs/ranking_comic/bloc/ranking_comic_bloc.dart'
 import 'package:hikicomic/utils/colors.dart';
 
 import 'package:hikicomic/widget/card_comic.dart';
+import 'package:hikicomic/widget/loading_screen.dart';
 
 class TabRankingComic extends StatelessWidget {
   const TabRankingComic({super.key});
@@ -21,9 +22,7 @@ class TabRankingComic extends StatelessWidget {
       child: BlocBuilder<RankingComicBloc, RankingComicState>(
         builder: (context, state) {
           if (state is RankingComicLoadingState) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return LoadingScreen();
           }
 
           if (state is RankingComicErrorState) {

@@ -50,7 +50,7 @@ class AccountRepository {
           isSuccessed: jsonResult['isSuccessed'] as bool,
           message: jsonResult['message'],
           statusCode: jsonResult['statusCode'] as int,
-          ressultObj: jsonResult['resultObj'] as dynamic);
+          resultObj: jsonResult['resultObj'] as dynamic);
       return {'isSuccessed': true, 'result': result};
     }
     return {'isSuccessed': false, 'result': ErrorResponse.fromMap(jsonResult)};

@@ -14,7 +14,7 @@ class ComicReadingHistoriesRepository {
     final response = await http.get(
         Uri.parse(
             '${Apis.comicReadingHistories}/paging?PageIndex=$pageIndex&PageSize=$pageSize'),
-        headers: await utils.isLoggedIn() == "true"
+        headers: await utils.methodLogin() != ""
             ? {'Authorization': 'Bearer ${await utils.readStorage('token')}'}
             : {});
 

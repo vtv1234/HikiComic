@@ -139,8 +139,8 @@ class _ComicDetailViewState extends State<ComicDetailView> {
                                 //       Icons.monetization_on_outlined),
                                 //   onPressed: () async {
                                 //     // utils.deleteAllSecureData();
-                                //     if (await utils.isLoggedIn() == "true") {
-                                //       print('isLoggedIn');
+                                //     if (await utils.methodLogin() != "") {
+                                //       print('methodLogin');
 
                                 //       context.pushNamed(
                                 //         'payment',
@@ -242,7 +242,7 @@ class _ComicDetailViewState extends State<ComicDetailView> {
                                       ),
 
                                       onRatingUpdate: (rating) async {
-                                        // if (await utils.isLoggedIn() ==
+                                        // if (await utils.methodLogin() ==
                                         //     "true") {
                                         context.read<ComicDetailBloc>().add(
                                             RatingComicEvent(
@@ -392,8 +392,8 @@ class _ComicDetailViewState extends State<ComicDetailView> {
                                                           color:
                                                               kButtonBackground)))),
                                           onPressed: () async {
-                                            if (await utils.isLoggedIn() ==
-                                                "true") {
+                                            if (await utils.methodLogin() !=
+                                                "") {
                                               if (isEnable) {
                                                 if (mounted) {
                                                   context
@@ -792,8 +792,8 @@ class _ComicDetailViewState extends State<ComicDetailView> {
                                                               .trim() !=
                                                           "") {
                                                         if (await utils
-                                                                .isLoggedIn() ==
-                                                            "true") {
+                                                                .methodLogin() !=
+                                                            "") {
                                                           if (mounted) {
                                                             context
                                                                 .read<

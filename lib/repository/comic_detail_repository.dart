@@ -12,12 +12,12 @@ class ComicDetailRepository {
   final utils = Utils();
   Future<BaseResponse> getComicDetailByComicSeoAlias(
       String comicSeoAlias) async {
-    bool isLoggedIn = await utils.isLoggedIn() == "true";
+    bool methodLogin = await utils.methodLogin() != "";
     final response = await http.get(
-      Uri.parse(isLoggedIn
+      Uri.parse(methodLogin
           ? '${Apis.getComicDetailByComicSeoAliasWithUser}$comicSeoAlias'
           : '${Apis.getComicDetailByComicSeoAlias}$comicSeoAlias'),
-      headers: isLoggedIn
+      headers: methodLogin
           ? {
               'Authorization': 'Bearer ${await utils.readStorage('token')}',
             }
@@ -35,7 +35,7 @@ class ComicDetailRepository {
   }
 
   Future<BaseResponse> updateStatusUserFollowComic(int comicId) async {
-    // bool isLoggedIn = await utils.isLoggedIn() == "true";
+    // bool methodLogin = await utils.methodLogin() != "";
     final response = await http.get(
       Uri.parse('${Apis.updateStatusUserFollowComic}$comicId'),
       headers: {
@@ -48,7 +48,7 @@ class ComicDetailRepository {
           isSuccessed: jsonResult['isSuccessed'] as bool,
           message: jsonResult['message'],
           statusCode: jsonResult['statusCode'] as int,
-          ressultObj: jsonResult['resultObj'] as dynamic);
+          resultObj: jsonResult['resultObj'] as dynamic);
       return result;
     } else {
       throw Exception(response.reasonPhrase);
@@ -59,7 +59,7 @@ class ComicDetailRepository {
       {required int comicId,
       required String comicSEOAlias,
       required double rating}) async {
-    // bool isLoggedIn = await utils.isLoggedIn() == "true";
+    // bool methodLogin = await utils.methodLogin() != "";
     final response = await http.post(
       Uri.parse(Apis.userRatingComic),
       body: jsonEncode({
@@ -78,7 +78,7 @@ class ComicDetailRepository {
           isSuccessed: jsonResult['isSuccessed'] as bool,
           message: jsonResult['message'],
           statusCode: jsonResult['statusCode'] as int,
-          ressultObj: jsonResult['resultObj'] as dynamic);
+          resultObj: jsonResult['resultObj'] as dynamic);
       return result;
     } else {
       throw Exception(response.reasonPhrase);

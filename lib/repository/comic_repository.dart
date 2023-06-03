@@ -62,7 +62,7 @@ class ComicRepository {
     final response = await http.post(
       Uri.parse(Apis.getFollowedComicsApi),
       body: jsonEncode({"pageIndex": pageIndex, "pageSize": pageSize}),
-      headers: await utils.isLoggedIn() == "true"
+      headers: await utils.methodLogin() != ""
           ? {
               'Authorization': 'Bearer ${await utils.readStorage('token')}',
               'Content-Type': 'application/json'

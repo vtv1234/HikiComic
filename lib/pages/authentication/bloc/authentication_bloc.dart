@@ -62,44 +62,44 @@ class AuthenticationBloc
     AuthenticationLogoutRequested event,
     Emitter<AuthenticationState> emit,
   ) {
+    emit(const AuthenticationState.unknown());
     _authenticationRepository.logOut();
   }
 
   Future<User?> _tryGetUser() async {
     try {
-      if (await utils.isLoggedIn() == "true" &&
-          await utils.hasToken() == true) {
-        final user = await _userRepository.getUser();
-        return user!.ressultObj;
+      // if (await utils.methodLogin() == "email" && await utils.hasToken() == true) {
+      final user = await _userRepository.getUser();
+      return user!.resultObj;
 
-        // print(result);
-      } else if (await utils.isLoggedIn() == "true" &&
-          await utils.hasAccessTokenFacebook() == true) {
-        Map<String, dynamic>? userData =
-            await FacebookAuth.instance.getUserData();
-        final User user = User(
-            id: userData['id'],
-            userImageURL: userData['picture']['data']['url'],
-            email: userData['email'],
-            lastName: userData['name']);
-        return user;
-      } else if (await utils.isLoggedIn() == "true" &&
-          await utils.hasAccessTokenGoogle() == true) {
-        GoogleSignIn googleSignIn = GoogleSignIn();
-        final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
-        // .then((value) => value!.authentication.then((googleKey) {
-        //       //accessToken = googleKey.accessToken;
-        //       print(googleKey.accessToken);
-        //       print(googleKey.idToken);
-        //     }));
-        final User user = User(
-            id: googleUser!.id,
-            userImageURL: googleUser.photoUrl ?? "default.png",
-            email: googleUser.email,
-            lastName: googleUser.displayName);
-        return user;
-      }
-      return null;
+      // print(result);
+      // } else if (await utils.methodLogin() == "facebook" &&
+      //     await utils.hasToken() == true) {
+      //   Map<String, dynamic>? userData =
+      //       await FacebookAuth.instance.getUserData();
+      //   final User user = User(
+      //       id: userData['id'],
+      //       userImageURL: userData['picture']['data']['url'],
+      //       email: userData['email'],
+      //       lastName: userData['name']);
+      //   return user;
+      // } else if (await utils.methodLogin() != "" &&
+      //     await utils.hasAccessTokenGoogle() == true) {
+      //   GoogleSignIn googleSignIn = GoogleSignIn();
+      //   final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+      //   // .then((value) => value!.authentication.then((googleKey) {
+      //   //       //accessToken = googleKey.accessToken;
+      //   //       print(googleKey.accessToken);
+      //   //       print(googleKey.idToken);
+      //   //     }));
+      //   final User user = User(
+      //       id: googleUser!.id,
+      //       userImageURL: googleUser.photoUrl ?? "default.png",
+      //       email: googleUser.email,
+      //       lastName: googleUser.displayName);
+      //   return user;
+      //}
+      //return null;
     } catch (_) {
       return null;
     }

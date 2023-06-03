@@ -15,14 +15,16 @@ class CommentRepository {
       required int? chapterId,
       required int pageIndex,
       required int pageSize}) async {
-    bool isLoggedIn = await utils.isLoggedIn() == "true";
-    final response = await http.get(
-      Uri.parse(
-        chapterId != null
-            ? '${Apis.pagingComment}?ComicId=$comicId&ChapterId=$chapterId&PageIndex=$pageIndex&PageSize=$pageSize'
-            : '${Apis.pagingComment}?ComicId=$comicId&PageIndex=$pageIndex&PageSize=$pageSize',
-      ),
-      headers: isLoggedIn
+    bool methodLogin = await utils.methodLogin() != "";
+    final response = await http.post(
+      Uri.parse(Apis.pagingComment),
+      body: jsonEncode({
+        "pageIndex": pageIndex,
+        "pageSize": pageSize,
+        "comicId": comicId,
+        "chapterId": chapterId
+      }),
+      headers: methodLogin
           ? {
               'Authorization': 'Bearer ${await utils.readStorage('token')}',
             }

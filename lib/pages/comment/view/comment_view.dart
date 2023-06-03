@@ -75,7 +75,7 @@ class _CommentViewState extends State<CommentView> {
                         IconButton(
                             onPressed: () async {
                               if (commentController.text.trim() != "") {
-                                if (await utils.isLoggedIn() == "true") {
+                                if (await utils.methodLogin() != "") {
                                   if (mounted) {
                                     context.read<CommentBloc>().add(SendComment(
                                         chapterId: widget.chapterId,

@@ -21,7 +21,7 @@ class ListGenresBloc extends Bloc<ListGenresEvent, ListGenresState> {
       final result = await _genresRepository.getAllGenres();
       if (result.isSuccessed == true) {
         emit(LoadListGenresSuccess(
-            listAllGenres: result.ressultObj,
+            listAllGenres: result.resultObj,
             indexSelectedGenre: event.indexSelectedGenre));
       } else {
         emit(LoadListGenresFailure(result.message!));

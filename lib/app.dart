@@ -108,6 +108,7 @@ class _AppViewState extends State<AppView> {
       final String result = await platform.invokeMethod('getAndroidId');
       androidId = result;
     } on PlatformException catch (e) {
+      print(e.details);
       androidId = "";
     }
   }
@@ -171,7 +172,7 @@ class _AppViewState extends State<AppView> {
   @override
   Widget build(BuildContext context) {
     print(androidId);
-    // print(_deviceData);
+    print(_deviceData);
     return ScreenUtilInit(
       useInheritedMediaQuery: true,
       builder: (BuildContext context, Widget? child) {
@@ -198,11 +199,11 @@ class _AppViewState extends State<AppView> {
           builder: (BuildContext context, GoRouterState state) =>
               const SplashScreen(),
         ),
-        GoRoute(
-          name: 'login-page',
-          path: '/login-page',
-          builder: (BuildContext context, GoRouterState state) => LoginPage(),
-        ),
+        // GoRoute(
+        //   name: 'login-page',
+        //   path: '/login-page',
+        //   builder: (BuildContext context, GoRouterState state) => LoginPage(),
+        // ),
         GoRoute(
           name: 'home',
           path: '/home',

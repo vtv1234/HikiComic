@@ -9,6 +9,7 @@ import 'package:hikicomic/data/models/comic.dart';
 import 'package:hikicomic/pages/tabs/completed_comic/bloc/completed_comic_bloc.dart';
 import 'package:hikicomic/utils/colors.dart';
 import 'package:hikicomic/widget/card_comic.dart';
+import 'package:hikicomic/widget/loading_screen.dart';
 
 class TabCompletedComic extends StatelessWidget {
   const TabCompletedComic({super.key});
@@ -32,9 +33,7 @@ class TabCompletedComic extends StatelessWidget {
                       LoadCompletedComicEvent(
                           pageIndex: pageIndex, pageSize: pageSize));
                 },
-                child: SizedBox(
-                    height: 0.8.sh,
-                    child: const Center(child: CircularProgressIndicator())),
+                child: SizedBox(height: 0.8.sh, child: LoadingScreen()),
               ),
             );
           }

@@ -10,6 +10,7 @@ import 'package:hikicomic/pages/tabs/genres_comic/bloc/genre_comic/genres_comic_
 import 'package:hikicomic/pages/tabs/genres_comic/bloc/list_genres_bloc/list_genres_bloc.dart';
 import 'package:hikicomic/utils/colors.dart';
 import 'package:hikicomic/widget/card_comic.dart';
+import 'package:hikicomic/widget/loading_screen.dart';
 import 'package:shimmer/shimmer.dart';
 
 class TabGenresComic extends StatefulWidget {
@@ -22,12 +23,14 @@ class TabGenresComic extends StatefulWidget {
 class _TabGenresComicState extends State<TabGenresComic> {
   @override
   Widget build(BuildContext context) {
+    late bool isShowMore;
     return BlocProvider(
       create: (context) => ListGenresBloc()
         ..add(const LoadAllGenresEvent(indexSelectedGenre: 0)),
       child: SingleChildScrollView(
         child: BlocConsumer<ListGenresBloc, ListGenresState>(
           listener: (context, state) {},
+
           // buildWhen: (previous, current) =>
           // previous != current && current is LoadComicOfGenreSuccess,
           builder: (context, state) {
@@ -37,37 +40,9 @@ class _TabGenresComicState extends State<TabGenresComic> {
                   ..add(LoadComicOfGenresEvent(
                       genre: state.listAllGenres[state.indexSelectedGenre])),
                 child: Column(children: [
-                  SizedBox(
-                      height: 0.1.sh,
-                      child: Scrollbar(
-                          controller: ScrollController(),
-                          child: SingleChildScrollView(
-                              child: Column(children: [
-                            BuildGenres(
-                                listAllGenres: state.listAllGenres,
-                                indexSelectedGenre: state.indexSelectedGenre)
-                            // Wrap(
-                            //   children: buildGenres(state.listAllGenres,
-                            //       context, state.indexSelectefGenre),
-                            // ),
-
-                            // BlocConsumer<GenresComicBloc, GenresComicState>(
-                            //   listener: (context, state) {},
-                            //   builder: (context, state) {
-                            //     if (state is LoadListGenresSuccess) {
-
-                            //     }
-                            //     return Shimmer.fromColors(
-                            //         baseColor: Colors.grey.shade300,
-                            //         highlightColor: Colors.grey.shade100,
-                            //         child: Wrap(
-                            //             children: List.generate(
-                            //           10,
-                            //           (index) => Chip(label: Text("Genre")),
-                            //         )));
-                            //   },
-                            // ),
-                          ])))),
+                  BuildListGenres(
+                      listGenres: state.listAllGenres,
+                      indexSelectedGenre: state.indexSelectedGenre),
                   const SizedBox(
                     height: 10,
                   ),
@@ -118,9 +93,7 @@ class _TabGenresComicState extends State<TabGenresComic> {
                 ]),
               );
             }
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const LoadingScreen();
             // return Column(children: [
             //   Container(
             //     height: 0.1.sh,
@@ -173,6 +146,79 @@ class _TabGenresComicState extends State<TabGenresComic> {
           },
         ),
       ),
+    );
+  }
+}
+
+class BuildListGenres extends StatefulWidget {
+  const BuildListGenres({
+    super.key,
+    required this.listGenres,
+    required this.indexSelectedGenre,
+    // required this.isShowMore,
+  });
+  final List<Genre> listGenres;
+  final int indexSelectedGenre;
+  // final bool isShowMore;
+
+  @override
+  State<BuildListGenres> createState() => _BuildListGenresState();
+}
+
+class _BuildListGenresState extends State<BuildListGenres> {
+  late bool isShowMore;
+  @override
+  void initState() {
+    isShowMore = true;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(
+            height: isShowMore ? 0.1.sh : 0.3.sh,
+            child: Scrollbar(
+                controller: ScrollController(),
+                child: SingleChildScrollView(
+                    child: Column(children: [
+                  BuildGenres(
+                      listAllGenres: widget.listGenres,
+                      indexSelectedGenre: widget.indexSelectedGenre)
+                  // Wrap(
+                  //   children: buildGenres(state.listAllGenres,
+                  //       context, state.indexSelectefGenre),
+                  // ),
+
+                  // BlocConsumer<GenresComicBloc, GenresComicState>(
+                  //   listener: (context, state) {},
+                  //   builder: (context, state) {
+                  //     if (state is LoadListGenresSuccess) {
+
+                  //     }
+                  //     return Shimmer.fromColors(
+                  //         baseColor: Colors.grey.shade300,
+                  //         highlightColor: Colors.grey.shade100,
+                  //         child: Wrap(
+                  //             children: List.generate(
+                  //           10,
+                  //           (index) => Chip(label: Text("Genre")),
+                  //         )));
+                  //   },
+                  // ),
+                ])))),
+        SizedBox(
+          height: 5,
+        ),
+        InkWell(
+            onTap: () {
+              setState(() {
+                isShowMore = !isShowMore;
+              });
+            },
+            child: Text(isShowMore == true ? "Show more" : "Show less")),
+      ],
     );
   }
 }

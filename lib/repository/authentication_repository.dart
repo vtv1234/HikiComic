@@ -38,21 +38,19 @@ class AuthenticationRepository {
           isSuccessed: jsonResult['isSuccessed'] as bool,
           message: jsonResult['message'],
           statusCode: jsonResult['statusCode'] as int,
-          ressultObj: jsonResult['resultObj'] as String);
+          resultObj: jsonResult['resultObj'] as String);
       return {'isSuccessed': true, 'result': result};
     }
     return {'isSuccessed': false, 'result': ErrorResponse.fromMap(jsonResult)};
   }
 
   Future<Map<String, dynamic>> loginWithFacebook(
-      {required String email,
-      required String password,
-      required bool rememberMe}) async {
+      {required String accessToken}) async {
     final response = await http.post(
-      Uri.parse(Apis.login),
+      Uri.parse(Apis.loginWithThirdParty),
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(
-          {"email": email, "password": password, "rememberMe": rememberMe}),
+      body:
+          jsonEncode({"accessToken": accessToken, "loginWithThirdPartyId": 2}),
     );
     // if (response.statusCode == 200) {
     final jsonResult = jsonDecode(response.body);
@@ -61,25 +59,47 @@ class AuthenticationRepository {
           isSuccessed: jsonResult['isSuccessed'] as bool,
           message: jsonResult['message'],
           statusCode: jsonResult['statusCode'] as int,
-          ressultObj: jsonResult['resultObj'] as String);
+          resultObj: jsonResult['resultObj'] as String);
+      return {'isSuccessed': true, 'result': result};
+    }
+    return {'isSuccessed': false, 'result': ErrorResponse.fromMap(jsonResult)};
+  }
+
+  Future<Map<String, dynamic>> loginWithGoogle(
+      {required String accessToken}) async {
+    final response = await http.post(
+      Uri.parse(Apis.loginWithThirdParty),
+      headers: {'Content-Type': 'application/json'},
+      body:
+          jsonEncode({"accessToken": accessToken, "loginWithThirdPartyId": 1}),
+    );
+    // if (response.statusCode == 200) {
+    final jsonResult = jsonDecode(response.body);
+    if (jsonResult['isSuccessed'] == true) {
+      final result = BaseResponse(
+          isSuccessed: jsonResult['isSuccessed'] as bool,
+          message: jsonResult['message'],
+          statusCode: jsonResult['statusCode'] as int,
+          resultObj: jsonResult['resultObj'] as String);
       return {'isSuccessed': true, 'result': result};
     }
     return {'isSuccessed': false, 'result': ErrorResponse.fromMap(jsonResult)};
   }
 
   Future<void> logOut() async {
-    if (await utils.isLoggedIn() == "true" && await utils.hasToken() == true) {
+    if (await utils.methodLogin() == "email" &&
+        await utils.hasToken() == true) {
       await utils.deleteAllSecureData();
 
       controller.add(AuthenticationStatus.unauthenticated);
-    } else if (await utils.isLoggedIn() == "true" &&
-        await utils.hasAccessTokenFacebook() == true) {
+    } else if (await utils.methodLogin() == "facebook" &&
+        await utils.hasToken() == true) {
       await FacebookAuth.instance.logOut();
       await utils.deleteAllSecureData();
 
       controller.add(AuthenticationStatus.unauthenticated);
-    } else if (await utils.isLoggedIn() == "true" &&
-        await utils.hasAccessTokenGoogle() == true) {
+    } else if (await utils.methodLogin() == "google" &&
+        await utils.hasToken() == true) {
       GoogleSignIn googleSignIn = GoogleSignIn();
       googleSignIn.disconnect();
       await utils.deleteAllSecureData();
@@ -109,7 +129,7 @@ class AuthenticationRepository {
           isSuccessed: jsonResult['isSuccessed'] as bool,
           message: jsonResult['message'],
           statusCode: jsonResult['statusCode'] as int,
-          ressultObj: jsonResult['resultObj'] as dynamic);
+          resultObj: jsonResult['resultObj'] as dynamic);
       return {'isSuccessed': true, 'result': result};
     }
     return {'isSuccessed': false, 'result': ErrorResponse.fromMap(jsonResult)};
@@ -131,7 +151,7 @@ class AuthenticationRepository {
           isSuccessed: jsonResult['isSuccessed'] as bool,
           message: jsonResult['message'],
           statusCode: jsonResult['statusCode'] as int,
-          ressultObj: jsonResult['resultObj'] as dynamic);
+          resultObj: jsonResult['resultObj'] as dynamic);
       return {'isSuccessed': true, 'result': result};
     }
     return {'isSuccessed': false, 'result': ErrorResponse.fromMap(jsonResult)};
@@ -153,7 +173,7 @@ class AuthenticationRepository {
           isSuccessed: jsonResult['isSuccessed'] as bool,
           message: jsonResult['message'],
           statusCode: jsonResult['statusCode'] as int,
-          ressultObj: jsonResult['resultObj'] as dynamic);
+          resultObj: jsonResult['resultObj'] as dynamic);
       return {'isSuccessed': true, 'result': result};
     }
     return {'isSuccessed': false, 'result': ErrorResponse.fromMap(jsonResult)};
@@ -174,7 +194,7 @@ class AuthenticationRepository {
           isSuccessed: jsonResult['isSuccessed'] as bool,
           message: jsonResult['message'],
           statusCode: jsonResult['statusCode'] as int,
-          ressultObj: jsonResult['resultObj'] as dynamic);
+          resultObj: jsonResult['resultObj'] as dynamic);
       return {'isSuccessed': true, 'result': result};
     }
     return {'isSuccessed': false, 'result': ErrorResponse.fromMap(jsonResult)};
@@ -194,7 +214,7 @@ class AuthenticationRepository {
           isSuccessed: jsonResult['isSuccessed'] as bool,
           message: jsonResult['message'],
           statusCode: jsonResult['statusCode'] as int,
-          ressultObj: jsonResult['resultObj'] as dynamic);
+          resultObj: jsonResult['resultObj'] as dynamic);
       return {'isSuccessed': true, 'result': result};
     }
     return {'isSuccessed': false, 'result': ErrorResponse.fromMap(jsonResult)};

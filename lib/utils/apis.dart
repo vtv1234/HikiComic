@@ -52,6 +52,7 @@ class Apis {
   //auth
   static const _authApi = '$_baseUrl/auth';
   static const login = '$_authApi/login';
+  static const loginWithThirdParty = '$_authApi/login-with-third-party';
   static const register = '$_authApi/register';
   static const verifyEmail = '$_authApi/user-verify-email';
   static const resendEmailVerification = '$_authApi/re-send-email-verification';

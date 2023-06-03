@@ -27,8 +27,7 @@ class ComicDetailBloc extends Bloc<ComicDetailEvent, ComicDetailState> {
             .getComicDetailByComicSeoAlias(event.comicSeoAlias);
         final chapters = await _chapterRepository
             .getChaptersByComicSeoAlias(event.comicSeoAlias);
-        emit(LoadedComicDetailState(
-            comicDetail.ressultObj, chapters.ressultObj));
+        emit(LoadedComicDetailState(comicDetail.resultObj, chapters.resultObj));
       } catch (e) {
         emit(ErrorComicDetailState(e.toString()));
       }
@@ -50,7 +49,7 @@ class ComicDetailBloc extends Bloc<ComicDetailEvent, ComicDetailState> {
 
   Future<FutureOr<void>> _handleRatingComicEvent(
       RatingComicEvent event, Emitter<ComicDetailState> emit) async {
-    if (await utils.isLoggedIn() == "true") {
+    if (await utils.methodLogin() != "") {
       try {
         final BaseResponse response = await _comicDetailRepository.ratingComic(
             comicId: event.comicId,

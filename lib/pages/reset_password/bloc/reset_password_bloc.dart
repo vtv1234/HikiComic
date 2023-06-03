@@ -121,13 +121,13 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
         BaseResponse regiseterSuccessedResult = registerResult['result'];
         // final StorageItem tokenItem =
         //     StorageItem(key: 'token', value: loginSuccessedResult.message!);
-        // final StorageItem isLoggedInItem =
-        //     StorageItem(key: 'isLoggedIn', value: 'true');
+        // final StorageItem methodLoginItem =
+        //     StorageItem(key: 'methodLogin', value: 'true');
 
         // await _utils.persistToken(tokenItem);
-        // await _utils.persistToken(isLoggedInItem);
+        // await _utils.persistToken(methodLoginItem);
         // _utils.persistToken(userIdToken);
-        // _utils.isLoggedIn(isLoggedInItem);
+        // _utils.methodLogin(methodLoginItem);
         // _authenticationRepository.controller
         //     .add(AuthenticationStatus.authenticated);
 // controller.add(AuthenticationStatus.authenticated);

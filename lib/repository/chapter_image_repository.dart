@@ -15,7 +15,7 @@ class ChapterImageRepository {
     final response = await http.get(
         Uri.parse(
             '${Apis.getChapterByChapterComicSeoAlias}$comicSeoAlias/$chapterSeoAlias'),
-        headers: await utils.isLoggedIn() == "true"
+        headers: await utils.methodLogin() != ""
             ? {'Authorization': 'Bearer ${await utils.readStorage('token')}'}
             : {});
     final resultJson = jsonDecode(response.body);

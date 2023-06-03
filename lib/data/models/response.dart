@@ -18,13 +18,13 @@ class BaseResponse<T> extends Equatable {
   final String? message;
   final int? statusCode;
   @JsonKey(fromJson: _dataFromJson)
-  final T? ressultObj;
+  final T? resultObj;
 
   factory BaseResponse.fromJson(Map<String, dynamic> json, type) =>
       _$BaseResponseFromJson(json, type);
 
   const BaseResponse(
-      {this.isSuccessed, this.message, this.statusCode, this.ressultObj});
+      {this.isSuccessed, this.message, this.statusCode, this.resultObj});
 
   /// Decodes [json] by "inspecting" its contents.
   static T _dataFromJson<T>(Object json, TypeModel type) {
@@ -78,7 +78,7 @@ class BaseResponse<T> extends Equatable {
   }
 
   @override
-  List<Object?> get props => [isSuccessed, statusCode, message, ressultObj];
+  List<Object?> get props => [isSuccessed, statusCode, message, resultObj];
 }
 
 BaseResponse<T> _$BaseResponseFromJson<T>(
@@ -87,5 +87,5 @@ BaseResponse<T> _$BaseResponseFromJson<T>(
       isSuccessed: json['isSuccessed'] as bool?,
       statusCode: json['statusCode'] as int?,
       message: json['message'] as String?,
-      ressultObj: BaseResponse._dataFromJson(json['resultObj'] as Object, type),
+      resultObj: BaseResponse._dataFromJson(json['resultObj'] as Object, type),
     );
