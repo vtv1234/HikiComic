@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hikicomic/data/models/account.dart';
 
 import 'package:hikicomic/pages/account/bloc/account_bloc.dart';
 import 'package:hikicomic/repository/authentication_repository.dart';
@@ -17,6 +18,7 @@ class AccountView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextEditingController nickNameController = TextEditingController();
+    context.read<AccountBloc>().add(GetAccountInformation());
     return LoaderOverlay(
         child: SafeArea(
       child: Scaffold(
@@ -31,9 +33,9 @@ class AccountView extends StatelessWidget {
         body: BlocConsumer<AccountBloc, AccountState>(
           listener: (context, state) {
             if (state is AccountLoading) {
-              context.loaderOverlay.show();
+              context.loaderOverlay.show(widget: LoadingScreen());
             } else if (state is UploadAvatarLoading) {
-              context.loaderOverlay.show();
+              context.loaderOverlay.show(widget: LoadingScreen());
             } else if (state is UploadAvatarByCameraSuccessful) {
               context.loaderOverlay.hide();
               context.read<AccountBloc>().add(GetAccountInformation());
@@ -65,7 +67,7 @@ class AccountView extends StatelessWidget {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(120),
                             child: state.accountInformation.userImageURL !=
-                                    "default.png"
+                                    "default.jpg"
                                 ? CachedNetworkImage(
                                     errorWidget: (context, url, error) =>
                                         const Icon(Icons.error),

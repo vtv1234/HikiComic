@@ -90,7 +90,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   ) async {
     emit(state.copyWith(
       message: "Siging...",
-      status: SignInStatus.loading,
+      status: SignInStatus.signing,
     ));
     try {
       final Map<String, dynamic> loginResult =
@@ -148,7 +148,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     try {
       emit(state.copyWith(
         message: "Siging...",
-        status: SignInStatus.loading,
+        status: SignInStatus.signing,
       ));
       accessToken = await FacebookAuth.instance.accessToken;
       if (accessToken != null) {
@@ -239,7 +239,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     try {
       emit(state.copyWith(
         message: "Signing...",
-        status: SignInStatus.loading,
+        status: SignInStatus.signing,
       ));
       String? accessToken;
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();

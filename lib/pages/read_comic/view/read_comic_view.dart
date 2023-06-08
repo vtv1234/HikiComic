@@ -180,18 +180,18 @@ class _ReadComicViewState extends State<ReadComicView>
                                 }
                                 break;
                               case 2:
-                                showModalBottomSheet(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.circular(kBorderRadius),
-                                  ),
-                                  context: context,
-                                  builder: (context) => CommentView(
-                                      chapterId: state.chapterImage.chapterId!,
-                                      comicId: state.chapterImage.comicId!,
-                                      chapterName:
-                                          state.chapterImage.chapterName!),
-                                );
+                                // showModalBottomSheet(
+                                //   shape: RoundedRectangleBorder(
+                                //     borderRadius:
+                                //         BorderRadius.circular(kBorderRadius),
+                                //   ),
+                                //   context: context,
+                                //   builder: (context) => CommentView(
+                                //       chapterId: state.chapterImage.chapterId!,
+                                //       comicId: state.chapterImage.comicId!,
+                                //       chapterName:
+                                //           state.chapterImage.chapterName!),
+                                // );
 
                                 break;
                               case 3:

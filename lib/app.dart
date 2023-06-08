@@ -54,25 +54,30 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider.value(
-      value: _authenticationRepository,
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (context) => AuthenticationBloc(
-                authenticationRepository: _authenticationRepository,
-                userRepository: _userRepository),
-          ),
-          BlocProvider(
-            create: (context) => SearchBloc(),
-          ),
-          BlocProvider(
-            create: (context) =>
-                AccountBloc(authenticationRepository: _authenticationRepository)
-                  ..add(GetAccountInformation()),
-          )
-        ],
-        child: const AppView(),
+    return GestureDetector(
+      onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: RepositoryProvider.value(
+        value: _authenticationRepository,
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => AuthenticationBloc(
+                  authenticationRepository: _authenticationRepository,
+                  userRepository: _userRepository),
+            ),
+            BlocProvider(
+              create: (context) => SearchBloc(),
+            ),
+            BlocProvider(
+              create: (context) => AccountBloc(
+                  authenticationRepository: _authenticationRepository)
+                ..add(GetAccountInformation()),
+            )
+          ],
+          child: const AppView(),
+        ),
       ),
     );
   }
@@ -100,7 +105,6 @@ class _AppViewState extends State<AppView> {
   void initState() {
     super.initState();
     initPlatformState();
-    getDeviceId();
   }
 
   Future<void> getDeviceId() async {
@@ -138,6 +142,7 @@ class _AppViewState extends State<AppView> {
           case TargetPlatform.android:
             deviceData = _deviceInfo
                 .readAndroidBuildData(await deviceInfoPlugin.androidInfo);
+            getDeviceId();
             break;
           case TargetPlatform.fuchsia:
             // TODO: Handle this case.
@@ -212,10 +217,11 @@ class _AppViewState extends State<AppView> {
         ),
         GoRoute(
           name: 'details',
-          path: '/details/:comicSEOAlias',
+          path: '/details/:comicSEOAlias/:comicId',
           builder: (BuildContext context, GoRouterState state) {
             return ComicDetailView(
               comicSEOAlias: state.params['comicSEOAlias']!,
+              comicId: state.params['comicId']!,
             );
           },
         ),

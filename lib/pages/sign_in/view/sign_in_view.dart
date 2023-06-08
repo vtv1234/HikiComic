@@ -64,17 +64,22 @@ class SignInDialog extends StatelessWidget {
                     ]),
                 child: BlocConsumer<SignInBloc, SignInState>(
                   listener: (context, state) {
-                    if (state.status == SignInStatus.loading) {
-                      context.loaderOverlay.show(widget: const LoadingScreen());
+                    if (state.status == SignInStatus.signing) {
+                      context.loaderOverlay.show(
+                          widget: const LoadingScreen(
+                        message: "Signing In",
+                      ));
                     }
                     if (state.status == SignInStatus.success) {
+                      context.loaderOverlay.hide();
+                      context.pop();
                       SchedulerBinding.instance.addPostFrameCallback(
                           (timeStamp) async => await successSnakBar(
                                   success: "Sign In Successful", duration: 10)
                               .show(context));
-                      Navigator.of(context).pop();
                     }
                     if (state.status == SignInStatus.failure) {
+                      context.loaderOverlay.hide();
                       context.read<SignInBloc>().add(
                             SignInLoadingEvent(
                                 email: emailController.text,
@@ -226,6 +231,7 @@ class SignInDialog extends StatelessWidget {
                                   context.read<SignInBloc>().add(
                                       SignInEmailChangedEvent(email: value));
                                 },
+                                textInputAction: TextInputAction.next,
                                 validator: (value) {
                                   // if (EmailValidator.validate(value!)) {
                                   //   context.read<SignInBloc>().add(

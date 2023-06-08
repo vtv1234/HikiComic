@@ -64,4 +64,26 @@ class Utils {
   Future<String?> readStorage(String key) async {
     return await _storageService.readSecureData(key);
   }
+
+  Future<bool> isLoggedIn() async {
+    if (await _storageService.readSecureData('methodLogin') != null) {
+      return true;
+    }
+    return false;
+  }
+
+  String differentTime(DateTime dateStart) {
+    Duration differentDuration = DateTime.now().difference(dateStart);
+    //second<minute<hours<day
+    //60<60<24<1
+    if (differentDuration > const Duration(days: 1)) {
+      return '${differentDuration.inDays} day ago';
+    } else if (differentDuration > const Duration(hours: 1)) {
+      return '${differentDuration.inHours} hours ago';
+    } else if (differentDuration > const Duration(minutes: 1)) {
+      return '${differentDuration.inMinutes} minutes ago';
+    } else {
+      return '${differentDuration.inSeconds} seconds ago';
+    }
+  }
 }

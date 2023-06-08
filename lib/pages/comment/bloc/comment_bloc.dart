@@ -8,29 +8,35 @@ part 'comment_state.dart';
 
 class CommentBloc extends Bloc<CommentEvent, CommentState> {
   final CommentRepository _commentRepository = CommentRepository();
-  CommentBloc() : super(CommentInitial()) {
-    on<GetListCommentOfChapter>((event, emit) async {
-      emit(CommentLoading());
+  CommentBloc() : super(CommentLoading()) {
+    on<GetListComment>((event, emit) async {
+      // emit(CommentLoading());
       try {
-        final List<Comment>? result =
-            await _commentRepository.getListCommentOfChapter(
-                comicId: event.comicId,
-                chapterId: event.chapterId,
-                pageIndex: 1,
-                pageSize: 30);
-        emit(CommentLoadedSuccessful(result));
+        // if (event.isLoading) return;
+        // emit()
+        final List<Comment>? result = await _commentRepository.GetListComment(
+            comicId: event.comicId,
+            chapterId: event.chapterId,
+            pageIndex: event.pageIndex,
+            pageSize: 10);
+
+        emit(CommentLoadedSuccessful(
+            listComment: result,
+            hasMore: result!.length < 10 ? false : true,
+            pageIndex: event.pageIndex + 1,
+            isLoading: false));
       } catch (e) {
         emit(CommentLoadedFailure(e.toString()));
       }
     });
     on<SendComment>((event, emit) async {
-      emit(CommentLoading());
+      // emit(CommentLoading());
       try {
         final responseResult = await _commentRepository.sendComment(
             chapterId: event.chapterId,
             comicId: event.comicId,
             commentContent: event.commentContent,
-            parentCommentId: event.parrentCommentId);
+            parentCommentId: event.parentCommentId);
         if (responseResult.isSuccessed == true) {
           emit(SendedCommentSuccess(responseResult.resultObj));
         } else {
@@ -40,5 +46,10 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
         emit(SendedCommentFail(e.toString()));
       }
     });
+    on<ReplyComment>(
+      (event, emit) {
+        emit(ReplyingComment(event.parentUsername));
+      },
+    );
   }
 }

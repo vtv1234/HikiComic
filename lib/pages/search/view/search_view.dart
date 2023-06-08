@@ -84,7 +84,9 @@ class SearchView extends SearchDelegate<List?> {
                             "details",
                             params: {
                               "comicSEOAlias":
-                                  state.hotComics[index].comicSEOAlias!
+                                  state.hotComics[index].comicSEOAlias!,
+                              'comicId':
+                                  state.hotComics[index].comicId!.toString()
                             },
                           )
                         },
@@ -365,7 +367,9 @@ class SearchView extends SearchDelegate<List?> {
                             "details",
                             params: {
                               "comicSEOAlias":
-                                  state.hotComics[index].comicSEOAlias!
+                                  state.hotComics[index].comicSEOAlias!,
+                              'comicId':
+                                  state.hotComics[index].comicId!.toString()
                             },
                           )
                         },
@@ -474,7 +478,9 @@ class SearchView extends SearchDelegate<List?> {
                                     "details",
                                     params: {
                                       "comicSEOAlias":
-                                          state.comics[index].comicSEOAlias!
+                                          state.comics[index].comicSEOAlias!,
+                                      'comicId': state.hotComics[index].comicId!
+                                          .toString()
                                     },
                                   )
                                 },

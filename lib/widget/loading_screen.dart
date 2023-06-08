@@ -4,23 +4,36 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:hikicomic/utils/colors.dart';
+import 'package:hikicomic/widget/jumping_dot.dart';
 
-class LoadingScreen extends StatefulWidget {
-  const LoadingScreen({super.key});
+class LoadingScreen extends StatelessWidget {
+  const LoadingScreen({super.key, this.message});
 
-  @override
-  State<LoadingScreen> createState() => LoadingScreenState();
-}
-
-class LoadingScreenState extends State<LoadingScreen> {
+  final String? message;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kPrimary,
       body: Center(
-        child: SpinKitFadingCircle(
-          size: 50,
-          color: kRed,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SpinKitFadingCircle(
+              size: 50,
+              color: kRed,
+            ),
+            message != null
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(message ?? ""),
+                      JumpingDots(
+                        color: kWhite,
+                      )
+                    ],
+                  )
+                : Container()
+          ],
         ),
       ),
     );

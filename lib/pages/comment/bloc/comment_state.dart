@@ -13,10 +13,19 @@ class CommentLoading extends CommentState {}
 
 class CommentLoadedSuccessful extends CommentState {
   final List<Comment>? listComment;
+  final bool hasMore;
+  final int pageIndex;
 
-  const CommentLoadedSuccessful(this.listComment);
+  final bool isLoading;
+
+  const CommentLoadedSuccessful({
+    this.listComment,
+    required this.hasMore,
+    required this.pageIndex,
+    required this.isLoading,
+  });
   @override
-  List<Object> get props => [listComment!];
+  List<Object> get props => [listComment!, hasMore];
 }
 
 class CommentLoadedFailure extends CommentState {
@@ -39,4 +48,13 @@ class SendedCommentFail extends CommentState {
   final String error;
 
   const SendedCommentFail(this.error);
+}
+
+class ReplyingComment extends CommentState {
+  final String replyUsername;
+
+  ReplyingComment(this.replyUsername);
+  @override
+  // TODO: implement props
+  List<Object> get props => [replyUsername];
 }

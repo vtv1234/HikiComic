@@ -11,6 +11,7 @@ import 'package:hikicomic/pages/comment/view/widget/comment_branch_view.dart';
 import 'package:hikicomic/utils/colors.dart';
 import 'package:hikicomic/utils/utils.dart';
 import 'package:hikicomic/widget/loading_screen.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import 'package:intl/intl.dart' as intl;
 
@@ -46,12 +47,23 @@ class _ComicDetailViewState extends State<ComicDetailView> {
   final controller = ScrollController();
   DateTime lastPressedAt = DateTime.now();
   final commentController = TextEditingController();
+
   // final replyCommentController = TextEditingController();
   bool isEnable = true;
   int page = 0;
   List<Comment> comments = [];
+  static const _pageSize = 20;
+
+  final PagingController<int, Comment> _pagingController =
+      PagingController(firstPageKey: 0);
   @override
   void initState() {
+    _pagingController.addPageRequestListener((pageKey) {
+      context.read<CommentBloc>().add(GetListComment(
+          comicId: int.parse(widget.comicId),
+          pageIndex: page++,
+          isLoading: false));
+    });
     super.initState();
   }
 
@@ -131,8 +143,8 @@ class _ComicDetailViewState extends State<ComicDetailView> {
                 }
                 if (state is LoadedComicDetailState) {
                   controller.addListener(() {
-                    if (controller.position.pixels ==
-                        controller.position.maxScrollExtent) {
+                    if (controller.position.pixels >
+                        0.8 * controller.position.maxScrollExtent) {
                       print('end');
                       context.read<CommentBloc>().add(GetListComment(
                             comicId: int.parse(widget.comicId),
@@ -617,126 +629,126 @@ class _ComicDetailViewState extends State<ComicDetailView> {
                             ),
                           ),
                         ),
-                        SliverToBoxAdapter(
-                            child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text('Chapters',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(fontWeight: FontWeight.bold)),
-                        )),
-                        SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int index) {
-                              if (index.isOdd) {
-                                return const Divider(
-                                    indent: 8,
-                                    endIndent: 8,
-                                    height: 0,
-                                    color: Colors.grey);
-                              }
-                              return InkWell(
-                                onTap: () =>
-                                    // chapters[index ~/ 2].isLockedChapter!
-                                    //     ? showDialog(
-                                    //         context: context,
-                                    //         builder: (context) => SignInDialog(
-                                    //             // userRepository: UserRepository(),
-                                    //             ),
-                                    //       )
-                                    //     :
-                                    context.pushNamed(
-                                  "read-comic",
-                                  params: {
-                                    "comicSEOAlias": comicDetail.comicSEOAlias!,
-                                    'chapterSEOAlias':
-                                        chapters[index ~/ 2].chapterSEOAlias!
-                                  },
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: Row(
-                                    // mainAxisAl,
-                                    children: [
-                                      Expanded(
-                                        flex: 5,
-                                        child: Text(
-                                          chapters[index ~/ 2].chapterName!,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                      //const Spacer(),
-                                      Expanded(
-                                        flex: 3,
-                                        child: Text(
-                                          intl.DateFormat('MM-dd-yyyy').format(
-                                              chapters[index ~/ 2]
-                                                  .dateCreated!),
-                                          style: const TextStyle(
-                                              color: Colors.grey),
-                                        ),
-                                      ),
+                        // SliverToBoxAdapter(
+                        //     child: Padding(
+                        //   padding: const EdgeInsets.all(8.0),
+                        //   child: Text('Chapters',
+                        //       style: Theme.of(context)
+                        //           .textTheme
+                        //           .bodyMedium
+                        //           ?.copyWith(fontWeight: FontWeight.bold)),
+                        // )),
+                        // SliverList(
+                        //   delegate: SliverChildBuilderDelegate(
+                        //     (BuildContext context, int index) {
+                        //       if (index.isOdd) {
+                        //         return const Divider(
+                        //             indent: 8,
+                        //             endIndent: 8,
+                        //             height: 0,
+                        //             color: Colors.grey);
+                        //       }
+                        //       return InkWell(
+                        //         onTap: () =>
+                        //             // chapters[index ~/ 2].isLockedChapter!
+                        //             //     ? showDialog(
+                        //             //         context: context,
+                        //             //         builder: (context) => SignInDialog(
+                        //             //             // userRepository: UserRepository(),
+                        //             //             ),
+                        //             //       )
+                        //             //     :
+                        //             context.pushNamed(
+                        //           "read-comic",
+                        //           params: {
+                        //             "comicSEOAlias": comicDetail.comicSEOAlias!,
+                        //             'chapterSEOAlias':
+                        //                 chapters[index ~/ 2].chapterSEOAlias!
+                        //           },
+                        //         ),
+                        //         child: Padding(
+                        //           padding: const EdgeInsets.all(8),
+                        //           child: Row(
+                        //             // mainAxisAl,
+                        //             children: [
+                        //               Expanded(
+                        //                 flex: 5,
+                        //                 child: Text(
+                        //                   chapters[index ~/ 2].chapterName!,
+                        //                   maxLines: 1,
+                        //                   overflow: TextOverflow.ellipsis,
+                        //                   style: const TextStyle(
+                        //                       fontWeight: FontWeight.bold),
+                        //                 ),
+                        //               ),
+                        //               //const Spacer(),
+                        //               Expanded(
+                        //                 flex: 3,
+                        //                 child: Text(
+                        //                   intl.DateFormat('MM-dd-yyyy').format(
+                        //                       chapters[index ~/ 2]
+                        //                           .dateCreated!),
+                        //                   style: const TextStyle(
+                        //                       color: Colors.grey),
+                        //                 ),
+                        //               ),
 
-                                      Expanded(
-                                        flex: 1,
-                                        child: Text(
-                                          chapters[index ~/ 2]
-                                              .viewCount
-                                              .toString(),
-                                          style: const TextStyle(
-                                              color: Colors.grey),
-                                        ),
-                                      ),
+                        //               Expanded(
+                        //                 flex: 1,
+                        //                 child: Text(
+                        //                   chapters[index ~/ 2]
+                        //                       .viewCount
+                        //                       .toString(),
+                        //                   style: const TextStyle(
+                        //                       color: Colors.grey),
+                        //                 ),
+                        //               ),
 
-                                      // Expanded(
-                                      //     flex: 2,
-                                      //     child: Chip(
-                                      //         padding: const EdgeInsets.all(0),
-                                      //         label: Row(
-                                      //           mainAxisAlignment:
-                                      //               MainAxisAlignment.center,
-                                      //           children: [
-                                      //             chapters[index ~/ 2]
-                                      //                     .isLockedChapter!
-                                      //                 ? const Icon(
-                                      //                     Icons.lock,
-                                      //                     color: kYellow,
-                                      //                     size: kSmallIconSize,
-                                      //                   )
-                                      //                 : Container(),
-                                      //             const SizedBox(
-                                      //               width: 2,
-                                      //             ),
-                                      //             Text(
-                                      //               chapters[index ~/ 2]
-                                      //                       .isLockedChapter!
-                                      //                   ? 'Read'
-                                      //                   : 'Free',
-                                      //               style: Theme.of(context)
-                                      //                   .textTheme
-                                      //                   .bodySmall
-                                      //                   ?.copyWith(
-                                      //                       color: chapters[
-                                      //                                   index ~/
-                                      //                                       2]
-                                      //                               .isLockedChapter!
-                                      //                           ? kYellow
-                                      //                           : kWhite),
-                                      //             ),
-                                      //           ],
-                                      //         )))
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
-                            childCount: (state.chapters.length * 2) - 1,
-                          ),
-                        ),
+                        //               // Expanded(
+                        //               //     flex: 2,
+                        //               //     child: Chip(
+                        //               //         padding: const EdgeInsets.all(0),
+                        //               //         label: Row(
+                        //               //           mainAxisAlignment:
+                        //               //               MainAxisAlignment.center,
+                        //               //           children: [
+                        //               //             chapters[index ~/ 2]
+                        //               //                     .isLockedChapter!
+                        //               //                 ? const Icon(
+                        //               //                     Icons.lock,
+                        //               //                     color: kYellow,
+                        //               //                     size: kSmallIconSize,
+                        //               //                   )
+                        //               //                 : Container(),
+                        //               //             const SizedBox(
+                        //               //               width: 2,
+                        //               //             ),
+                        //               //             Text(
+                        //               //               chapters[index ~/ 2]
+                        //               //                       .isLockedChapter!
+                        //               //                   ? 'Read'
+                        //               //                   : 'Free',
+                        //               //               style: Theme.of(context)
+                        //               //                   .textTheme
+                        //               //                   .bodySmall
+                        //               //                   ?.copyWith(
+                        //               //                       color: chapters[
+                        //               //                                   index ~/
+                        //               //                                       2]
+                        //               //                               .isLockedChapter!
+                        //               //                           ? kYellow
+                        //               //                           : kWhite),
+                        //               //             ),
+                        //               //           ],
+                        //               //         )))
+                        //             ],
+                        //           ),
+                        //         ),
+                        //       );
+                        //     },
+                        //     childCount: (state.chapters.length * 2) - 1,
+                        //   ),
+                        // ),
                         SliverToBoxAdapter(
                             child: BlocConsumer<CommentBloc, CommentState>(
                           // bloc: CommentBloc()
@@ -908,7 +920,7 @@ class _ComicDetailViewState extends State<ComicDetailView> {
                                                         color: kRed,
                                                         size: 20,
                                                       )
-                                                    : Text('No more comment'));
+                                                    : Text('No more commeent'));
                                           }
                                           ;
                                         }
@@ -1155,7 +1167,7 @@ class _BuildCommentsState extends State<BuildComments> {
                                     color: kRed,
                                     size: 20,
                                   )
-                                : Text('No more comment'));
+                                : Text('No more commeent'));
                       }
                       ;
                     }

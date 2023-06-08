@@ -80,7 +80,10 @@ class _BuildSideBarState extends State<BuildSideBar> {
         child: BlocConsumer<AuthenticationBloc, AuthenticationState>(
           listener: (context, state) {
             if (state.status == AuthenticationStatus.unknown) {
-              context.loaderOverlay.show(widget: LoadingScreen());
+              context.loaderOverlay.show(
+                  widget: LoadingScreen(
+                message: "Signing Out",
+              ));
             }
           },
           builder: (context, state) {
@@ -318,7 +321,7 @@ class _HomeViewState extends State<HomeView> {
           ),
         ),
         body: Padding(
-          padding: const EdgeInsets.all(8),
+          padding: EdgeInsets.only(left: 8, right: 8),
           child: SingleChildScrollView(
             child: BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
               return Column(

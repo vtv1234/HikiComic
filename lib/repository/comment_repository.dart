@@ -10,26 +10,25 @@ import 'package:http/http.dart' as http;
 
 class CommentRepository {
   final utils = Utils();
-  Future<List<Comment>?> getListCommentOfChapter(
+  Future<List<Comment>?> GetListComment(
       {required int comicId,
       required int? chapterId,
       required int pageIndex,
       required int pageSize}) async {
-    bool methodLogin = await utils.methodLogin() != "";
-    final response = await http.post(
-      Uri.parse(Apis.pagingComment),
-      body: jsonEncode({
-        "pageIndex": pageIndex,
-        "pageSize": pageSize,
-        "comicId": comicId,
-        "chapterId": chapterId
-      }),
-      headers: methodLogin
-          ? {
-              'Authorization': 'Bearer ${await utils.readStorage('token')}',
-            }
-          : {},
-    );
+    final response = await http.post(Uri.parse(Apis.pagingComment),
+        body: jsonEncode({
+          "pageIndex": pageIndex,
+          "pageSize": pageSize,
+          "comicId": comicId,
+          "chapterId": chapterId
+        }),
+        headers: {'Content-Type': 'application/json'}
+        // headers: await utils.isLoggedIn()
+        //     ? {
+        //         'Authorization': 'Bearer ${await utils.readStorage('token')}',
+        //       }
+        //     : {},
+        );
     if (response.statusCode == 200) {
       final List result = jsonDecode(response.body)['items'];
       return result.map((e) => Comment.fromMap(e)).toList();
@@ -39,8 +38,8 @@ class CommentRepository {
   }
 
   Future<BaseResponse> sendComment(
-      {required chapterId,
-      required comicId,
+      {required int? chapterId,
+      required int? comicId,
       required int? parentCommentId,
       required String commentContent}) async {
     final response = await http.post(Uri.parse(Apis.createComment),

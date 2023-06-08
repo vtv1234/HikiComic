@@ -7,22 +7,36 @@ abstract class CommentEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetListCommentOfChapter extends CommentEvent {
+class GetListComment extends CommentEvent {
   final int comicId;
   final int? chapterId;
+  final int pageIndex;
+  final bool isLoading;
 
-  const GetListCommentOfChapter(this.comicId, this.chapterId);
+  const GetListComment({
+    required this.comicId,
+    this.chapterId,
+    required this.pageIndex,
+    required this.isLoading,
+  });
 }
 
 class SendComment extends CommentEvent {
   final String commentContent;
   final int comicId;
   final int? chapterId;
-  final int? parrentCommentId;
+  final int? parentCommentId;
 
   const SendComment(
       {required this.commentContent,
       required this.comicId,
       required this.chapterId,
-      required this.parrentCommentId});
+      required this.parentCommentId});
+}
+
+class ReplyComment extends CommentEvent {
+  final int parentCommentId;
+  final String parentUsername;
+
+  ReplyComment({required this.parentCommentId, required this.parentUsername});
 }

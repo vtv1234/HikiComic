@@ -14,65 +14,70 @@ class CardComic extends StatelessWidget {
       onTap: () => {
         context.pushNamed(
           "details",
-          params: {"comicSEOAlias": comic.comicSEOAlias!},
+          params: {
+            "comicSEOAlias": comic.comicSEOAlias!,
+            'comicId': comic.comicId!.toString()
+          },
         )
       },
       //
-      child: SizedBox(
-        height: 0.24.sh,
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(5),
-                child: CachedNetworkImage(
-                  height: 0.20.sh,
-                  errorWidget: (context, url, error) => const Center(
-                    child: Icon(Icons.error),
+      child: Expanded(
+        child: SizedBox(
+          height: 0.24.sh,
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              // mainAxisSize: MainAxisSize.min,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(5),
+                  child: CachedNetworkImage(
+                    height: 0.20.sh,
+                    errorWidget: (context, url, error) => const Center(
+                      child: Icon(Icons.error),
+                    ),
+                    imageUrl: comic.comicCoverImageURL!,
+                    fit: BoxFit.fitHeight,
                   ),
-                  imageUrl: comic.comicCoverImageURL!,
-                  fit: BoxFit.fitHeight,
                 ),
-              ),
-              Text(
-                comic.comicName!,
-                maxLines: 1,
-                style: const TextStyle(overflow: TextOverflow.ellipsis),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const Icon(
-                    Icons.remove_red_eye,
-                    size: 10,
-                  ),
-                  Text(
-                    comic.viewCount.toString(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodySmall
-                        ?.copyWith(color: Colors.grey.shade400),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  const Icon(
-                    Icons.star,
-                    size: 10,
-                    color: Colors.yellow,
-                  ),
-                  Text(
-                    comic.rating.toString(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodySmall
-                        ?.copyWith(color: Colors.grey.shade400),
-                  )
-                ],
-              )
-            ]),
+                Text(
+                  comic.comicName!,
+                  maxLines: 1,
+                  style: const TextStyle(overflow: TextOverflow.ellipsis),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const Icon(
+                      Icons.remove_red_eye,
+                      size: 10,
+                    ),
+                    Text(
+                      comic.viewCount.toString(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall
+                          ?.copyWith(color: Colors.grey.shade400),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    const Icon(
+                      Icons.star,
+                      size: 10,
+                      color: Colors.yellow,
+                    ),
+                    Text(
+                      comic.rating.toString(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall
+                          ?.copyWith(color: Colors.grey.shade400),
+                    )
+                  ],
+                )
+              ]),
+        ),
       ),
     );
   }

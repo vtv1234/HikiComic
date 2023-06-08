@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:hikicomic/data/models/history_comic.dart';
 import 'package:hikicomic/utils/colors.dart';
+import 'package:hikicomic/utils/utils.dart';
 
 class CardHistoryComic extends StatelessWidget {
   final HistoryComic comic;
@@ -12,19 +13,20 @@ class CardHistoryComic extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String dateRead = "";
-    Duration differentDuration = DateTime.now().difference(comic.dateRead!);
-    //second<minute<hours<day
-    //60<60<24<1
-    if (differentDuration > const Duration(days: 1)) {
-      dateRead = '${differentDuration.inDays} day ago';
-    } else if (differentDuration > const Duration(hours: 1)) {
-      dateRead = '${differentDuration.inHours} hours ago';
-    } else if (differentDuration > const Duration(minutes: 1)) {
-      dateRead = '${differentDuration.inMinutes} minutes ago';
-    } else {
-      dateRead = '${differentDuration.inSeconds} seconds ago';
-    }
+    String dateRead = Utils().differentTime(comic.dateRead!);
+
+    // Duration differentDuration = DateTime.now().difference(comic.dateRead!);
+    // //second<minute<hours<day
+    // //60<60<24<1
+    // if (differentDuration > const Duration(days: 1)) {
+    //   dateRead = '${differentDuration.inDays} day ago';
+    // } else if (differentDuration > const Duration(hours: 1)) {
+    //   dateRead = '${differentDuration.inHours} hours ago';
+    // } else if (differentDuration > const Duration(minutes: 1)) {
+    //   dateRead = '${differentDuration.inMinutes} minutes ago';
+    // } else {
+    //   dateRead = '${differentDuration.inSeconds} seconds ago';
+    // }
 
     return GestureDetector(
       onTap: () => {

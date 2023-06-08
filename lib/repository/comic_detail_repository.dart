@@ -12,12 +12,14 @@ class ComicDetailRepository {
   final utils = Utils();
   Future<BaseResponse> getComicDetailByComicSeoAlias(
       String comicSeoAlias) async {
-    bool methodLogin = await utils.methodLogin() != "";
+    bool a = await utils.isLoggedIn();
+    print(a);
+
     final response = await http.get(
-      Uri.parse(methodLogin
+      Uri.parse(await utils.isLoggedIn()
           ? '${Apis.getComicDetailByComicSeoAliasWithUser}$comicSeoAlias'
           : '${Apis.getComicDetailByComicSeoAlias}$comicSeoAlias'),
-      headers: methodLogin
+      headers: await utils.isLoggedIn()
           ? {
               'Authorization': 'Bearer ${await utils.readStorage('token')}',
             }
