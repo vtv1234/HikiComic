@@ -1,14 +1,24 @@
+<<<<<<< Updated upstream
+=======
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
+>>>>>>> Stashed changes
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hikicomic/pages/account/bloc/account_bloc.dart';
 import 'package:hikicomic/pages/account/view/account_view.dart';
+import 'package:hikicomic/pages/comic_detail/view.dart';
+import 'package:hikicomic/pages/comment/bloc/comment_bloc.dart';
+import 'package:hikicomic/pages/fcm.dart';
 import 'package:hikicomic/pages/home/view/home_view.dart';
 import 'package:hikicomic/pages/library/view/library_view.dart';
 import 'package:hikicomic/pages/read_comic/view/read_comic_view.dart';
 import 'package:hikicomic/pages/splash/view/splash.dart';
 import 'package:hikicomic/utils/theme.dart';
+import 'package:hikicomic/widget/snackbar.dart';
 
 import 'pages/authentication/authentication.dart';
 import 'pages/comic_detail/view/comic_detail_view.dart';
@@ -31,23 +41,41 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  late final AuthenticationRepository _authenticationRepository;
-  late final UserRepository _userRepository;
+  // late final AuthenticationRepository _authenticationRepository;
+  // late final UserRepository _userRepository;
+  String? _token;
+  late Stream<String> _tokenStream;
+
+  void setToken(String? token) {
+    print('FCM Token: $token');
+    setState(() {
+      _token = token;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-    _authenticationRepository = AuthenticationRepository();
-    _userRepository = UserRepository();
+    FirebaseMessaging.instance
+        .getToken(
+            vapidKey:
+                'BBk4Kx7w6Z4xpSEvYFyiHMOzwsDSTdpeTZFNGyMcNCcpjgIG5j1cfkRg5LSSmU7pKJrfSja6y4H9KIvRgIiwAXQ')
+        .then(setToken);
+    _tokenStream = FirebaseMessaging.instance.onTokenRefresh;
+    _tokenStream.listen(setToken);
+    // _authenticationRepository = AuthenticationRepository();
+    // _userRepository = UserRepository();
   }
 
   @override
   void dispose() {
-    _authenticationRepository.dispose();
+    // _authenticationRepository.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< Updated upstream
     return RepositoryProvider.value(
       value: _authenticationRepository,
       child: MultiBlocProvider(
@@ -69,6 +97,44 @@ class _AppState extends State<App> {
         child: const AppView(),
       ),
     );
+=======
+    print(_token);
+    // context.pushNamed('home', params: {'token': _token!});
+
+    TextEditingController mytext = TextEditingController(text: _token);
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("Copy & Paste with Dart"),
+          backgroundColor: Colors.indigoAccent,
+        ),
+        body: Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.all(20),
+            child: Column(
+              children: [
+                TextField(
+                  controller: mytext,
+                ),
+                Row(children: [
+                  ElevatedButton(
+                      onPressed: () {
+                        Clipboard.setData(ClipboardData(text: mytext.text));
+                      },
+                      child: Text("Copy Text")),
+                  Padding(
+                    padding: EdgeInsets.only(left: 20),
+                    child: ElevatedButton(
+                        onPressed: () async {
+                          Clipboard.getData(Clipboard.kTextPlain).then((value) {
+                            mytext.text = mytext.text + value!.text!;
+                          });
+                        },
+                        child: Text("Paste Text")),
+                  )
+                ]),
+              ],
+            )));
+>>>>>>> Stashed changes
   }
 }
 
@@ -82,6 +148,15 @@ class AppView extends StatefulWidget {
 }
 
 class _AppViewState extends State<AppView> {
+<<<<<<< Updated upstream
+=======
+  static final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
+  late Map<String, dynamic> _deviceData = <String, dynamic>{};
+  final DeviceInfo _deviceInfo = DeviceInfo();
+  static const platform =
+      MethodChannel('com.example.hikicomic.hikicomic/androidId');
+  String androidId = '';
+>>>>>>> Stashed changes
   // final _navigatorKey = GlobalKey<NavigatorState>();
 
   // NavigatorState get _navigator => _navigatorKey.currentState!;
@@ -117,8 +192,9 @@ class _AppViewState extends State<AppView> {
         GoRoute(
           name: 'home',
           path: '/home',
-          builder: (BuildContext context, GoRouterState state) =>
-              const HomeScreen(),
+          builder: (BuildContext context, GoRouterState state) => Fcm(
+            token: state.params['token']!,
+          ),
         ),
         GoRoute(
           name: 'details',

@@ -190,6 +190,7 @@ class SignInDialog extends StatelessWidget {
                                               )),
                                 ],
                               ),
+<<<<<<< Updated upstream
                             ),
                             Text(
                               'Sign In with Email',
@@ -218,6 +219,68 @@ class SignInDialog extends StatelessWidget {
                                 if (RegExp(
                                         r'^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$')
                                     .hasMatch(value!.trim())) {
+=======
+                              Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    IconButton(
+                                        iconSize: 40,
+                                        onPressed: () {
+                                          context
+                                              .read<SignInBloc>()
+                                              .add(SignInWithGoogleEvent());
+                                        },
+                                        icon: Image.asset(
+                                          ImagePath.iconPathGoogle,
+                                          //height: ,
+                                          //width: 300,
+                                        )),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    IconButton(
+                                        iconSize: 40,
+                                        onPressed: () {
+                                          context
+                                              .read<SignInBloc>()
+                                              .add(SignInWithFacebookEvent());
+                                        },
+                                        icon: Image.asset(
+                                          ImagePath.iconPathFacebook,
+                                          //height: ,
+                                          //width: 300,
+                                        )),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    // IconButton(
+                                    //     iconSize: 40,
+                                    //     onPressed: () {},
+                                    //     icon: Image.asset(
+                                    //         ImagePath.iconPathTwitter
+                                    //         //height: ,
+                                    //         //width: 300,
+                                    //         )),
+                                  ],
+                                ),
+                              ),
+                              Text(
+                                'Sign In with Email',
+                                textAlign: TextAlign.center,
+                                style:
+                                    Theme.of(context).textTheme.headlineMedium,
+                              ),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              TextFormField(
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                onChanged: (value) {
+>>>>>>> Stashed changes
                                   context.read<SignInBloc>().add(
                                       const SignInEmailValidatedEvent(
                                           isValidated: true));

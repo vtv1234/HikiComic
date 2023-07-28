@@ -50,44 +50,43 @@ class _ComicDetailViewState extends State<ComicDetailView> {
       child: Scaffold(
           body: BlocConsumer<ComicDetailBloc, ComicDetailState>(
               listener: (context, state) {
-                if (state is UpdateStatusFollowingComicSuccessful) {
-                  successSnakBar(success: state.message, duration: 2)
-                      .show(context);
-                  context
-                      .read<ComicDetailBloc>()
-                      .add(LoadComicDetailEvent(widget.comicSEOAlias));
-                }
-                if (state is UpdateStatusFollowingComicFailure) {
-                  errorSnakBar(error: state.message, duration: 2).show(context);
-                  // context
-                  //     .read<ComicDetailBloc>()
-                  //     .add(LoadComicDetailEvent(comicSEOAlias));
-                }
-                if (state is RatingComicSuccessful) {
-                  successSnakBar(success: state.message, duration: 2)
-                      .show(context);
-                  context
-                      .read<ComicDetailBloc>()
-                      .add(LoadComicDetailEvent(widget.comicSEOAlias));
-                }
-                if (state is RatingComicFailure) {
-                  infoSnakBar(info: state.message, duration: 10).show(context);
-                  context
-                      .read<ComicDetailBloc>()
-                      .add(LoadComicDetailEvent(widget.comicSEOAlias));
-                  showDialog(
-                    context: context,
-                    builder: (context) => const SignInDialog(),
-                  );
-                  // context
-                  //     .read<ComicDetailBloc>()
-                  //     .add(LoadComicDetailEvent(comicSEOAlias));
-                }
-              },
-              buildWhen: (previous, current) =>
-                  previous != current && current is LoadedComicDetailState ||
-                  current is RatingComicFailure,
+        if (state is UpdateStatusFollowingComicSuccessful) {
+          successSnakBar(success: state.message, duration: 2).show(context);
+          context
+              .read<ComicDetailBloc>()
+              .add(LoadComicDetailEvent(widget.comicSEOAlias));
+        }
+        if (state is UpdateStatusFollowingComicFailure) {
+          errorSnakBar(error: state.message, duration: 2).show(context);
+          // context
+          //     .read<ComicDetailBloc>()
+          //     .add(LoadComicDetailEvent(comicSEOAlias));
+        }
+        if (state is RatingComicSuccessful) {
+          successSnakBar(success: state.message, duration: 2).show(context);
+          context
+              .read<ComicDetailBloc>()
+              .add(LoadComicDetailEvent(widget.comicSEOAlias));
+        }
+        if (state is RatingComicFailure) {
+          infoSnakBar(info: state.message, duration: 10).show(context);
+          context
+              .read<ComicDetailBloc>()
+              .add(LoadComicDetailEvent(widget.comicSEOAlias));
+          showDialog(
+            context: context,
+            builder: (context) => const SignInDialog(),
+          );
+          // context
+          //     .read<ComicDetailBloc>()
+          //     .add(LoadComicDetailEvent(comicSEOAlias));
+        }
+      },
+              // buildWhen: (previous, current) =>
+              //     previous != current && current is LoadedComicDetailState ||
+              //     current is RatingComicFailure,
               builder: (context, state) {
+<<<<<<< Updated upstream
                 if (state is LoadingComicDetailState) {
                   context
                       .read<ComicDetailBloc>()
@@ -141,23 +140,269 @@ class _ComicDetailViewState extends State<ComicDetailView> {
                                 //     // utils.deleteAllSecureData();
                                 //     if (await utils.isLoggedIn() == "true") {
                                 //       print('isLoggedIn');
+=======
+        if (state is LoadingComicDetailState) {
+          context
+              .read<ComicDetailBloc>()
+              .add(LoadComicDetailEvent(widget.comicSEOAlias));
+          return const LoadingScreen();
+        }
+        if (state is ErrorComicDetailState) {
+          return const Center(child: Text("Error"));
+        }
+        if (state is LoadedComicDetailState) {
+          controller.addListener(() {
+            if (controller.position.pixels ==
+                controller.position.maxScrollExtent) {
+              print('end');
+              context.read<CommentBloc>().add(GetListComment(
+                    comicId: int.parse(widget.comicId),
+                    isLoading: false,
+                    pageIndex: page++,
+                  ));
+            }
+          });
 
-                                //       context.pushNamed(
-                                //         'payment',
-                                //       );
-                                //     } else {
-                                //       // infoSnakBar(info: 'no logged in',).show(context);
-                                //       // prin
-                                //       showDialog(
-                                //         context: context,
-                                //         builder: (context) => SignInDialog(),
-                                //       );
-                                //     }
-                                //   },
-                                // ),
-                                IconButton(
-                                  icon: const Icon(Icons.home_outlined),
+          ComicDetail comicDetail = state.comicDetail;
+          List<Chapter> chapters = state.chapters;
+          return CustomScrollView(
+              controller: controller,
+              physics: const BouncingScrollPhysics(),
+              shrinkWrap: true,
+              slivers: [
+                SliverAppBar(
+                    titleSpacing: 0,
+                    pinned: true,
+                    automaticallyImplyLeading: false,
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          onPressed: () => context.pop(),
+                          icon: const Icon(
+                            Icons.arrow_back_ios,
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            comicDetail.comicName!,
+                            maxLines: 1,
+                            style: TextStyle(
+                                color: Colors.white,
+                                overflow: TextOverflow.ellipsis,
+                                fontSize: Theme.of(context)
+                                    .textTheme
+                                    .titleLarge
+                                    ?.fontSize),
+                          ),
+                        ),
+                        // Spacer(),
+                        // IconButton(
+                        //   icon: const Icon(
+                        //       Icons.monetization_on_outlined),
+                        //   onPressed: () async {
+                        //     // utils.deleteAllSecureData();
+                        //     if (await utils.methodLogin() != "") {
+                        //       print('methodLogin');
+>>>>>>> Stashed changes
+
+                        //       context.pushNamed(
+                        //         'payment',
+                        //       );
+                        //     } else {
+                        //       // infoSnakBar(info: 'no logged in',).show(context);
+                        //       // prin
+                        //       showDialog(
+                        //         context: context,
+                        //         builder: (context) => SignInDialog(),
+                        //       );
+                        //     }
+                        //   },
+                        // ),
+                        IconButton(
+                          icon: const Icon(Icons.home_outlined),
+                          onPressed: () {
+                            context.pushNamed('home');
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(builder: (context) {
+                            //     return HomeScreen();
+                            //   }),
+                            // );
+                          },
+                        ),
+                      ],
+                    )),
+                SliverToBoxAdapter(
+                  child: CachedNetworkImage(
+                    imageUrl: comicDetail.comicCoverImageURL!,
+                    fit: BoxFit.fitWidth,
+                    height: 0.3.sh,
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          comicDetail.comicName!,
+                          style: Theme.of(context).textTheme.headlineMedium,
+                        ),
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.remove_red_eye_outlined,
+                              size: kSmallIconSize,
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Text(comicDetail.viewCount.toString()),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Icon(
+                              Icons.star,
+                              color: Colors.yellow.shade700,
+                              size: kSmallIconSize,
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Text(comicDetail.countRating.toString()),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Icon(
+                              Icons.bookmark,
+                              color: Colors.red.shade400,
+                              size: kSmallIconSize,
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Text(comicDetail.countFollow.toString()),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            RatingBar.builder(
+                              glowColor: kPrimary,
+                              initialRating: comicDetail.rating!.toDouble(),
+                              minRating: 1,
+                              direction: Axis.horizontal,
+                              allowHalfRating: true,
+                              itemCount: 5,
+                              //itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                              itemSize: 25,
+                              itemBuilder: (context, _) => const Icon(
+                                Icons.star,
+                                color: Colors.amber,
+                              ),
+
+                              onRatingUpdate: (rating) async {
+                                // if (await utils.methodLogin() ==
+                                //     "true") {
+                                context.read<ComicDetailBloc>().add(
+                                    RatingComicEvent(
+                                        comicId: comicDetail.comicId!,
+                                        comicSEOAlias: widget.comicSEOAlias,
+                                        rating: rating));
+                              },
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              comicDetail.rating.toString(),
+                              style: Theme.of(context).textTheme.bodySmall,
+                            )
+                          ],
+                        ),
+                        Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                flex: 2,
+                                child: Text('Alternative',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(
+                                            fontWeight: FontWeight.bold)),
+                              ),
+                              // SizedBox(
+                              //   width: 5,
+                              // ),
+                              Expanded(
+                                flex: 7,
+                                child: Text(comicDetail.alternative!,
+                                    maxLines: 5,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(
+                                          color: Colors.grey,
+                                        )),
+                              )
+                            ]),
+                        BuildAuthor(authors: comicDetail.authors),
+                        BuildArtist(
+                          artists: comicDetail.artists,
+                        ),
+
+                        Row(
+                          children: [
+                            const Expanded(
+                              flex: 2,
+                              child: Text(
+                                'Genres',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 7,
+                              child: Wrap(
+                                  direction: Axis.horizontal,
+                                  spacing: 8.0, // gap between adjacent chips
+                                  runSpacing: 4.0,
+                                  children:
+                                      buildGenres(context, comicDetail.genres)),
+                            ),
+                          ],
+                        ),
+                        const Text(
+                          'Summary',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+
+                        BuildSummary(
+                          summary: comicDetail.summary!,
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ElevatedButton.icon(
+                                  style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              kButtonBackground),
+                                      shape: MaterialStateProperty.all<
+                                              RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(18.0),
+                                              side: const BorderSide(
+                                                  color: kButtonBackground)))),
                                   onPressed: () {
+<<<<<<< Updated upstream
                                     context.pushNamed('home');
                                     // Navigator.push(
                                     //   context,
@@ -622,97 +867,328 @@ class _ComicDetailViewState extends State<ComicDetailView> {
                                     //             ),
                                     //       )
                                     //     :
+=======
+>>>>>>> Stashed changes
                                     context.pushNamed(
-                                  "read-comic",
-                                  params: {
-                                    "comicSEOAlias": comicDetail.comicSEOAlias!,
-                                    'chapterSEOAlias':
-                                        chapters[index ~/ 2].chapterSEOAlias!
+                                      "read-comic",
+                                      params: {
+                                        "comicSEOAlias":
+                                            comicDetail.comicSEOAlias!,
+                                        'chapterSEOAlias':
+                                            chapters[0].chapterSEOAlias!
+                                      },
+                                    );
                                   },
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: Row(
-                                    // mainAxisAl,
-                                    children: [
-                                      Expanded(
-                                        flex: 5,
-                                        child: Text(
-                                          chapters[index ~/ 2].chapterName!,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                      //const Spacer(),
-                                      Expanded(
-                                        flex: 3,
-                                        child: Text(
-                                          intl.DateFormat('MM-dd-yyyy').format(
-                                              chapters[index ~/ 2]
-                                                  .dateCreated!),
-                                          style: const TextStyle(
-                                              color: Colors.grey),
-                                        ),
-                                      ),
-
-                                      Expanded(
-                                        flex: 1,
-                                        child: Text(
-                                          chapters[index ~/ 2]
-                                              .viewCount
-                                              .toString(),
-                                          style: const TextStyle(
-                                              color: Colors.grey),
-                                        ),
-                                      ),
-
-                                      // Expanded(
-                                      //     flex: 2,
-                                      //     child: Chip(
-                                      //         padding: const EdgeInsets.all(0),
-                                      //         label: Row(
-                                      //           mainAxisAlignment:
-                                      //               MainAxisAlignment.center,
-                                      //           children: [
-                                      //             chapters[index ~/ 2]
-                                      //                     .isLockedChapter!
-                                      //                 ? const Icon(
-                                      //                     Icons.lock,
-                                      //                     color: kYellow,
-                                      //                     size: kSmallIconSize,
-                                      //                   )
-                                      //                 : Container(),
-                                      //             const SizedBox(
-                                      //               width: 2,
-                                      //             ),
-                                      //             Text(
-                                      //               chapters[index ~/ 2]
-                                      //                       .isLockedChapter!
-                                      //                   ? 'Read'
-                                      //                   : 'Free',
-                                      //               style: Theme.of(context)
-                                      //                   .textTheme
-                                      //                   .bodySmall
-                                      //                   ?.copyWith(
-                                      //                       color: chapters[
-                                      //                                   index ~/
-                                      //                                       2]
-                                      //                               .isLockedChapter!
-                                      //                           ? kYellow
-                                      //                           : kWhite),
-                                      //             ),
-                                      //           ],
-                                      //         )))
-                                    ],
+                                  icon: Text(
+                                    state.chapters[0].chapterName!,
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  label: const Icon(
+                                    Icons.arrow_forward_ios_outlined,
+                                    color: kWhite,
+                                    size: 16,
                                   ),
                                 ),
-                              );
-                            },
-                            childCount: (state.chapters.length * 2) - 1,
+                              ),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ElevatedButton.icon(
+                                  style: ButtonStyle(
+
+                                      // splashFactory: ,
+                                      //  overlayColor: ,
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              kButtonBackground),
+                                      shape: MaterialStateProperty.all<
+                                              RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(18.0),
+                                              side: const BorderSide(
+                                                  color: kButtonBackground)))),
+                                  onPressed: () async {
+                                    if (await utils.methodLogin() != "") {
+                                      if (isEnable) {
+                                        if (mounted) {
+                                          context.read<ComicDetailBloc>().add(
+                                              UpdateStatusFollowingComic(
+                                                  comicDetail.comicId!));
+                                          isEnable = false;
+                                        }
+                                      } else if (DateTime.now()
+                                              .difference(lastPressedAt) >=
+                                          const Duration(seconds: 10)) {
+                                        if (mounted) {
+                                          context.read<ComicDetailBloc>().add(
+                                              UpdateStatusFollowingComic(
+                                                  comicDetail.comicId!));
+                                          lastPressedAt = DateTime.now();
+                                        }
+                                      }
+                                      // if (DateTime.now()
+                                      //         .difference(lastPressedAt)
+                                      //         .inSeconds !=
+                                      //     0)
+                                      else {
+                                        if (mounted) {
+                                          infoSnakBar(
+                                                  info:
+                                                      "You can //${comicDetail.isFollow! ? 'unfollow' : 'follow'} this comic in ${10 - DateTime.now().difference(lastPressedAt).inSeconds} second",
+                                                  duration: 2)
+                                              .show(context);
+                                        }
+                                      }
+                                    } else {
+                                      if (mounted) {
+                                        infoSnakBar(
+                                                info:
+                                                    "You must sign in to follow this comic",
+                                                duration: 10)
+                                            .show(context);
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) =>
+                                              const SignInDialog(),
+                                        ).then((value) => context
+                                            .read<ComicDetailBloc>()
+                                            .add(LoadComicDetailEvent(
+                                                widget.comicSEOAlias)));
+                                      }
+                                    }
+                                  },
+                                  icon: AnimatedSwitcher(
+                                      duration:
+                                          const Duration(milliseconds: 300),
+                                      transitionBuilder: (Widget child,
+                                          Animation<double> animation) {
+                                        return
+                                            // RotationTransition(
+                                            //     turns: animation);
+                                            ScaleTransition(
+                                                scale: animation, child: child);
+                                      },
+                                      child: Text(
+                                        comicDetail.isFollow!
+                                            ? 'Following'
+                                            : 'Follow',
+                                        key: ValueKey(comicDetail.isFollow!),
+                                      )
+                                      // comicDetail.isFollow!
+                                      //     ? Icons.check
+                                      //     : Icons.add,
+                                      // color: kWhite,
+                                      // size: 16,
+                                      ),
+                                  label: AnimatedSwitcher(
+                                      duration:
+                                          const Duration(milliseconds: 300),
+                                      transitionBuilder: (Widget child,
+                                          Animation<double> animation) {
+                                        return
+                                            // RotationTransition(
+                                            //     turns: animation);
+                                            ScaleTransition(
+                                                scale: animation, child: child);
+                                      },
+                                      child: Icon(
+                                        comicDetail.isFollow!
+                                            ? Icons.check
+                                            : Icons.add,
+                                        key: ValueKey(comicDetail.isFollow!),
+                                      )
+                                      // comicDetail.isFollow!
+                                      //     ? Icons.check
+                                      //     : Icons.add,
+                                      // color: kWhite,
+                                      // size: 16,
+                                      ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        // Row(
+                        //   children: [
+                        //     const Icon(
+                        //       Icons.lock_outline,
+                        //       size: kSmallIconSize,
+                        //       color: kYellow,
+                        //     ),
+                        //     Text('Get the entire collection now',
+                        //         maxLines: 2,
+                        //         style: Theme.of(context)
+                        //             .textTheme
+                        //             .bodySmall),
+                        //     const SizedBox(
+                        //       width: 10,
+                        //     ),
+                        //     ElevatedButton(
+                        //       style: darkTheme(context)
+                        //           .elevatedButtonTheme
+                        //           .style
+                        //           ?.copyWith(
+                        //               // iconSize:
+                        //               //     MaterialStatePropertyAll(),
+                        //               padding:
+                        //                   const MaterialStatePropertyAll(
+                        //                       EdgeInsets.all(
+                        //                           kDefaultPadding)),
+                        //               iconColor:
+                        //                   const MaterialStatePropertyAll(
+                        //                       kYellow),
+                        //               foregroundColor:
+                        //                   MaterialStateProperty.all(
+                        //                       kYellow),
+                        //               side: MaterialStateProperty
+                        //                   .resolveWith((states) =>
+                        //                       const BorderSide(
+                        //                           color: kYellow))),
+                        //       child: Row(children: [
+                        //         Text("unlock all",
+                        //             style: Theme.of(context)
+                        //                 .textTheme
+                        //                 .bodySmall
+                        //                 ?.copyWith(color: kYellow)
+                        //             //style: TextStyle(color: kYellow),
+                        //             ),
+                        //         const Icon(
+                        //           Icons.arrow_forward_ios_outlined,
+                        //           size: kSmallIconSize,
+                        //         )
+                        //       ]),
+                        //       onPressed: () {},
+                        //     ),
+                        //     const Spacer(),
+                        //     IconButton(
+                        //         splashRadius: 25,
+                        //         onPressed: () {},
+                        //         icon: const Icon(Icons.sort)),
+                        //   ],
+                        // )
+                      ]
+                          .map((widget) => Padding(
+                                padding: const EdgeInsets.fromLTRB(5, 5, 5, 0),
+                                child: widget,
+                              ))
+                          .toList(),
+                    ),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                    child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('Chapters',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(fontWeight: FontWeight.bold)),
+                )),
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                      if (index.isOdd) {
+                        return const Divider(
+                            indent: 8,
+                            endIndent: 8,
+                            height: 0,
+                            color: Colors.grey);
+                      }
+                      return InkWell(
+                        onTap: () =>
+                            // chapters[index ~/ 2].isLockedChapter!
+                            //     ? showDialog(
+                            //         context: context,
+                            //         builder: (context) => SignInDialog(
+                            //             // userRepository: UserRepository(),
+                            //             ),
+                            //       )
+                            //     :
+                            context.pushNamed(
+                          "read-comic",
+                          params: {
+                            "comicSEOAlias": comicDetail.comicSEOAlias!,
+                            'chapterSEOAlias':
+                                chapters[index ~/ 2].chapterSEOAlias!
+                          },
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Row(
+                            // mainAxisAl,
+                            children: [
+                              Expanded(
+                                flex: 5,
+                                child: Text(
+                                  chapters[index ~/ 2].chapterName!,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              //const Spacer(),
+                              Expanded(
+                                flex: 3,
+                                child: Text(
+                                  intl.DateFormat('MM-dd-yyyy').format(
+                                      chapters[index ~/ 2].dateCreated!),
+                                  style: const TextStyle(color: Colors.grey),
+                                ),
+                              ),
+
+                              Expanded(
+                                flex: 1,
+                                child: Text(
+                                  chapters[index ~/ 2].viewCount.toString(),
+                                  style: const TextStyle(color: Colors.grey),
+                                ),
+                              ),
+
+                              // Expanded(
+                              //     flex: 2,
+                              //     child: Chip(
+                              //         padding: const EdgeInsets.all(0),
+                              //         label: Row(
+                              //           mainAxisAlignment:
+                              //               MainAxisAlignment.center,
+                              //           children: [
+                              //             chapters[index ~/ 2]
+                              //                     .isLockedChapter!
+                              //                 ? const Icon(
+                              //                     Icons.lock,
+                              //                     color: kYellow,
+                              //                     size: kSmallIconSize,
+                              //                   )
+                              //                 : Container(),
+                              //             const SizedBox(
+                              //               width: 2,
+                              //             ),
+                              //             Text(
+                              //               chapters[index ~/ 2]
+                              //                       .isLockedChapter!
+                              //                   ? 'Read'
+                              //                   : 'Free',
+                              //               style: Theme.of(context)
+                              //                   .textTheme
+                              //                   .bodySmall
+                              //                   ?.copyWith(
+                              //                       color: chapters[
+                              //                                   index ~/
+                              //                                       2]
+                              //                               .isLockedChapter!
+                              //                           ? kYellow
+                              //                           : kWhite),
+                              //             ),
+                              //           ],
+                              //         )))
+                            ],
                           ),
                         ),
+<<<<<<< Updated upstream
                         SliverToBoxAdapter(
                           child: BlocProvider(
                               create: (context) => CommentBloc()
@@ -861,18 +1337,294 @@ class _ComicDetailViewState extends State<ComicDetailView> {
                               )),
                         ),
                       ]);
+=======
+                      );
+                    },
+                    childCount: (state.chapters.length * 2) - 1,
+                  ),
+                ),
+                SliverToBoxAdapter(
+                    child: BlocConsumer<CommentBloc, CommentState>(
+                  // bloc: CommentBloc()
+                  //   ..add(GetListComment(
+                  //       comicId: int.parse(widget.comicId),
+                  //       pageIndex: page++,
+                  //       isLoading: false)),
+                  listener: (context, state) {
+                    if (state is SendedCommentFail) {
+                      errorSnakBar(error: state.error, duration: 10)
+                          .show(context);
+                    } else if (state is SendedCommentSuccess) {
+                      context.read<CommentBloc>().add(GetListComment(
+                          comicId: int.parse(widget.comicId),
+                          pageIndex: 1,
+                          isLoading: false));
+                    } else if (state is ReplyingComment) {
+                      commentController.text = state.replyUsername;
+                    }
+                  },
+                  buildWhen: (previous, current) {
+                    // if (current is ReplyingComment) return false;
+                    // if (previous is CommentLoadedSuccessful &&
+                    //     current is SendedCommentSuccess) return false;
 
-                  // return AlignedGridView.count(
-                  //     itemCount: hotComics.length,
-                  //     crossAxisCount: 3,
-                  //     mainAxisSpacing: 6,
-                  //     crossAxisSpacing: 6,
-                  //     itemBuilder: (context, index) => CardComic(
-                  //           comic: hotComics[index],
-                  //         ));
-                }
-                return Container();
-              })),
+                    return true;
+                  },
+                  builder: (context, state) {
+                    if (state is CommentLoading) {
+                      return const Center(
+                        child: SpinKitFadingCircle(
+                          color: kRed,
+                        ),
+                      );
+                    }
+
+                    if (state is CommentLoadedSuccessful) {
+                      comments
+                          .addAll(state.listComment!.map((comment) => comment));
+                      return Padding(
+                        padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Divider(
+                              thickness: 0,
+                              indent: 0,
+                              height: 20,
+                              color: Colors.white,
+                            ),
+                            Text('Comments',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(fontWeight: FontWeight.bold)),
+                            // Container(
+                            //   decoration: const BoxDecoration(
+                            //     color: kWhite,
+                            //     borderRadius: BorderRadius.all(
+                            //       Radius.circular(10),
+                            //     ),
+                            //   ),
+                            //   child: Row(
+                            //     children: [
+                            //       Expanded(
+                            //         child: TextFormField(
+                            //           controller: commentController,
+                            //           cursorColor: kRed,
+                            //           onFieldSubmitted: (value) async {
+                            //             if (commentController.text
+                            //                     .trim() !=
+                            //                 "") {
+                            //               if (await utils
+                            //                   .isLoggedIn()) {
+                            //                 if (mounted) {
+                            //                   context
+                            //                       .read<CommentBloc>()
+                            //                       .add(SendComment(
+                            //                           chapterId: null,
+                            //                           comicId: int
+                            //                               .parse(widget
+                            //                                   .comicId),
+                            //                           commentContent:
+                            //                               commentController
+                            //                                   .text,
+                            //                           parentCommentId:
+                            //                               null));
+                            //                 }
+                            //               } else {
+                            //                 if (mounted) {
+                            //                   showDialog(
+                            //                     context: context,
+                            //                     builder: (context) =>
+                            //                         const SignInDialog(),
+                            //                   );
+                            //                 }
+                            //               }
+                            //             }
+                            //           },
+                            //           style: Theme.of(context)
+                            //               .textTheme
+                            //               .bodySmall
+                            //               ?.copyWith(
+                            //                   color: Colors.black),
+                            //           decoration: const InputDecoration(
+                            //               border: InputBorder.none,
+                            //               contentPadding:
+                            //                   EdgeInsets.fromLTRB(
+                            //                       kDefaultPadding,
+                            //                       0,
+                            //                       kDefaultPadding,
+                            //                       0)),
+                            //         ),
+                            //       ),
+                            //       IconButton(
+                            //           onPressed: () async {
+                            //             if (commentController.text
+                            //                     .trim() !=
+                            //                 "") {
+                            //               if (await utils
+                            //                   .isLoggedIn()) {
+                            //                 if (mounted) {
+                            //                   context
+                            //                       .read<CommentBloc>()
+                            //                       .add(SendComment(
+                            //                           chapterId: null,
+                            //                           comicId: int
+                            //                               .parse(widget
+                            //                                   .comicId),
+                            //                           commentContent:
+                            //                               commentController
+                            //                                   .text,
+                            //                           parentCommentId:
+                            //                               null));
+                            //                 }
+                            //               } else {
+                            //                 if (mounted) {
+                            //                   showDialog(
+                            //                     context: context,
+                            //                     builder: (context) =>
+                            //                         const SignInDialog(),
+                            //                   );
+                            //                 }
+                            //               }
+                            //             }
+                            //           },
+                            //           icon: const Icon(
+                            //             Icons.send,
+                            //             color: kRed,
+                            //           ))
+                            //     ],
+                            //   ),
+                            // ),
+                            ListView.builder(
+                                padding: EdgeInsets.all(8),
+                                controller: ScrollController(),
+                                shrinkWrap: true,
+                                itemCount: comments.length + 1,
+                                itemBuilder: (context, index) {
+                                  if (index < comments.length) {
+                                    final comment = comments[index];
+                                    return CommentBranchView(comment: comment);
+                                  } else {
+                                    return Center(
+                                        child: state.hasMore
+                                            ? SpinKitFadingCircle(
+                                                color: kRed,
+                                                size: 20,
+                                              )
+                                            : Text('No more comment'));
+                                  }
+                                  ;
+                                }
+>>>>>>> Stashed changes
+
+                                // itemCount: 5,
+                                // itemBuilder: (context, index) => ParentCommentView(),
+                                ),
+                          ],
+                        ),
+                      );
+                    }
+
+                    return Container();
+                  },
+                )
+                    //     BuildComments(
+                    //   comicDetail: comicDetail,
+                    //   mounted: mounted,
+                    //   utils: utils,
+                    //   controller: controller,
+                    // )
+                    ),
+                SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: kWhite,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            controller: commentController,
+                            cursorColor: kRed,
+                            onFieldSubmitted: (value) async {
+                              if (commentController.text.trim() != "") {
+                                if (await utils.isLoggedIn()) {
+                                  if (mounted) {
+                                    context.read<CommentBloc>().add(SendComment(
+                                        chapterId: null,
+                                        comicId: int.parse(widget.comicId),
+                                        commentContent: commentController.text,
+                                        parentCommentId: null));
+                                  }
+                                } else {
+                                  if (mounted) {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) =>
+                                          const SignInDialog(),
+                                    );
+                                  }
+                                }
+                              }
+                            },
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall
+                                ?.copyWith(color: Colors.black),
+                            decoration: const InputDecoration(
+                                border: InputBorder.none,
+                                contentPadding: EdgeInsets.fromLTRB(
+                                    kDefaultPadding, 0, kDefaultPadding, 0)),
+                          ),
+                        ),
+                        IconButton(
+                            onPressed: () async {
+                              if (commentController.text.trim() != "") {
+                                if (await utils.isLoggedIn()) {
+                                  if (mounted) {
+                                    context.read<CommentBloc>().add(SendComment(
+                                        chapterId: null,
+                                        comicId: int.parse(widget.comicId),
+                                        commentContent: commentController.text,
+                                        parentCommentId: null));
+                                  }
+                                } else {
+                                  if (mounted) {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) =>
+                                          const SignInDialog(),
+                                    );
+                                  }
+                                }
+                              }
+                            },
+                            icon: const Icon(
+                              Icons.send,
+                              color: kRed,
+                            ))
+                      ],
+                    ),
+                  ),
+                )
+              ]);
+
+          // return AlignedGridView.count(
+          //     itemCount: hotComics.length,
+          //     crossAxisCount: 3,
+          //     mainAxisSpacing: 6,
+          //     crossAxisSpacing: 6,
+          //     itemBuilder: (context, index) => CardComic(
+          //           comic: hotComics[index],
+          //         ));
+        }
+        return Container();
+      })),
     );
   }
 

@@ -183,6 +183,24 @@ class _ReadComicViewState extends State<ReadComicView>
                                 }
                                 break;
                               case 2:
+<<<<<<< Updated upstream
+=======
+                                showModalBottomSheet(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(kBorderRadius),
+                                  ),
+                                  context: context,
+                                  builder: (context) => CommentView(
+                                      chapterId: state.chapterImage.chapterId!,
+                                      comicId: state.chapterImage.comicId!,
+                                      chapterName:
+                                          state.chapterImage.chapterName!),
+                                );
+
+                                break;
+                              case 3:
+>>>>>>> Stashed changes
                                 showModalBottomSheet(
                                   shape: RoundedRectangleBorder(
                                     borderRadius:

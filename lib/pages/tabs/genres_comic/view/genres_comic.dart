@@ -112,8 +112,37 @@ class _TabGenresComicState extends State<TabGenresComic> {
                                     child: SizedBox(height: 0.2.sh),
                                   )),
                         );
+<<<<<<< Updated upstream
                       },
                     ),
+=======
+                      } else if (state is LoadComicOfGenreFailure) {
+                        return SliverFillRemaining(
+                          child: Center(
+                            child: Text(state.error),
+                          ),
+                        );
+                      } else if (state is LoadComicOfGenreSuccess) {
+                        return SliverGrid.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithMaxCrossAxisExtent(
+                                  // crossAxisCount: 3,
+                                  mainAxisSpacing: 5,
+                                  crossAxisSpacing: 5,
+                                  maxCrossAxisExtent: 0.4.sw,
+                                  mainAxisExtent: 0.25.sh),
+                          itemCount: state.comicOfGenre.length,
+                          itemBuilder: (context, index) =>
+                              // Container(
+                              //       child: Center(
+                              //           child: Text(state.comicOfGenre[index].comicName!)),
+                              //     )
+                              CardComic(comic: state.comicOfGenre[index]),
+                        );
+                      }
+                      return SliverToBoxAdapter();
+                    },
+>>>>>>> Stashed changes
                   )
                 ]),
               );

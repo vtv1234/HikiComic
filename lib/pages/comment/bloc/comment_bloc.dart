@@ -12,6 +12,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
     on<GetListCommentOfChapter>((event, emit) async {
       emit(CommentLoading());
       try {
+<<<<<<< Updated upstream
         final List<Comment>? result =
             await _commentRepository.getListCommentOfChapter(
                 comicId: event.comicId,
@@ -19,6 +20,21 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
                 pageIndex: 1,
                 pageSize: 30);
         emit(CommentLoadedSuccessful(result));
+=======
+        // if (event.isLoading) return;
+        // emit()
+        final List<Comment>? result = await _commentRepository.getListComment(
+            comicId: event.comicId,
+            chapterId: event.chapterId,
+            pageIndex: event.pageIndex,
+            pageSize: 10);
+
+        emit(CommentLoadedSuccessful(
+            listComment: result,
+            hasMore: result!.length < 10 ? false : true,
+            pageIndex: event.pageIndex + 1,
+            isLoading: false));
+>>>>>>> Stashed changes
       } catch (e) {
         emit(CommentLoadedFailure(e.toString()));
       }

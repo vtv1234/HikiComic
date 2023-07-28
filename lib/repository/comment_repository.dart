@@ -10,7 +10,11 @@ import 'package:http/http.dart' as http;
 
 class CommentRepository {
   final utils = Utils();
+<<<<<<< Updated upstream
   Future<List<Comment>?> getListCommentOfChapter(
+=======
+  Future<List<Comment>?> getListComment(
+>>>>>>> Stashed changes
       {required int comicId,
       required int? chapterId,
       required int pageIndex,

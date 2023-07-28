@@ -40,6 +40,7 @@ class BuildComment extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
+<<<<<<< Updated upstream
         left: comment.parentCommentId != null ? 40 : 0,
       ),
       child: ConstrainedBox(
@@ -69,6 +70,33 @@ class BuildComment extends StatelessWidget {
                                 fit: BoxFit.cover,
                                 imageUrl: comment.urlImageUser!)
                             : Image.asset(ImagePath.userAvatarImagePath),
+=======
+          left: widget.comment.parentCommentId != null ? 40 : 0, bottom: 15),
+      child: Column(
+        children: [
+          Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: SizedBox(
+                    height: 50,
+                    width: 50,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(120),
+                      child:
+                          // state.accountInformation.userImageURL != null
+                          //     ?
+                          widget.comment.urlImageUser != "default.jpg"
+                              ? CachedNetworkImage(
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(Icons.error),
+                                  fit: BoxFit.cover,
+                                  imageUrl: widget.comment.urlImageUser!)
+                              : Image.asset(ImagePath.userAvatarImagePath),
+                    ),
+>>>>>>> Stashed changes
                   ),
                 ),
               ),
